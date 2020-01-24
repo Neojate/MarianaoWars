@@ -1,0 +1,18 @@
+﻿.MenuSystem {
+    background-color: #EEE;
+    padding: 30px 10px;
+}
+
+.MenuSystem .SubTitle {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.MenuSystem .Title {
+    color: #000;
+    font-size: 1.2em;
+}
+
+.MenuSystem div div {
+    color: white;
+}
