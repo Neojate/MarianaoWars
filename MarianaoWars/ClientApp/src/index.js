@@ -21,5 +21,5 @@ ReactDOM.render(
 // worker can interfere with the Identity UI, so it is
 // disabled by default when Identity is being used.
 //
-//registerServiceWorker();
+///registerServiceWorker();
 
