@@ -11,6 +11,7 @@ using MarianaoWars.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignalRChat.Hubs;
 
 namespace MarianaoWars
 {
@@ -41,6 +42,7 @@ namespace MarianaoWars
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -79,6 +81,7 @@ namespace MarianaoWars
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
 
             app.UseSpa(spa =>
