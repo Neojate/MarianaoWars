@@ -4,9 +4,9 @@ import '../css/MenuSystem.css';
 export class MenuSystem extends Component {
     static displayName = MenuSystem.name;
 
-    constructor(props) {
-        super.props;
-        this.state = { data: [], loading: true };
+    constructor() {
+        //super.props;
+        //this.state = { data: [], loading: true };
     }
 
     render() {

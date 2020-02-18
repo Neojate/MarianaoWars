@@ -9,7 +9,7 @@ export class Home extends Component {
         return (
             <div className="layout">
                 <div>
-                    <MenuSystem />
+                    
                 </div>
                 <div></div>
             </div>

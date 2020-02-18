@@ -30,6 +30,8 @@ namespace MarianaoWars
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddDbContext<MarianaoContext>(option => option.UseMySql("DefaultConnection"));
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
