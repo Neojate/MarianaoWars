@@ -27,7 +27,7 @@ namespace MarianaoWars.Controllers
                 1,
                 1,
                 1,
-                DateTime.Now);
+                100);
 
             institutoRepo.CreateInstituto(instituto);
         }
