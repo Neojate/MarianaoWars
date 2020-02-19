@@ -17,5 +17,7 @@ namespace MarianaoWars.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<Instituto> Institutos { get; set; }
     }
 }

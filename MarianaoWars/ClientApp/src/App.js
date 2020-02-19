@@ -10,6 +10,7 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import { Chat } from './components/Chat';
 
 import './custom.css'
+import { Prueba } from './components/prueba';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -21,6 +22,7 @@ export default class App extends Component {
         <Route path='/counter' component={Counter} />
         <Route path='/chat' component={Chat} />
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
+        <Route path='/cacados' component={Prueba} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );

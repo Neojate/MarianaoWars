@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MarianaoWars.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,9 +11,11 @@ namespace MarianaoWars.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("/caca")]
     public class WeatherForecastController : ControllerBase
     {
+        private MarianaoContext db;
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -23,6 +26,8 @@ namespace MarianaoWars.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
+            var lista = db.Instituto.ToList();
+            string hola = "";
         }
 
         [HttpGet]
