@@ -15,7 +15,7 @@ namespace MarianaoWars.Controllers
     [Route("[Controller]")]
     public class PruebaDbController : ControllerBase
     {
-        IInstitutoRepository institutoRepo = new InstitutoImp();
+        //IInstitutoRepository institutoRepo = new InstitutoImp();
 
         public PruebaDbController()
         {
@@ -29,7 +29,7 @@ namespace MarianaoWars.Controllers
                 1,
                 100);
 
-            institutoRepo.CreateInstituto(instituto);
+            //institutoRepo.CreateInstituto(instituto);
         }
 
         public string Get()
