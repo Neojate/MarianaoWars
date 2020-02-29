@@ -11,7 +11,7 @@ namespace MarianaoWars.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("/caca")]
+    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         //private MarianaoContext db;
