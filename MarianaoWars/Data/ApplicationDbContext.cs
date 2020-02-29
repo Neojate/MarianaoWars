@@ -18,6 +18,5 @@ namespace MarianaoWars.Data
         {
         }
 
-        public DbSet<Instituto> Institutos { get; set; }
     }
 }

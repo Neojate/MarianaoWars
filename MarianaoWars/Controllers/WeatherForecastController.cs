@@ -14,7 +14,7 @@ namespace MarianaoWars.Controllers
     [Route("/caca")]
     public class WeatherForecastController : ControllerBase
     {
-        private MarianaoContext db;
+        //private MarianaoContext db;
 
         private static readonly string[] Summaries = new[]
         {
@@ -26,7 +26,7 @@ namespace MarianaoWars.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            var lista = db.Instituto.ToList();
+            //var lista = db.Instituto.ToList();
             string hola = "";
         }
 
