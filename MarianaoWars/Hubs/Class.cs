@@ -16,17 +16,16 @@ namespace SignalRChat.Hubs
         }
         public async Task InitCount(string user, string message)
         {   
-            while (true)
+            //while (true)
     
-            {
-                for (int i = 0; i < 500; i++)
+            //{
+                for (int i = 0; i < 10; i++)
                 {
                     await Clients.Caller.SendAsync("nombreMetodoRecibido", user, i);
-                    
                 }
                 Thread.Sleep(1000);
 
-            }
+            //}
 
 
         }
