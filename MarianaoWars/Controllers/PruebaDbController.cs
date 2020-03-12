@@ -19,7 +19,7 @@ namespace MarianaoWars.Controllers
 
         public PruebaDbController()
         {
-            Instituto instituto = new Instituto(
+            Institute instituto = new Institute(
                 "Marianao",
                 "Primer servidor de prueba",
                 DateTime.Now,
