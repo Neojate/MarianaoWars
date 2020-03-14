@@ -26,8 +26,6 @@ namespace MarianaoWars.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            //var lista = db.Instituto.ToList();
-            string hola = "";
         }
 
         [HttpGet]

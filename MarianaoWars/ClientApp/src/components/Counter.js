@@ -7,7 +7,18 @@ export class Counter extends Component {
     super(props);
     this.state = { currentCount: 0 };
     this.incrementCounter = this.incrementCounter.bind(this);
-  }
+    }
+
+    componentDidMount() {
+        this.account();
+    }
+
+    async account() {
+        const response = await fetch('account');
+        const data = await response.json();
+        console.log(data);
+    }
+
 
   incrementCounter() {
     this.setState({
