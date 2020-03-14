@@ -13,7 +13,7 @@ namespace MarianaoWars.Models
     {
         
         // ID del Instituto. Primary Key Autoincremental.
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         // Nombre del servidor.
         public string Name { get; set; }
@@ -37,24 +37,10 @@ namespace MarianaoWars.Models
         public int RateUpdate { get; set; }
 
         // La cantidad máxima de jugadores que permite el servidor
-        public int maxJugadores { get; set; }
+        public int MaxPlayers { get; set; }
 
         // Muestra si el servidor está cerrado. Abierto = false || Close = true
         public bool IsClosed { get; set; }
-
-
-        public Institute(string name, string description, DateTime initDate, DateTime closeDate, double rateTime, double rateCost, int rateUpdate, int maxJugadores, bool isClosed)
-        {
-            Name = name;
-            Description = description;
-            InitDate = initDate;
-            CloseDate = closeDate;
-            RateTime = rateTime;
-            RateCost = rateCost;
-            RateUpdate = rateUpdate;
-            this.maxJugadores = maxJugadores;
-            IsClosed = isClosed;
-        }
 
 
     }

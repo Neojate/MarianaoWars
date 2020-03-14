@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarianaoWars.Repositories.Interfaces
 {
-    public interface IInstituteRepository
+    public interface IRepositoryInstitute
     {
         // Método que devuelve un instituto en función de su ID
         Institute GetInstitute(int instituteId);

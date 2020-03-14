@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarianaoWars.Services.Interfaces
 {
-    interface IInstituteService
+    public interface IServiceInstitute
     {
         // Método que busca los servidores cuya fecha de expiración ha sucumbido y los cierra.
         public void CloseServers();

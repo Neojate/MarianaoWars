@@ -13,6 +13,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SignalRChat.Hubs;
 
+using MarianaoWars.Services.Interfaces;
+using MarianaoWars.Services.Implementations;
+using MarianaoWars.Repositories.Interfaces;
+using MarianaoWars.Repositories.Implementations;
+using MarianaoWars.Middleware;
+
 namespace MarianaoWars
 {
     public class Startup
@@ -49,6 +55,10 @@ namespace MarianaoWars
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            //Inyeccion de dependencias MarianaoWars
+            IoC.AddDependency(services);
+
         }
 
 

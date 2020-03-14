@@ -2,6 +2,7 @@
 using MarianaoWars.Models;
 using MarianaoWars.Repositories.Implementations;
 using MarianaoWars.Repositories.Interfaces;
+using MarianaoWars.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,26 +16,18 @@ namespace MarianaoWars.Controllers
     [Route("[Controller]")]
     public class PruebaDbController : ControllerBase
     {
-        //IInstitutoRepository institutoRepo = new InstitutoImp();
 
-        public PruebaDbController()
+        private readonly IServiceInstitute serviceInstitute;
+
+        public PruebaDbController(IServiceInstitute context)
         {
-            Institute instituto = new Institute(
-                "Marianao",
-                "Primer servidor de prueba",
-                DateTime.Now,
-                DateTime.Now,
-                1,
-                1,
-                1,
-                100);
+            context.CloseServers();
 
-            //institutoRepo.CreateInstituto(instituto);
         }
 
         public string Get()
         {
-            return "hola";
+            return "asda";
         }
     }
 }
