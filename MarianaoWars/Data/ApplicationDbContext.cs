@@ -15,6 +15,8 @@ namespace MarianaoWars.Data
         
         public DbSet<Institute> Institute { get; set; }
 
+        public DbSet<User> User { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

@@ -20,5 +20,9 @@ namespace MarianaoWars.Services.Interfaces
         // Método que devuelve la lista de todos los Institutos abiertos.
         IEnumerable<Institute> GetOpenInstitutes();
 
+        // Método que devuelve la lista de todos los Usuarios.
+        IEnumerable<User> GetUsers();
+
+
     }
 }

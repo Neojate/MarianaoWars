@@ -36,15 +36,18 @@ namespace MarianaoWars.Services.Implementations
 
         public IEnumerable<Institute> GetInstitutes()
         {
-            return context.Institute
-                .ToList();
+            return context.Institute;
         }
 
         public IEnumerable<Institute> GetOpenInstitutes()
         {
             return context.Institute
-                .Where(institute => !institute.IsClosed)
-                .ToList();
+                .Where(institute => !institute.IsClosed);
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return context.User;
         }
 
     }

@@ -22,7 +22,7 @@ namespace MarianaoWars.Controllers
         public PruebaDbController(IServiceInstitute context)
         {
             context.CloseServers();
-
+            List<User> users = context.GetUsers().ToList();
         }
 
         public string Get()
