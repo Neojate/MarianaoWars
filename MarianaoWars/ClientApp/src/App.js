@@ -11,6 +11,7 @@ import { Chat } from './components/Chat';
 
 import './custom.css'
 import { Prueba } from './components/prueba';
+import { InstitutePanel } from './components/InstitutePanel';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -23,6 +24,7 @@ export default class App extends Component {
         <Route path='/chat' component={Chat} />
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path='/cacados' component={Prueba} />
+        <Route path='/instituts' component={InstitutePanel} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );

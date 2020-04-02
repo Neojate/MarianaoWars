@@ -13,21 +13,35 @@ namespace MarianaoWars.Controllers
 {
 
     [ApiController]
-    [Route("[Controller]")]
+    [Route("/caca")]
     public class PruebaDbController : ControllerBase
     {
 
-        private readonly IServiceInstitute serviceInstitute;
+        private readonly IServiceInstitute context;
 
         public PruebaDbController(IServiceInstitute context)
         {
-            context.CloseServers();
-            List<User> users = context.GetUsers().ToList();
+            this.context = context;
+            //context.CloseServers();
+            //User user = context.GetUsers().ToList()[0];
+            //Institute institute = context.GetInstitutes().ToList()[0];
+            //context.EnrollmentUser(user, institute);
+            //var x = context.GetEnrollment(4).Institute;
+            //var enrollments = context.GetEnrollments(1);
+        }        
+
+        [HttpGet]
+        [ActionName("usuaris")]
+        public IEnumerable<User> GetUsers()
+        {
+            return context.GetUsers();
         }
 
-        public string Get()
+        [HttpGet("institutes")]
+        public IEnumerable<Institute> GetInstitutes()
         {
-            return "asda";
+            return context.GetInstitutes();
         }
+
     }
 }

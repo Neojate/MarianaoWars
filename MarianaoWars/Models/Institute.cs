@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,6 +42,10 @@ namespace MarianaoWars.Models
 
         // Muestra si el servidor está cerrado. Abierto = false || Close = true
         public bool IsClosed { get; set; }
+
+        // Lista de las matriculaciones en este servidor
+        [InverseProperty("Institute")]
+        public ICollection<Enrollment> Enrollments { get; set; }
 
 
     }

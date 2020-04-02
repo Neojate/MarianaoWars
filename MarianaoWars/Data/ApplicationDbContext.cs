@@ -13,6 +13,8 @@ namespace MarianaoWars.Data
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         
+        public DbSet<Enrollment> Enrollment { get; set; }
+
         public DbSet<Institute> Institute { get; set; }
 
         public DbSet<User> User { get; set; }
