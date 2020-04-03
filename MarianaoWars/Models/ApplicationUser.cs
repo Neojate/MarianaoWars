@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MarianaoWars.Models
 {
@@ -20,6 +21,9 @@ namespace MarianaoWars.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        [InverseProperty("User")]
+        public ICollection<Enrollment> Enrollments { get; set; }
 
     }
 }

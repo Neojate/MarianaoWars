@@ -2,6 +2,7 @@
 using MarianaoWars.Models;
 using MarianaoWars.Repositories.Implementations;
 using MarianaoWars.Repositories.Interfaces;
+using MarianaoWars.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,29 +13,35 @@ namespace MarianaoWars.Controllers
 {
 
     [ApiController]
-    [Route("[Controller]")]
+    [Route("/caca")]
     public class PruebaDbController : ControllerBase
     {
-        //IInstitutoRepository institutoRepo = new InstitutoImp();
 
-        public PruebaDbController()
+        private readonly IServiceInstitute context;
+
+        public PruebaDbController(IServiceInstitute context)
         {
-            Instituto instituto = new Instituto(
-                "Marianao",
-                "Primer servidor de prueba",
-                DateTime.Now,
-                DateTime.Now,
-                1,
-                1,
-                1,
-                100);
+            this.context = context;
+            //context.CloseServers();
+            //User user = context.GetUsers().ToList()[0];
+            //Institute institute = context.GetInstitutes().ToList()[0];
+            //context.EnrollmentUser(user, institute);
+            //var x = context.GetEnrollment(4).Institute;
+            //var enrollments = context.GetEnrollments(1);
+        }        
 
-            //institutoRepo.CreateInstituto(instituto);
+        [HttpGet]
+        [ActionName("usuaris")]
+        public IEnumerable<ApplicationUser> GetUsers()
+        {
+            return context.GetUsers();
         }
 
-        public string Get()
+        [HttpGet("institutes")]
+        public IEnumerable<Institute> GetInstitutes()
         {
-            return "hola";
+            return context.GetInstitutes();
         }
+
     }
 }

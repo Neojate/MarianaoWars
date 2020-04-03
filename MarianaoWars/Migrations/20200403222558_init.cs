@@ -67,6 +67,27 @@ namespace MarianaoWars.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Institute",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    InitDate = table.Column<DateTime>(nullable: false),
+                    CloseDate = table.Column<DateTime>(nullable: false),
+                    RateTime = table.Column<double>(nullable: false),
+                    RateCost = table.Column<double>(nullable: false),
+                    RateUpdate = table.Column<int>(nullable: false),
+                    MaxPlayers = table.Column<int>(nullable: false),
+                    IsClosed = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Institute", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -189,6 +210,34 @@ namespace MarianaoWars.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Enrollment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: true),
+                    InstituteId = table.Column<int>(nullable: false),
+                    InitDate = table.Column<DateTime>(nullable: false),
+                    Rank = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrollment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Enrollment_Institute_InstituteId",
+                        column: x => x.InstituteId,
+                        principalTable: "Institute",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrollment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -238,6 +287,16 @@ namespace MarianaoWars.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Enrollment_InstituteId",
+                table: "Enrollment",
+                column: "InstituteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollment_UserId",
+                table: "Enrollment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
@@ -269,10 +328,16 @@ namespace MarianaoWars.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
+                name: "Enrollment");
+
+            migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Institute");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

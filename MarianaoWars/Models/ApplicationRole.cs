@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MarianaoWars.Models
 {
-    public class ApplicationRole : IdentityRole<int>
+    public class ApplicationRole : IdentityRole
     {
     }
 }
