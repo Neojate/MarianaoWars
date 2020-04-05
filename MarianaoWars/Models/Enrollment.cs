@@ -36,7 +36,7 @@ namespace MarianaoWars.Models
         public Enrollment(ApplicationUser user, Institute institute)
         {
             InitDate = DateTime.Now;
-            Rank = institute.Enrollments.Count + 1;
+            Rank = 0;
             User = user;
             Institute = institute;
         }

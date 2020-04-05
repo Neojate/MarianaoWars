@@ -7,7 +7,7 @@ namespace MarianaoWars.Controllers
 {
 
     [ApiController]
-    [Route("/instituts")]
+    [Route("/institutes")]
     public class OutGameController
     {
         private readonly IServiceInstitute context;
@@ -17,16 +17,25 @@ namespace MarianaoWars.Controllers
             this.context = context;
         }
 
+        // Petición que obtiene la lista de todos los institutos abiertos.
         [HttpGet("openinstitutes")]
         public IEnumerable<Institute> GetInstitutes()
         {
             return context.GetOpenInstitutes();
         }
 
-        [HttpGet("toinstitute")]
-        public void ToInstitute(int instituteId)
-        {            
-            Institute institute = context.GetInstitute(instituteId);
+        // Petición que devuelve si un usuario está matriculado en un instituto en concreto.
+        [HttpGet("hasenrollment")]
+        public bool HasEnrollment(string userId, int instituteId)
+        {
+            return context.HasEnrollment(userId, instituteId);
+        }
+
+        // Petición que matricula a un usuario en un instituto en concreto.
+        [HttpGet("createenrollment")]
+        public bool ToInstitute(string userId, int instituteId)
+        {
+            return context.EnrollmentUser(userId, instituteId);
         }
     }
 

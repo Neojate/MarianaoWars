@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react'
+import authService from './api-authorization/AuthorizeService';
 import $ from "jquery"
 
 export class InstitutePanel extends Component {
@@ -9,10 +10,20 @@ export class InstitutePanel extends Component {
     }
 
     handleClick(institute) {
-        var data = {
-            "instituteId": institute.id
+        let data = {
+            'instituteId': institute.id,
+            'userId': this.state.userId
         }
-        $.get('/instituts/toinstitute', data, function () { });
+        $.get('/institutes/hasenrollment', data, (receivedData) => {
+            if (receivedData) {
+                if (!window.confirm('¿Deseas matricularte en el instituto ' + institute.name + '?')) return;
+                $.get('institutes/createenrollment', data, () => {
+                    alert('Te has matriculado con éxito.');
+                });                 
+            } else {
+                alert('Entrando en partida...');
+            }
+        });
     }
         
     drawInstituteTable(institutes) {
@@ -28,7 +39,7 @@ export class InstitutePanel extends Component {
                 </thead>
                 <tbody>
                     {institutes.map(institute =>
-                        <tr onClick={this.handleClick(institute)}>
+                        <tr onClick={() => this.handleClick(institute)}>
                             <td>{institute.name}</td>
                             <td>{institute.rateTime}x</td>
                             <td>{institute.rateCost}x</td>
@@ -54,10 +65,11 @@ export class InstitutePanel extends Component {
 
     componentDidMount() {
         this.sourceData();
+        this.populateState();
     }
 
     async sourceData() {
-        fetch('instituts/openinstitutes')
+        fetch('institutes/openinstitutes')
             .then((response) => {
                 return response.json();
             })
@@ -66,8 +78,16 @@ export class InstitutePanel extends Component {
                     data: json,
                     loading: false
                 });
-                console.log(json);
             });
+    }
+
+    async populateState() {
+        const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()]);
+        console.log(user.sub);
+        this.setState({
+            isAuthenticated,
+            'userId': user.sub
+        });
     }
 
     

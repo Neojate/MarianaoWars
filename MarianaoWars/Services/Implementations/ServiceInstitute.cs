@@ -27,11 +27,16 @@ namespace MarianaoWars.Services.Implementations
             context.SaveChanges();
         }
 
-        public void EnrollmentUser(ApplicationUser user, Institute institute)
+        public bool EnrollmentUser(string userId, int instituteId)
         {
-            Enrollment enrollment = new Enrollment(user, institute);
-            context.Enrollment.Add(enrollment);
-            context.SaveChanges();
+            if (GetEnrollment(userId, instituteId) == null)
+            {
+                Enrollment enrollment = new Enrollment(GetUser(userId), GetInstitute(instituteId));
+                context.Enrollment.Add(enrollment);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public Enrollment GetEnrollment(int enrollmentId)
@@ -40,9 +45,17 @@ namespace MarianaoWars.Services.Implementations
                 .Find(enrollmentId);
         }
 
-        public IEnumerable<Enrollment> GetEnrollments(int instituteId)
+        public Enrollment GetEnrollment(string userId, int instituteId)
         {
-            return GetInstitute(instituteId).Enrollments;
+            return context.Enrollment
+                .Where(enrollment => enrollment.UserId.Equals(userId) && enrollment.InstituteId == instituteId)
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<Enrollment> GetEnrollmentsFromInstitute(int instituteId)
+        {
+            return context.Enrollment
+                .Where(enrollment => enrollment.InstituteId == instituteId);
         }
 
         public Institute GetInstitute (int instituteId)
@@ -58,7 +71,8 @@ namespace MarianaoWars.Services.Implementations
 
         public int GetNumberEnrollments(int instituteId)
         {
-            return GetEnrollments(instituteId).Count();
+            //return GetEnrollments(instituteId).Count();
+            return 0;
         }
 
         public IEnumerable<Institute> GetOpenInstitutes()
@@ -67,24 +81,20 @@ namespace MarianaoWars.Services.Implementations
                 .Where(institute => !institute.IsClosed);
         }
 
-        public ApplicationUser GetUser(int userId)
+        public ApplicationUser GetUser(string userId)
         {
-            
-            return context.Users
-                .Where(user => user.Id.Equals(userId))
-                .FirstOrDefault();
-        }
 
-        public ApplicationUser GetUser(string userEmail)
-        {
-            return context.Users
-                .Where(user => user.Email.Equals(userEmail))
-                .FirstOrDefault();
+            return context.Users.Find(userId);
         }
 
         public IEnumerable<ApplicationUser> GetUsers()
         {
             return context.Users;
+        }
+
+        public bool HasEnrollment(string userId, int instituteId)
+        {
+            return GetEnrollment(userId, instituteId) == null ? true : false; 
         }
 
         public void UpdateRank(ApplicationUser user, Institute institute)
