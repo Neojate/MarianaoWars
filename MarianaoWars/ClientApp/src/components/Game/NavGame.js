@@ -5,7 +5,7 @@ export class NavGame extends Component {
     render() {
         return (
             <div>
-                <nav class="collapse navbar-collapse">
+                <nav className="collapse navbar-collapse">
                     <div id="nav_knowledge">
                         Conocimiento
                     </div>
