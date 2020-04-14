@@ -39,10 +39,11 @@ namespace MarianaoWars.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IdentityResult>> Get(
-            [FromBody] ApplicationUser appUser)
+        public async Task<ActionResult<IdentityResult>> post(
+            [FromBody] string FirstName)
         {
 
+            ApplicationUser appUser = new ApplicationUser();
             IdentityResult result;
             ApplicationUser user = await UserMgr.FindByNameAsync(appUser.Email); 
 

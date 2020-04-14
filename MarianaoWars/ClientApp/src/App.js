@@ -9,11 +9,10 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { Chat } from './components/Chat';
-
 import './custom.css'
 import { Prueba } from './components/prueba';
 import { InstitutePanel } from './components/InstitutePanel';
-import { Game } from './components/Game/Game';
+import { Game } from './components/game/Game';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -27,7 +26,7 @@ export default class App extends Component {
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path='/cacados' component={Prueba} />
         <Route path='/instituts' component={InstitutePanel} />
-        <Route path='/game' components={Game} />
+        <Route path='/game' component={Game} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );

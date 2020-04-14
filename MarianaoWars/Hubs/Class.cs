@@ -43,7 +43,7 @@ namespace SignalRChat.Hubs
 
         public async Task UpdateResources(int instituteId)
         {
-            SystemResource systemResource = preGame.GetResource();
+            IEnumerable<SystemResource> systemResource = preGame.GetResource();
             while (true)
             {
                 IEnumerable<Enrollment> enrollments = preGame.GetEnrollments(instituteId);

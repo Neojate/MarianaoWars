@@ -18,6 +18,6 @@ namespace MarianaoWars.Services.Interfaces
 
         bool HasEnrollment(string userId, int instituteId);
 
-        SystemResource GetResource();
+        IEnumerable<SystemResource> GetResource();
     }
 }

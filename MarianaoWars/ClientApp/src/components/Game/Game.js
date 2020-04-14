@@ -3,6 +3,10 @@ import { NavGame } from './NavGame';
 
 export class Game extends Component {
 
+    constructor() {
+        super();
+    }
+
     render() {
         return (
             <div>

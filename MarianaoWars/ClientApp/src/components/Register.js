@@ -57,8 +57,6 @@ export class Register extends Component {
     const token = await authService.getAccessToken();
     }
 
-    
-
     async account(event) {
 
         event.preventDefault();
