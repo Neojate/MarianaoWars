@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react'
-import NavGame from './NavGame.js';
+import { NavGame } from './NavGame';
 
 export class Game extends Component {
 

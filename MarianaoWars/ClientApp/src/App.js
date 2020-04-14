@@ -13,7 +13,7 @@ import { Chat } from './components/Chat';
 import './custom.css'
 import { Prueba } from './components/prueba';
 import { InstitutePanel } from './components/InstitutePanel';
-
+import { Game } from './components/Game/Game';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -27,7 +27,7 @@ export default class App extends Component {
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path='/cacados' component={Prueba} />
         <Route path='/instituts' component={InstitutePanel} />
-        
+        <Route path='/game' components={Game} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );
