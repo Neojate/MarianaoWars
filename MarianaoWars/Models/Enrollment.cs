@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarianaoWars.Models
 {
+    /*
+     * Enrollment hace referencia a la matrícula. Es la unión entre la tabla User e Institute.
+     */
     public class Enrollment
     {
         // ID del Enrollment. Primary Key Autoincremental.
@@ -28,6 +33,9 @@ namespace MarianaoWars.Models
         // Instituto al que pertenece la matrícula
         public Institute Institute { get; set; }
 
+        // Lista de los ordenadores asociados a la matrícula.
+        public List<Computer> Computers { get; set; }
+
         public Enrollment()
         {
 
@@ -40,8 +48,6 @@ namespace MarianaoWars.Models
             User = user;
             Institute = institute;
         }
-
-
 
     }
 }

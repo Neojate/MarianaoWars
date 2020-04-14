@@ -1,6 +1,8 @@
 ﻿using MarianaoWars.Data;
 using MarianaoWars.Models;
+using MarianaoWars.Repositories.Interfaces;
 using MarianaoWars.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +73,11 @@ namespace MarianaoWars.Services.Implementations
 
         public int GetNumberEnrollments(int instituteId)
         {
-            //return GetEnrollments(instituteId).Count();
+            /*Institute institute = context.Institute
+                .Find(instituteId);
+
+            context.Entry(institute).Reference(institute => institute.Enrollments);
+            */
             return 0;
         }
 

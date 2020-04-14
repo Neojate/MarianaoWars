@@ -47,6 +47,5 @@ namespace MarianaoWars.Services.Interfaces
         // Método que modifica el rango de un usuario (se debería hacer auto, es decir, que el recorra todos los usuarios)
         void UpdateRank(ApplicationUser user, Institute institute);
 
-
     }
 }

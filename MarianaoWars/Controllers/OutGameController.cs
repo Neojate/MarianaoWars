@@ -10,11 +10,12 @@ namespace MarianaoWars.Controllers
     [Route("/institutes")]
     public class OutGameController
     {
-        private readonly IServiceInstitute context;
+        private readonly IServiceInitGame context;
 
-        public OutGameController(IServiceInstitute context)
+        public OutGameController(IServiceInitGame context, IServiceResource game)
         {
             this.context = context;
+            var x = game.GetComputer(13);
         }
 
         // Petición que obtiene la lista de todos los institutos abiertos.
@@ -33,9 +34,9 @@ namespace MarianaoWars.Controllers
 
         // Petición que matricula a un usuario en un instituto en concreto.
         [HttpGet("createenrollment")]
-        public bool ToInstitute(string userId, int instituteId)
+        public void ToInstitute(string userId, int instituteId)
         {
-            return context.EnrollmentUser(userId, instituteId);
+            context.CreateEnrollment(userId, instituteId);
         }
     }
 

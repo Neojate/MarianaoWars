@@ -34,6 +34,20 @@ namespace MarianaoWars.Data
 
         public DbSet<Institute> Institute { get; set; }
 
+        public DbSet<Computer> Computer { get; set; }
+
+        public DbSet<Resource> Resource { get; set; }
+
+        public DbSet<Software> Software { get; set; }
+
+        public DbSet<Talent> Talent { get; set; }
+
+        public DbSet<AttackScript> AttackScript { get; set; }
+
+        public DbSet<DefenseScript> DefenseScript { get; set; }
+
+        public DbSet<SystemResource> SystemResource { get; set; }
+
         //public DbSet<User> User { get; set; }
 
         public ApplicationDbContext(

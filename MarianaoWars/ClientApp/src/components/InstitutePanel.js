@@ -13,9 +13,9 @@ export class InstitutePanel extends Component {
         let data = {
             'instituteId': institute.id,
             'userId': this.state.userId
-        }
-        $.get('/institutes/hasenrollment', data, (receivedData) => {
-            if (receivedData) {
+        };
+        $.get('/institutes/hasenrollment', data, (hasEnrollment) => {
+            if (!hasEnrollment) {
                 if (!window.confirm('¿Deseas matricularte en el instituto ' + institute.name + '?')) return;
                 $.get('institutes/createenrollment', data, () => {
                     alert('Te has matriculado con éxito.');

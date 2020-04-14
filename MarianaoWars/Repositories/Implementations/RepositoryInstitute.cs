@@ -12,34 +12,34 @@ namespace MarianaoWars.Repositories.Implementations
 
     public class RepositoryInstitute : IRepositoryInstitute
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext dbContext;
 
-        public RepositoryInstitute(ApplicationDbContext context)
+        public RepositoryInstitute(ApplicationDbContext dbContext)
         {
-            this.context = context;
+            this.dbContext = dbContext;
         }
 
         public Institute GetInstitute(int instituteId)
         {
-            return context.Institute.Find(instituteId);
+            return dbContext.Institute.Find(instituteId);
         }
 
         public IEnumerable<Institute> GetInstitutes()
         {
-            return context.Institute;
+            return dbContext.Institute;
         }
 
         public IEnumerable<Institute> GetOpenInstitutes()
         {
-            return context.Institute.Where(
+            return dbContext.Institute.Where(
                 institute => !institute.IsClosed
                 );
         }
 
         public void UpdateInstitute(Institute updatedInstitute)
         {
-            context.Entry(updatedInstitute).State = EntityState.Modified;
-            context.SaveChanges();
+            dbContext.Entry(updatedInstitute).State = EntityState.Modified;
+            dbContext.SaveChangesAsync();
         }
     }
 }

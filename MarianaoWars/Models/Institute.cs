@@ -12,8 +12,9 @@ namespace MarianaoWars.Models
      */
     public class Institute
     {
-        
+
         // ID del Instituto. Primary Key Autoincremental.
+        [Key]
         public int Id { get; set; }
 
         // Nombre del servidor.

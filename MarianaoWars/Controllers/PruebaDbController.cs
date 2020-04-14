@@ -30,7 +30,7 @@ namespace MarianaoWars.Controllers
             //var enrollments = context.GetEnrollments(1);
         }        
 
-        [HttpGet]
+        /*[HttpGet]
         [ActionName("usuaris")]
         public IEnumerable<ApplicationUser> GetUsers()
         {
@@ -41,7 +41,7 @@ namespace MarianaoWars.Controllers
         public IEnumerable<Institute> GetInstitutes()
         {
             return context.GetInstitutes();
-        }
+        }*/
 
     }
 }
