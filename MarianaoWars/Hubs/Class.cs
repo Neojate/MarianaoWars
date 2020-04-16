@@ -35,15 +35,13 @@ namespace SignalRChat.Hubs
                     await Clients.Caller.SendAsync("nombreMetodoRecibido", user, i);
                 }
                 Thread.Sleep(1000);
-
             //}
-
-
         }
 
-        public async Task UpdateResources(int instituteId)
+        public async Task UpdateResources(string userId, string instituteIdStr)
         {
-            IEnumerable<SystemResource> systemResource = preGame.GetResource();
+            int instituteId = Int32.Parse(instituteIdStr);
+            List<SystemResource> systemResource = preGame.GetResource().ToList();
             while (true)
             {
                 IEnumerable<Enrollment> enrollments = preGame.GetEnrollments(instituteId);
@@ -52,7 +50,8 @@ namespace SignalRChat.Hubs
                     IEnumerable<Computer> computers = resource.GetComputers(enrollment.Id);
                     foreach (Computer computer in computers)
                     {
-                        //enviar respuesta con este resultado -> resource.UpdateResources(computer, systemResource);
+                        Resource resourceUpdate = resource.UpdateResources(computer, systemResource);
+                        await Clients.Caller.SendAsync("nombreMetodoRecibido", resourceUpdate);
                     }
                 }
                 Thread.Sleep(1000);

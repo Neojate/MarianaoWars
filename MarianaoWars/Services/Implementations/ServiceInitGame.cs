@@ -128,15 +128,15 @@ namespace MarianaoWars.Services.Implementations
                 .Where(e => e.InstituteId == instituteId)
                 .ToList();
 
-            if (enrollments.Count == 0)
+            if (enrollments.Count == 1)
                 return false;
 
             foreach (Enrollment enrollment in enrollments)
                 foreach (Computer computer in enrollment.Computers)
-                    if (!computer.IpDirection.Equals(ipDirection)) 
-                        return false;
+                    if (computer.IpDirection.Equals(ipDirection)) 
+                        return true;
 
-            return true;
+            return false;
         }
         #endregion
     }

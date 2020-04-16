@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { Resource } from './Resource';
 import { Row } from 'reactstrap';
+import authService from '../api-authorization/AuthorizeService';
+import * as signalR from '@aspnet/signalr';
 
 
 export class NavGame extends Component {
@@ -12,19 +14,48 @@ export class NavGame extends Component {
 
         this.state = {
             systemResources: [],
-            loading: true
+            loading: true,
+            userId: this.props.userId,
+            hubConnection: null,
+            instituteId: this.props.instituteId
         };
-
     }
 
     componentDidMount() {
         this.systemResourceData();
+
+        const nick = this.state.userId;
+
+        const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+        this.setState({ hubConnection, nick }, () => {
+            this.state.hubConnection
+                .start()
+                .then(() => {
+                    console.log('Connection started!');
+                    this.updateResources();
+                })
+                .catch(err => console.log('Error while establishing connection :('));
+
+            this.state.hubConnection.on('nombreMetodoRecibido', (receivedMessage) => {
+                console.log(receivedMessage);
+            });
+
+        });
     }
 
+    updateResources = () => {
+        this.state.hubConnection
+            .invoke('UpdateResources', this.state.userId, this.state.instituteId)
+            .catch(err => console.error(err));
+    };
+
     async systemResourceData() {
-        const response = await fetch('systemresources');
+
+        const response = await fetch('game/getSytemResource');
         const data = await response.json();
         this.setState({ systemResources: data, loading: false });
+
     }
 
     static renderResources(systemResources) {
@@ -33,13 +64,13 @@ export class NavGame extends Component {
             <Row>
                 {systemResources.map((value, index) => {
 
-                    var qty = 60;
+                    var qty = 0;
                     var color = qty < 80 ? "succes" : "danger";
 
                     return <Resource key={value.id}
                         id={`recurso${value.id}`}
                         image="iconResource1.png"
-                        quantity="1025"
+                        quantity="0"
                         color={color}
                         value={qty}
                         popoverHeader={value.name}

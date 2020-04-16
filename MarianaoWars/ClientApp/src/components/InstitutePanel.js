@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react'
 import authService from './api-authorization/AuthorizeService';
-import $ from "jquery"
+import $ from "jquery";
+import { Redirect } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export class InstitutePanel extends Component {
 
@@ -22,11 +24,14 @@ export class InstitutePanel extends Component {
                 });                 
             } else {
                 alert('Entrando en partida...');
+                this.props.history.push(`/game/${data.instituteId}`);
+                //return <Redirect to='/game' />
             }
         });
     }
         
     drawInstituteTable(institutes) {
+
         return (
             <table className="table table-hover">
                 <thead>
@@ -38,16 +43,22 @@ export class InstitutePanel extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {institutes.map(institute =>
-                        <tr onClick={() => this.handleClick(institute)}>
-                            <td>{institute.name}</td>
-                            <td>{institute.rateTime}x</td>
-                            <td>{institute.rateCost}x</td>
+                    {institutes.map((institute, index) =>
+
+                            //<Link to={`/game/${institute.id}`}> {institute.name}</Link>
+                            //{ institute.name }
+                                    
+                            <tr key={index} onClick={() => this.handleClick(institute)}>
+                                <td>
+                                    {institute.name}
+                                </td>
+                                <td>{institute.rateTime}x</td>
+                                <td>{institute.rateCost}x</td>
                             <td>{institute.initDate}</td>
                         </tr>    
                     )}
                 </tbody>
-            </table>
+                </table>           
         );
     }
 
