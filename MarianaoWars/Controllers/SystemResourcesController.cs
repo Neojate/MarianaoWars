@@ -10,7 +10,7 @@ using MarianaoWars.Models;
 namespace MarianaoWars.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/game")]
     public class SystemResourcesController : ControllerBase
     {
         private readonly IServiceInitGame context;
@@ -20,10 +20,12 @@ namespace MarianaoWars.Controllers
             this.context = context;
         }
 
-        [HttpGet]
-        public IEnumerable<SystemResource> Get()
+        [HttpGet("getSytemResource")]
+        public IEnumerable<SystemResource> GetSystemResource()
         {
             return context.GetResource();   
         }
+
+
     }
 }
