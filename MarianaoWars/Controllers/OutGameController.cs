@@ -16,7 +16,8 @@ namespace MarianaoWars.Controllers
         {
             this.context = context;
             var x = game.GetComputer(13);
-        }
+            var y = context.GetResource();
+         }
 
         // Petición que obtiene la lista de todos los institutos abiertos.
         [HttpGet("openinstitutes")]
