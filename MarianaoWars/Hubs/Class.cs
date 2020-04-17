@@ -50,8 +50,8 @@ namespace SignalRChat.Hubs
                     IEnumerable<Computer> computers = resource.GetComputers(enrollment.Id);
                     foreach (Computer computer in computers)
                     {
-                        Resource resourceUpdate = resource.UpdateResources(computer, systemResource);
-                        await Clients.Caller.SendAsync("nombreMetodoRecibido", resourceUpdate);
+                        resource.UpdateResources(computer, systemResource);
+                        await Clients.Caller.SendAsync("nombreMetodoRecibido", computer);
                     }
                 }
                 Thread.Sleep(1000);

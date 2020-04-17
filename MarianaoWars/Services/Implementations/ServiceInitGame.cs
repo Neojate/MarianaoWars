@@ -90,7 +90,8 @@ namespace MarianaoWars.Services.Implementations
         public IEnumerable<Enrollment> GetEnrollments(int instituteId)
         {
             return dbContext.Enrollment
-                .Where(enrollment => enrollment.InstituteId == instituteId);
+                .Where(enrollment => enrollment.InstituteId == instituteId)
+                .Include(enrollment => enrollment.Computers);
         }
 
         public bool HasEnrollment(string userId, int instituteId)

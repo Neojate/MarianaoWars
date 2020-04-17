@@ -64,7 +64,7 @@ export class InstitutePanel extends Component {
 
     render() {
         let content = this.state.loading ?
-            <p><emp>Loading...</emp></p> :
+            <p><label>Loading...</label></p> :
             this.drawInstituteTable(this.state.data);
         return (
             <div>

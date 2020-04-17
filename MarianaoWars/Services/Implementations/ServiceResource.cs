@@ -19,7 +19,7 @@ namespace MarianaoWars.Services.Implementations
             this.dbContext = dbContext;
         }
 
-        public Resource UpdateResources(Computer computerToUpdate, List<SystemResource> systemResources)
+        public void UpdateResources(Computer computerToUpdate, List<SystemResource> systemResources)
         {
             //conocimiento
             computerToUpdate.Resource.Knowledge += (int)(systemResources[0].IncrementKnowledge * computerToUpdate.Resource.KnowledgeLevel * systemResources[0].Knowledge / 60);
@@ -32,10 +32,6 @@ namespace MarianaoWars.Services.Implementations
 
             //sleep
             computerToUpdate.Resource.StressLevel += (int)(systemResources[0].IncrementSleep * computerToUpdate.Resource.StressLevel * systemResources[2].Sleep / 60);
-
-            dbContext.SaveChanges();
-            return computerToUpdate.Resource;
-
         }
 
         public Computer GetComputer (int computerId)
