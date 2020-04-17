@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MarianaoWars.Repositories.Interfaces
 {
     public interface IRepositoryInstitute
-    {
+    {/*
         // Método que devuelve un instituto en función de su ID
         Institute GetInstitute(int instituteId);
 
@@ -18,7 +18,19 @@ namespace MarianaoWars.Repositories.Interfaces
         IEnumerable<Institute> GetOpenInstitutes();
 
         // Método que updatea un instituto
-        void UpdateInstitute(Institute updatedInstitute);
+        void UpdateInstitute(Institute updatedInstitute);*/
+
+        Task<List<Institute>> GetOpenInstitutes();
+
+        Task<List<Computer>> GetComputers(int enrollmentId);
+
+        Task<Enrollment> GetEnrollment(string userId, int instituteId);
+
+        Task<List<Enrollment>> GetEnrollments(int instituteId);
+
+        Task SaveEnrollment(Enrollment enrollment);
+
+
 
     }
 }

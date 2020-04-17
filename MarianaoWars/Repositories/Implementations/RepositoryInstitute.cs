@@ -19,7 +19,7 @@ namespace MarianaoWars.Repositories.Implementations
             this.dbContext = dbContext;
         }
 
-        public Institute GetInstitute(int instituteId)
+        /*public Institute GetInstitute(int instituteId)
         {
             return dbContext.Institute.Find(instituteId);
         }
@@ -40,6 +40,46 @@ namespace MarianaoWars.Repositories.Implementations
         {
             dbContext.Entry(updatedInstitute).State = EntityState.Modified;
             dbContext.SaveChangesAsync();
+        }*/
+
+        public async Task<List<Institute>> GetOpenInstitutes()
+        {
+            return await dbContext.Institute
+                .Where(institute => !institute.IsClosed)
+                .ToListAsync();
+        }
+
+        public async Task<Enrollment> GetEnrollment(string userId, int instituteId)
+        {
+            return await dbContext.Enrollment
+                .Where(enrollment => enrollment.UserId.Equals(userId) && enrollment.InstituteId == instituteId)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Enrollment>> GetEnrollments(int instituteId)
+        {
+            return await dbContext.Enrollment
+                .Where(enrollment => enrollment.InstituteId == instituteId)
+                .Include(enrollment => enrollment.Computers)
+                .ToListAsync();
+        }
+
+        public async Task<List<Computer>> GetComputers(int enrollmentId)
+        {
+            return await dbContext.Computer
+                .Where(computer => computer.EnrollmentId == enrollmentId)
+                .Include(computer => computer.Resource)
+                .Include(computer => computer.Software)
+                .Include(computer => computer.Talent)
+                .Include(computer => computer.AttackScript)
+                .Include(computer => computer.DefenseScript)
+                .ToListAsync();
+        }
+
+        public async Task SaveEnrollment(Enrollment enrollment)
+        {
+            await dbContext.Enrollment.AddAsync(enrollment);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

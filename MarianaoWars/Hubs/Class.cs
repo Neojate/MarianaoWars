@@ -6,18 +6,21 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using MarianaoWars.Services.Interfaces;
 using MarianaoWars.Models;
+using System.Text.Json;
 
 namespace SignalRChat.Hubs
 {
     public class ChatHub : Hub
     {
-        private IServiceResource resource;
+        private IAsyncPregame game;
         private IServiceInitGame preGame;
+        private IAsyncPostgame postGame;
 
-        public ChatHub(IServiceInitGame preGame, IServiceResource resource)
+        public ChatHub(IServiceInitGame preGame, IAsyncPregame game, IAsyncPostgame postGame)
         {
             this.preGame = preGame;
-            this.resource = resource;
+            this.game = game;
+            this.postGame = postGame;
         }
 
         public async Task SendMessege(string user, string message)
@@ -44,16 +47,19 @@ namespace SignalRChat.Hubs
             List<SystemResource> systemResource = preGame.GetResource().ToList();
             while (true)
             {
-                IEnumerable<Enrollment> enrollments = preGame.GetEnrollments(instituteId);
+                //await Clients.Caller.SendAsync("nombreMetodoRecibido", "hola");
+
+                IEnumerable<Enrollment> enrollments = game.GetEnrollments(instituteId);
                 foreach (Enrollment enrollment in enrollments)
                 {
-                    IEnumerable<Computer> computers = resource.GetComputers(enrollment.Id);
+                    IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
                     foreach (Computer computer in computers)
                     {
-                        resource.UpdateResources(computer, systemResource);
-                        await Clients.Caller.SendAsync("nombreMetodoRecibido", computer);
+                        await Clients.Caller.SendAsync("nombreMetodoRecibido", "hola");
                     }
+                    
                 }
+                postGame.CreateEnrollment();
                 Thread.Sleep(1000);
             }
             

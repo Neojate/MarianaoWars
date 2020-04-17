@@ -1,4 +1,5 @@
-﻿using MarianaoWars.Repositories.Implementations;
+﻿using MarianaoWars.Data;
+using MarianaoWars.Repositories.Implementations;
 using MarianaoWars.Repositories.Interfaces;
 using MarianaoWars.Services.Implementations;
 using MarianaoWars.Services.Interfaces;
@@ -14,14 +15,19 @@ namespace MarianaoWars.Middleware
     {
         public static IServiceCollection AddDependency(this IServiceCollection services)
         {
+
             //repositorios
-            services.AddScoped<IRepositoryInstitute, RepositoryInstitute>();
-            //services.AddTransient<IRepositoryInstitute, RepositoryInstitute>();
+            //services.AddScoped<IRepositoryInstitute, RepositoryInstitute>();
+            services.AddTransient<IRepositoryInstitute, RepositoryInstitute>();
+
+            
 
             //servicios
-            services.AddTransient<IServiceInstitute, ServiceInstitute>();
-            services.AddTransient<IServiceInitGame, ServiceInitGame>();
-            services.AddTransient<IServiceResource, ServiceResource>();
+            services.AddScoped<IServiceInstitute, ServiceInstitute>();
+            services.AddScoped<IServiceInitGame, ServiceInitGame>();
+            services.AddScoped<IServiceResource, ServiceResource>();
+            services.AddTransient<IAsyncPregame, AsyncServicePregame>();
+            services.AddTransient<IAsyncPostgame, AsyncServicePostgame>();
 
             return services;
         }
