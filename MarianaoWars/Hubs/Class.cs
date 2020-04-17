@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using MarianaoWars.Services.Interfaces;
 using MarianaoWars.Models;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace SignalRChat.Hubs
 {
@@ -44,23 +44,39 @@ namespace SignalRChat.Hubs
         public async Task UpdateResources(string userId, string instituteIdStr)
         {
             int instituteId = Int32.Parse(instituteIdStr);
-            List<SystemResource> systemResource = preGame.GetResource().ToList();
+            //List<SystemResource> systemResource = preGame.GetResource().ToList();
             while (true)
             {
-                //await Clients.Caller.SendAsync("nombreMetodoRecibido", "hola");
-
+               
                 IEnumerable<Enrollment> enrollments = game.GetEnrollments(instituteId);
+
+                //await Clients.Caller.SendAsync("nombreMetodoRecibido", enrollments);
+                
                 foreach (Enrollment enrollment in enrollments)
                 {
-                    IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
-                    foreach (Computer computer in computers)
+                    //IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
+                    foreach (Computer computer in enrollment.Computers)
                     {
-                        await Clients.Caller.SendAsync("nombreMetodoRecibido", "hola");
+                        try
+                        {
+                            string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
+                            {
+                                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                                Formatting = Formatting.Indented
+                            });
+                            await Clients.Caller.SendAsync("nombreMetodoRecibido", output);
+                        }
+                        catch(Exception e)
+                        {
+                            await Clients.Caller.SendAsync("nombreMetodoRecibido", e.ToString());
+                        }
+                        
                     }
                     
                 }
-                postGame.CreateEnrollment();
-                Thread.Sleep(1000);
+                
+                //postGame.CreateEnrollment();
+                Thread.Sleep(5000);
             }
             
         }
