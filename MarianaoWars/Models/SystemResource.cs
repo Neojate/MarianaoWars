@@ -23,7 +23,7 @@ namespace MarianaoWars.Models
         public int BaseDownloads { get; set; }
 
         // Incremento de los puntos base * nivel de la mina.
-        public int PlusDownloads { get; set; }
+        public double PlusDownloads { get; set; }
 
         // Puntos base de Conocimiento requeridos para construir la mina.
         public int BaseKnowledge { get; set; }
@@ -53,7 +53,7 @@ namespace MarianaoWars.Models
         public int Knowledge { get; set; }
 
         // Incremento de puntos que otorga la mina.
-        public int IncrementKnowledge { get; set; }
+        public double IncrementKnowledge { get; set; }
 
         // Puntos base de Conocimiento que otorga la mina
         public int Ingenyous { get; set; }
@@ -65,7 +65,7 @@ namespace MarianaoWars.Models
         public int Coffe { get; set; }
 
         // Incremento de puntos que otorga la mina.
-        public double IncrementCoffe { get; set; }
+        public int IncrementCoffe { get; set; }
 
         // Puntos base de Conocimiento que otorga la mina
         public int Sleep { get; set; }
