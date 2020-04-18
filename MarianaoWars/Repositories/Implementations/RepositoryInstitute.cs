@@ -19,33 +19,15 @@ namespace MarianaoWars.Repositories.Implementations
             this.dbContext = dbContext;
         }
 
-        /*public Institute GetInstitute(int instituteId)
+        public async Task<List<Computer>> GetComputers(int enrollmentId)
         {
-            return dbContext.Institute.Find(instituteId);
-        }
-
-        public IEnumerable<Institute> GetInstitutes()
-        {
-            return dbContext.Institute;
-        }
-
-        public IEnumerable<Institute> GetOpenInstitutes()
-        {
-            return dbContext.Institute.Where(
-                institute => !institute.IsClosed
-                );
-        }
-
-        public void UpdateInstitute(Institute updatedInstitute)
-        {
-            dbContext.Entry(updatedInstitute).State = EntityState.Modified;
-            dbContext.SaveChangesAsync();
-        }*/
-
-        public async Task<List<Institute>> GetOpenInstitutes()
-        {
-            return await dbContext.Institute
-                .Where(institute => !institute.IsClosed)
+            return await dbContext.Computer
+                .Where(computer => computer.EnrollmentId == enrollmentId)
+                .Include(computer => computer.Resource)
+                .Include(computer => computer.Software)
+                .Include(computer => computer.Talent)
+                .Include(computer => computer.AttackScript)
+                .Include(computer => computer.DefenseScript)
                 .ToListAsync();
         }
 
@@ -64,22 +46,79 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
-        public async Task<List<Computer>> GetComputers(int enrollmentId)
+        public async Task<Institute> GetInstitute(int instituteId)
         {
-            return await dbContext.Computer
-                .Where(computer => computer.EnrollmentId == enrollmentId)
-                .Include(computer => computer.Resource)
-                .Include(computer => computer.Software)
-                .Include(computer => computer.Talent)
-                .Include(computer => computer.AttackScript)
-                .Include(computer => computer.DefenseScript)
+            return await dbContext.Institute
+                .FindAsync(instituteId);
+        }
+
+        public async Task<List<Institute>> GetOpenInstitutes()
+        {
+            return await dbContext.Institute
+                .Where(institute => !institute.IsClosed)
                 .ToListAsync();
         }
 
-        public async Task SaveEnrollment(Enrollment enrollment)
+        public async Task<List<SystemResource>> GetSystemResources()
+        {
+            return await dbContext.SystemResource
+                .ToListAsync();
+        }
+
+        public async Task<ApplicationUser> GetUser(string userId)
+        {
+            return await dbContext.Users
+                .FindAsync(userId);
+        }
+
+        public async Task<AttackScript> SaveAttackScript(AttackScript attackScript)
+        {
+            await dbContext.AttackScript.AddAsync(attackScript);
+            await dbContext.SaveChangesAsync();
+            return attackScript;
+        }
+
+        public async Task<Computer> SaveComputer(Computer computer)
+        {
+            await dbContext.Computer.AddAsync(computer);
+            await dbContext.SaveChangesAsync();
+            return computer;
+        }
+
+        public async Task<Enrollment> SaveEnrollment(Enrollment enrollment)
         {
             await dbContext.Enrollment.AddAsync(enrollment);
             await dbContext.SaveChangesAsync();
+            return enrollment;
         }
+
+        public async Task<DefenseScript> SaveDefenseScript(DefenseScript defenseScript)
+        {
+            await dbContext.DefenseScript.AddAsync(defenseScript);
+            await dbContext.SaveChangesAsync();
+            return defenseScript;
+        }
+
+        public async Task<Resource> SaveResource(Resource resource)
+        {
+            await dbContext.Resource.AddAsync(resource);
+            await dbContext.SaveChangesAsync();
+            return resource;
+        }
+
+        public async Task<Software> SaveSoftware(Software software)
+        {
+            await dbContext.Software.AddAsync(software);
+            await dbContext.SaveChangesAsync();
+            return software;
+        }
+
+        public async Task<Talent> SaveTalent(Talent talent)
+        {
+            await dbContext.Talent.AddAsync(talent);
+            await dbContext.SaveChangesAsync();
+            return talent;
+        }
+
     }
 }

@@ -54,8 +54,8 @@ namespace SignalRChat.Hubs
                 
                 foreach (Enrollment enrollment in enrollments)
                 {
-                    //IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
-                    foreach (Computer computer in enrollment.Computers)
+                    IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
+                    foreach (Computer computer in computers)
                     {
                         try
                         {
@@ -74,8 +74,6 @@ namespace SignalRChat.Hubs
                     }
                     
                 }
-                
-                //postGame.CreateEnrollment();
                 Thread.Sleep(5000);
             }
             
