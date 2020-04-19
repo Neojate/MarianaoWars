@@ -54,8 +54,8 @@ namespace SignalRChat.Hubs
                 
                 foreach (Enrollment enrollment in enrollments)
                 {
-                    //IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
-                    foreach (Computer computer in enrollment.Computers)
+                    IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
+                    foreach (Computer computer in computers)
                     {
                         try
                         {
@@ -64,6 +64,7 @@ namespace SignalRChat.Hubs
                                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                                 Formatting = Formatting.Indented
                             });
+
                             await Clients.Caller.SendAsync("nombreMetodoRecibido", output);
                         }
                         catch(Exception e)
