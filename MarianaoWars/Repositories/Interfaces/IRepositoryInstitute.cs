@@ -7,30 +7,46 @@ using System.Threading.Tasks;
 namespace MarianaoWars.Repositories.Interfaces
 {
     public interface IRepositoryInstitute
-    {/*
-        // Método que devuelve un instituto en función de su ID
-        Institute GetInstitute(int instituteId);
-
-        // Método que devuelve la lista de institutos
-        IEnumerable<Institute> GetInstitutes();
-
-        // Método que devuelve la lista de los institutos abiertos.
-        IEnumerable<Institute> GetOpenInstitutes();
-
-        // Método que updatea un instituto
-        void UpdateInstitute(Institute updatedInstitute);*/
-
-        Task<List<Institute>> GetOpenInstitutes();
-
+    {
+        // Método que recupera todos los ordenadores
         Task<List<Computer>> GetComputers(int enrollmentId);
 
+        // Método que devuelve una matrícula en función del usuario y el instituto
         Task<Enrollment> GetEnrollment(string userId, int instituteId);
 
+        // Método que devuelve todas las matrículas de un servidor
         Task<List<Enrollment>> GetEnrollments(int instituteId);
 
-        Task SaveEnrollment(Enrollment enrollment);
+        Task<Institute> GetInstitute(int instituteId);
 
+        // Método que recupera todos los institutos abiertos
+        Task<List<Institute>> GetOpenInstitutes();
 
+        // Método que recupera los recursos de sistema
+        Task<List<SystemResource>> GetSystemResources();
 
+        // Método que recupera un usuario según su Id
+        Task<ApplicationUser> GetUser(string userId);
+
+        // Método que guarda un script de ataque
+        Task<AttackScript> SaveAttackScript(AttackScript attackScript);
+
+        // Método que guarda un ordenador
+        Task<Computer> SaveComputer(Computer computer);
+
+        // Método que guarda un script de defensa
+        Task<DefenseScript> SaveDefenseScript(DefenseScript defenseScript);
+
+        // Método que guarda una matrícula
+        Task<Enrollment> SaveEnrollment(Enrollment enrollment);
+
+        // Método que guarda un recurso
+        Task<Resource> SaveResource(Resource resource);
+
+        // Método que guarda un software
+        Task<Software> SaveSoftware(Software software);
+
+        // Método que guarda un talento
+        Task<Talent> SaveTalent(Talent talent);
     }
 }

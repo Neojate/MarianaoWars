@@ -75,8 +75,6 @@ namespace SignalRChat.Hubs
                     }
                     
                 }
-                
-                //postGame.CreateEnrollment();
                 Thread.Sleep(5000);
             }
             

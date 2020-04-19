@@ -10,13 +10,12 @@ namespace MarianaoWars.Controllers
     [Route("/institutes")]
     public class OutGameController
     {
-        private readonly IServiceInitGame context;
+        private readonly IServiceInitGame contextx;
+        private readonly IAsyncPregame context;
 
-        public OutGameController(IServiceInitGame context, IServiceResource game)
+        public OutGameController(IAsyncPregame context)
         {
             this.context = context;
-            var x = game.GetComputer(13);
-            var y = context.GetResource();
          }
 
         // Petición que obtiene la lista de todos los institutos abiertos.
