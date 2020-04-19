@@ -17,7 +17,9 @@ export class NavGame extends Component {
             loading: true,
             userId: this.props.userId,
             hubConnection: null,
-            instituteId: this.props.instituteId
+            instituteId: this.props.instituteId,
+            computerLoading: true,
+            computer: {}
         };
     }
 
@@ -38,7 +40,7 @@ export class NavGame extends Component {
                 .catch(err => console.log('Error while establishing connection :('));
 
             this.state.hubConnection.on('nombreMetodoRecibido', (receivedMessage) => {
-                console.log(receivedMessage);
+                this.setState({ computer: JSON.parse(receivedMessage), computerLoading: false });
             });
 
         });
@@ -58,19 +60,43 @@ export class NavGame extends Component {
 
     }
 
-    static renderResources(systemResources) {
+    static renderResources(systemResources, computer) {
 
         return (
             <Row>
+
+
+
                 {systemResources.map((value, index) => {
 
+
                     var qty = 0;
+                    var quantity = 0;
+
+                    switch (value.name) {
+                        case "Ingenio":
+                            quantity = computer.Resource.Ingenyous;
+                            break;
+
+                        case "Café":
+                            quantity = computer.Resource.Coffe;
+                            break;
+
+                        case "Descanso":
+                            quantity = computer.Resource.Stress;
+                            break;
+
+                        case "Conocimiento":
+                            quantity = computer.Resource.Knowledge;
+                            break
+                    }
+
                     var color = qty < 80 ? "succes" : "danger";
 
                     return <Resource key={value.id}
                         id={`recurso${value.id}`}
                         image="iconResource1.png"
-                        quantity="0"
+                        quantity={quantity}
                         color={color}
                         value={qty}
                         popoverHeader={value.name}
@@ -83,9 +109,9 @@ export class NavGame extends Component {
 
     render() {
 
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : NavGame.renderResources(this.state.systemResources);
+        let contents = (!this.state.loading && !this.state.computerLoading)
+            ? NavGame.renderResources(this.state.systemResources, this.state.computer)
+            : <p><em>Loading...</em></p>;
 
         return (
             <div>

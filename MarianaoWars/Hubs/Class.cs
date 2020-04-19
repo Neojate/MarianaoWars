@@ -65,6 +65,7 @@ namespace SignalRChat.Hubs
                                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                                 Formatting = Formatting.Indented
                             });
+
                             await Clients.Caller.SendAsync("nombreMetodoRecibido", output);
                         }
                         catch(Exception e)
