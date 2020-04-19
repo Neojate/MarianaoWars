@@ -88,8 +88,8 @@ namespace MarianaoWars.Services.Implementations
             Random random = new Random();
             do
             {
-                int x = random.Next(255);
-                int y = random.Next(255);
+                int x = random.Next(10);
+                int y = random.Next(50);
                 ipDirection = string.Format("192.168.{0}.{1}", x, y);
             }
             while (repeatPosition(ipDirection, instituteId));

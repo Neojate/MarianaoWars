@@ -48,5 +48,7 @@ namespace MarianaoWars.Repositories.Interfaces
 
         // Método que guarda un talento
         Task<Talent> SaveTalent(Talent talent);
+
+        Task<Resource> UpdateResource(Resource resource);
     }
 }

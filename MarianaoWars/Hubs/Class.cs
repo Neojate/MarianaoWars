@@ -44,7 +44,7 @@ namespace SignalRChat.Hubs
         public async Task UpdateResources(string userId, string instituteIdStr)
         {
             int instituteId = Int32.Parse(instituteIdStr);
-            //List<SystemResource> systemResource = preGame.GetResource().ToList();
+            List<SystemResource> systemResources = postGame.GetSystemResources();
             while (true)
             {
                
@@ -55,8 +55,9 @@ namespace SignalRChat.Hubs
                 foreach (Enrollment enrollment in enrollments)
                 {
                     IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
-                    foreach (Computer computer in computers)
-                    {
+                    foreach (Computer computer in computers) { 
+
+                        postGame.UpdateResource(computer.Resource, systemResources);
                         try
                         {
                             string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()

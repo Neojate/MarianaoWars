@@ -120,5 +120,12 @@ namespace MarianaoWars.Repositories.Implementations
             return talent;
         }
 
+        public async Task<Resource> UpdateResource(Resource resource)
+        {
+            dbContext.Update(resource);
+            await dbContext.SaveChangesAsync();
+            return resource;
+        }
+
     }
 }
