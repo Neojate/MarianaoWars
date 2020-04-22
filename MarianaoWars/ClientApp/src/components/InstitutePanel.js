@@ -24,7 +24,17 @@ export class InstitutePanel extends Component {
                 });                 
             } else {
                 alert('Entrando en partida...');
-                this.props.history.push(`/game/${data.instituteId}`);
+                var location = {
+                    key: 'ac3df4', // not with HashHistory!
+                    pathname: `/game/${data.instituteId}`,
+                    search: ``,
+                    hash: '#howdy',
+                    state: {
+                        ['userId']: this.state.userId
+                    }
+                }
+                //this.props.history.push(`/game/${data.instituteId}`);
+                this.props.history.push(location);
                 //return <Redirect to='/game' />
             }
         });

@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Resource } from './Resource';
-import { Row } from 'reactstrap';
-import authService from '../api-authorization/AuthorizeService';
+import { Row, Col } from 'reactstrap';
+
 import * as signalR from '@aspnet/signalr';
 
 
@@ -18,8 +18,7 @@ export class NavGame extends Component {
             userId: this.props.userId,
             hubConnection: null,
             instituteId: this.props.instituteId,
-            computerLoading: true,
-            computer: {}
+            computer: this.props.computer
         };
     }
 
@@ -28,8 +27,8 @@ export class NavGame extends Component {
 
         const nick = this.state.userId;
 
-        const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
+        //const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        /*
         this.setState({ hubConnection, nick }, () => {
             this.state.hubConnection
                 .start()
@@ -40,10 +39,11 @@ export class NavGame extends Component {
                 .catch(err => console.log('Error while establishing connection :('));
 
             this.state.hubConnection.on('nombreMetodoRecibido', (receivedMessage) => {
-                this.setState({ computer: JSON.parse(receivedMessage), computerLoading: false });
+                this.setState({ computer: JSON.parse(receivedMessage)});
             });
 
         });
+        */
     }
 
     updateResources = () => {
@@ -62,13 +62,17 @@ export class NavGame extends Component {
 
     static renderResources(systemResources, computer) {
 
+        var comupterStyle = {
+            height: '100px',
+            width: '100px',
+            margin: 'auto',
+            border: '1px solid black',
+            borderRadius: '50%'
+        }
+
         return (
-            <Row>
-
-
-
+            <Row style={{ alignItems : 'center' }}>
                 {systemResources.map((value, index) => {
-
 
                     var qty = 0;
                     var quantity = 0;
@@ -103,20 +107,40 @@ export class NavGame extends Component {
                         popoverBody={value.description}
                     />
                 })}
+
+                <Col className="text-center" xs="3">
+                    <img className="img-fluid" style={{ maxWidth: '50%' }} src={require('../../images/internet.png')} />
+                </Col>
+
+                <Col xs="2">
+                    <p>{computer.Name}</p>
+                </Col>
+                <Col xs="2">
+                    <p>{computer.IpDirection}</p>
+                </Col>
+                <Col xs="1">
+                    <p>{computer.MemmoryUsed + '/' + computer.Memmory}</p>
+                </Col>
+
             </Row>
-            );
+        );
+
+        
     }
 
     render() {
 
-        let contents = (!this.state.loading && !this.state.computerLoading)
+        let contents = (!this.state.loading)
             ? NavGame.renderResources(this.state.systemResources, this.state.computer)
             : <p><em>Loading...</em></p>;
+
+        let computer = this.state.computer;
 
         return (
             <div>
                 {contents}
             </div>
+            
         );
     }
 

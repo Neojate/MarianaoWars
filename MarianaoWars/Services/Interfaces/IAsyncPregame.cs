@@ -14,6 +14,9 @@ namespace MarianaoWars.Services.Interfaces
         // Método que devuelve la lista de todos los ordenadores de una matrícula.
         List<Computer> GetComputers(int enrollmentId);
 
+        // Método que devuelve la matrícula de un instituto y un usuario.
+        Enrollment GetEnrollment(string userid, int instituteId);
+
         // Método que devuelve la lista de todas las matrículas de un instituto.
         List<Enrollment> GetEnrollments(int instituteId);
 

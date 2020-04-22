@@ -23,10 +23,10 @@ export class Resource extends Component {
 
     render() {
         return (
-            <Col id={this.props.id} xs="1" /*onMouseEnter={this.toogle} onMouseOut={this.toogle}*/>
+            <Col id={this.props.id} xs="1">
                 <Row>
                     <Col xs="4">
-                        <img onClick={this.toogle} style={{ maxWidth: '16px' }} src={require('../../images/' + this.props.image)} />
+                        <img onMouseEnter={this.toogle} onMouseOut={this.toogle} /*onClick={this.toogle}*/ style={{ maxWidth: '16px' }} src={require('../../images/' + this.props.image)} />
                     </Col>
                     <Col xs="8">
                         <p>{this.props.quantity}</p>

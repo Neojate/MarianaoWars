@@ -41,6 +41,8 @@ namespace SignalRChat.Hubs
             //}
         }
 
+        
+
         public async Task UpdateResources(string userId, string instituteIdStr)
         {
             int instituteId = Int32.Parse(instituteIdStr);
