@@ -22,6 +22,7 @@ namespace MarianaoWars.Repositories.Implementations
         public async Task<List<Computer>> GetComputers(int enrollmentId)
         {
             return await dbContext.Computer
+                .AsNoTracking()
                 .Where(computer => computer.EnrollmentId == enrollmentId)
                 .Include(computer => computer.Resource)
                 .Include(computer => computer.Software)
@@ -127,5 +128,9 @@ namespace MarianaoWars.Repositories.Implementations
             return resource;
         }
 
+        public async Task<Resource> GetResource(int resourceId)
+        {
+            return await dbContext.Resource.FindAsync(resourceId);
+        }
     }
 }

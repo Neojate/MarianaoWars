@@ -18,6 +18,7 @@ import './custom.css'
 import { Prueba } from './components/prueba';
 import { InstitutePanel } from './components/InstitutePanel';
 import { Game } from './components/Game/Game';
+import { Engage } from './components/Engage';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -33,6 +34,7 @@ export default class App extends Component {
                         <Route path='/cacados' component={Prueba} />
                         <Route path='/instituts' component={InstitutePanel} />
                         <Route path="/game/:instituteId" component={Game} />
+                        <Route path="/activar" component={Engage}/>
                         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
                     
             </Layout>

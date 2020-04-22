@@ -23,6 +23,8 @@ namespace MarianaoWars.Services.Interfaces
         // Método que dice si un jugador tiene matrícula en un instituto concreto.
         bool HasEnrollment(string userId, int instituteId);
 
+        Resource GetResource(int resourceId);
+
         
 
     }

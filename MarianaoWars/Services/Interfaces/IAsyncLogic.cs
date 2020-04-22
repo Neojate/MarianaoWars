@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace MarianaoWars.Services.Interfaces
 {
-    public interface IAsyncPostgame
+    public interface IAsyncLogic
     {
-        void CreateEnrollment();
-
-        void UpdateResource(Resource resource, List<SystemResource> systemResources);
+       
 
         List<SystemResource> GetSystemResources();
 
         List<Computer> GetComputersBySector(int instituteId, int sector);
+
+        void SaveComputer(Computer computer);
+
+        void UpdateResource(Resource computer);
 
     }
 }

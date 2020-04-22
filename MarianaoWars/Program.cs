@@ -15,8 +15,6 @@ namespace MarianaoWars
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-
-            //ServerLogic serverLogic = new ServerLogic();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

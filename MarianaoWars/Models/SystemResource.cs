@@ -19,59 +19,11 @@ namespace MarianaoWars.Models
         // Nivel máximo al que se puede subir la mina.
         public int LastVersion { get; set; }
 
-        // Puntos iniciales que otorga la mina.
-        public int BaseDownloads { get; set; }
+        // Array de puntos que otorga la mina
+        public string Increment { get; set; }
 
-        // Incremento de los puntos base * nivel de la mina.
-        public double PlusDownloads { get; set; }
-
-        // Puntos base de Conocimiento requeridos para construir la mina.
-        public int BaseKnowledge { get; set; }
-
-        // Incremento de los puntos base * nivel  de fabricar la mina.
-        public double PlusKnowledge { get; set; }
-
-        // Puntos base de Ingenio requeridos para construir la mina.
-        public int BaseIngenyous { get; set; }
-
-        // Incremento de los puntos base * nivel  de fabricar la mina.
-        public double PlusIngenyous { get; set; }
-
-        // Puntos base de Café requeridos para construir la mina.
-        public int BaseCoffe { get; set; }
-
-        // Incremento de los puntos base * nivel  de fabricar la mina.
-        public double PlusCoffe { get; set; }
-
-        // Puntos base de Descanso requeridos para construir la mina.
-        public int BaseSleep { get; set; }
-
-        // Incremento de los puntos base * nivel  de fabricar la mina.
-        public double PlusSleep { get; set; }
-
-        // Puntos base de Conocimiento que otorga la mina
-        public int Knowledge { get; set; }
-
-        // Incremento de puntos que otorga la mina.
-        public double IncrementKnowledge { get; set; }
-
-        // Puntos base de Conocimiento que otorga la mina
-        public int Ingenyous { get; set; }
-
-        // Incremento de puntos que otorga la mina.
-        public double IncrementIngenyous { get; set; }
-
-        // Puntos base de Conocimiento que otorga la mina
-        public int Coffe { get; set; }
-
-        // Incremento de puntos que otorga la mina.
-        public int IncrementCoffe { get; set; }
-
-        // Puntos base de Conocimiento que otorga la mina
-        public int Sleep { get; set; }
-
-        // Incremento de puntos que otorga la mina.
-        public int IncrementSleep { get; set; }
+        // Arrat de puntos que consume en Sueño.
+        public string Sleep { get; set; }
 
 
     }

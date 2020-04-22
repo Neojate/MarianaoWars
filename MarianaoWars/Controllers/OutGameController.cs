@@ -2,6 +2,7 @@
 using MarianaoWars.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace MarianaoWars.Controllers
 {
@@ -13,7 +14,7 @@ namespace MarianaoWars.Controllers
         private readonly IServiceInitGame contextx;
         private readonly IAsyncPregame context;
 
-        public OutGameController(IAsyncPregame context)
+        public OutGameController(IAsyncPregame context, IAsyncLogic game)
         {
             this.context = context;
          }
