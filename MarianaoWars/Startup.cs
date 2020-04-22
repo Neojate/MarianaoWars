@@ -18,6 +18,7 @@ using MarianaoWars.Services.Implementations;
 using MarianaoWars.Repositories.Interfaces;
 using MarianaoWars.Repositories.Implementations;
 using MarianaoWars.Middleware;
+using MarianaoWars.Controllers;
 
 namespace MarianaoWars
 {
@@ -34,8 +35,11 @@ namespace MarianaoWars
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+            {
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+            }, ServiceLifetime.Transient);
+                
 
             /**
              * con ideityserver
@@ -83,8 +87,6 @@ namespace MarianaoWars
 
             //Inyeccion de dependencias MarianaoWars
             IoC.AddDependency(services);
-
-
         }
 
 
@@ -135,6 +137,7 @@ namespace MarianaoWars
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
         }
     }
 }

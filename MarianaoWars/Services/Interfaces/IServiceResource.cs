@@ -14,7 +14,5 @@ namespace MarianaoWars.Services.Interfaces
         // Método que devuelve un ordenador en función de su id.
         Computer GetComputer(int computerId);
 
-        void UpdateResources(Computer computerToUpdate, List<SystemResource> systemResources);
-
     }
 }

@@ -84,6 +84,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetEnrollment(userId, instituteId).Result == null ? false : true;
         }
 
+        public Resource GetResource(int resourceId)
+        {
+            return repository.GetResource(resourceId).Result;
+        }
+
 
 
         #region MÉTODOS PRIVADOS

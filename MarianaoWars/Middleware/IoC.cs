@@ -27,7 +27,7 @@ namespace MarianaoWars.Middleware
             services.AddScoped<IServiceInitGame, ServiceInitGame>();
             services.AddScoped<IServiceResource, ServiceResource>();
             services.AddTransient<IAsyncPregame, AsyncServicePregame>();
-            services.AddTransient<IAsyncPostgame, AsyncServicePostgame>();
+            services.AddTransient<IAsyncLogic, AsyncServiceLogic>();
 
             return services;
         }

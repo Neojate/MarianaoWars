@@ -50,5 +50,7 @@ namespace MarianaoWars.Repositories.Interfaces
         Task<Talent> SaveTalent(Talent talent);
 
         Task<Resource> UpdateResource(Resource resource);
+
+        Task<Resource> GetResource(int resourceId);
     }
 }

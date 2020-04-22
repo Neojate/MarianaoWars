@@ -14,9 +14,9 @@ namespace SignalRChat.Hubs
     {
         private IAsyncPregame game;
         private IServiceInitGame preGame;
-        private IAsyncPostgame postGame;
+        private IAsyncLogic postGame;
 
-        public ChatHub(IServiceInitGame preGame, IAsyncPregame game, IAsyncPostgame postGame)
+        public ChatHub(IServiceInitGame preGame, IAsyncPregame game, IAsyncLogic postGame)
         {
             this.preGame = preGame;
             this.game = game;
@@ -46,20 +46,14 @@ namespace SignalRChat.Hubs
         public async Task UpdateResources(string userId, string instituteIdStr)
         {
             int instituteId = Int32.Parse(instituteIdStr);
-            List<SystemResource> systemResources = postGame.GetSystemResources();
+            //List<SystemResource> systemResources = postGame.GetSystemResources();
+
             while (true)
             {
-               
-                IEnumerable<Enrollment> enrollments = game.GetEnrollments(instituteId);
-
-                //await Clients.Caller.SendAsync("nombreMetodoRecibido", enrollments);
-                
-                foreach (Enrollment enrollment in enrollments)
+                foreach (Enrollment enrollment in game.GetEnrollments(instituteId))
                 {
-                    IEnumerable<Computer> computers = game.GetComputers(enrollment.Id);
-                    foreach (Computer computer in computers) { 
-
-                        postGame.UpdateResource(computer.Resource, systemResources);
+                    foreach (Computer computer in game.GetComputers(enrollment.Id))
+                    {
                         try
                         {
                             string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
@@ -70,15 +64,15 @@ namespace SignalRChat.Hubs
 
                             await Clients.Caller.SendAsync("nombreMetodoRecibido", output);
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             await Clients.Caller.SendAsync("nombreMetodoRecibido", e.ToString());
                         }
-                        
                     }
-                    
+
                 }
                 Thread.Sleep(1000);
+                
             }
             
         }
