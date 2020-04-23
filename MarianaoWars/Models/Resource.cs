@@ -44,8 +44,8 @@ namespace MarianaoWars.Models
             Stress = 30;
             KnowledgeLevel = 1;
             IngenyousLevel = 1;
-            CoffeLevel = 0;
-            StressLevel = 0;
+            CoffeLevel = 1;
+            StressLevel = 1;
         }
     }
 }
