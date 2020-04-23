@@ -34,7 +34,7 @@ export class NavGame extends Component {
                 .start()
                 .then(() => {
 
-                    setInterval(this.InitUpdate, 2000);
+                    setInterval(this.InitUpdate, 1000);
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
