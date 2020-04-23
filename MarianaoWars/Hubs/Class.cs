@@ -41,13 +41,10 @@ namespace SignalRChat.Hubs
             //}
         }
 
-        public async Task InitAct(string user, string computerId)
+        public async Task InitUpdate(string user, int computerId)
         {
 
-            await Clients.Caller.SendAsync("actualizaRecursos", "Hola");
-            
-            /*
-            List<Computer> computers = game.GetComputer(Int32.Parse(computerId));
+            List<Computer> computers = game.GetComputer(computerId);
 
             string output = JsonConvert.SerializeObject(computers, new JsonSerializerSettings()
             {
@@ -55,43 +52,7 @@ namespace SignalRChat.Hubs
                 Formatting = Formatting.Indented
             });
 
-            await Clients.Caller.SendAsync("actualizaRecursos", output);
-            */
-
-
-        }
-
-        public async Task UpdateResources(string userId, string instituteIdStr)
-        {
-            int instituteId = Int32.Parse(instituteIdStr);
-            //List<SystemResource> systemResources = postGame.GetSystemResources();
-
-            while (true)
-            {
-                foreach (Enrollment enrollment in game.GetEnrollments(instituteId))
-                {
-                    foreach (Computer computer in game.GetComputers(enrollment.Id))
-                    {
-                        try
-                        {
-                            string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
-                            {
-                                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                                Formatting = Formatting.Indented
-                            });
-
-                            await Clients.Caller.SendAsync("nombreMetodoRecibido", output);
-                        }
-                        catch (Exception e)
-                        {
-                            await Clients.Caller.SendAsync("nombreMetodoRecibido", e.ToString());
-                        }
-                    }
-
-                }
-                Thread.Sleep(1000);
-                
-            }
+            await Clients.Caller.SendAsync("updateResources", output);
             
         }
 

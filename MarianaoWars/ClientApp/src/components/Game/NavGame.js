@@ -33,22 +33,17 @@ export class NavGame extends Component {
             this.state.hubConnection
                 .start()
                 .then(() => {
-                    console.log('Connection started!');
-                    //setInterval(this.actualizar, 2000);
-                    this.actualizar();
-                    //this.lanzarActualización();
-                    //this.updateResources();
+
+                    setInterval(this.InitUpdate, 2000);
+
                 })
                 .catch(err => console.log('Error while establishing connection :('));
 
-            this.state.hubConnection.on('actualizaRecursos', (receivedMessage) => {
-                console.log(JSON.parse(receivedMessage));
-                //this.setState({ computer: JSON.parse(receivedMessage) });
+            this.state.hubConnection.on('updateResources', (receivedMessage) => {
+                var computers = JSON.parse(receivedMessage);
+                this.setState({ computer: computers[0] });
             });
 
-            /*this.state.hubConnection.on('nombreMetodoRecibido', (receivedMessage) => {
-                this.setState({ computer: JSON.parse(receivedMessage)});
-            });*/
 
 
 
@@ -56,25 +51,11 @@ export class NavGame extends Component {
         
     }
 
-    /*
-    lanzarActualización() {
-        setInterval(this.actualizar, 2000, this.state.hubConnection, this.state.computer.Id);
-    }
-    */
-
-    actualizar = () => {
+    InitUpdate = () => {
         this.state.hubConnection
-            .invoke('InitAct', this.state.userId, this.state.computer.Id)
+            .invoke('InitUpdate', this.state.userId, this.state.computer.Id)
                 .catch(err => console.error(err));        
     }
-
-    /*
-    updateResources = () => {
-        this.state.hubConnection
-            .invoke('UpdateResources', this.state.userId, this.state.instituteId)
-            .catch(err => console.error(err));
-    };
-    */
 
     async systemResourceData() {
 
