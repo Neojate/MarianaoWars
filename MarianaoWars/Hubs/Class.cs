@@ -41,7 +41,25 @@ namespace SignalRChat.Hubs
             //}
         }
 
-        
+        public async Task InitAct(string user, string computerId)
+        {
+
+            await Clients.Caller.SendAsync("actualizaRecursos", "Hola");
+            
+            /*
+            List<Computer> computers = game.GetComputer(Int32.Parse(computerId));
+
+            string output = JsonConvert.SerializeObject(computers, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            await Clients.Caller.SendAsync("actualizaRecursos", output);
+            */
+
+
+        }
 
         public async Task UpdateResources(string userId, string instituteIdStr)
         {

@@ -11,6 +11,10 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera todos los ordenadores
         Task<List<Computer>> GetComputers(int enrollmentId);
 
+        // Método que recupera un ordenador por su Id
+        Task<List<Computer>> GetComputer(int computerId);
+
+
         // Método que devuelve una matrícula en función del usuario y el instituto
         Task<Enrollment> GetEnrollment(string userId, int instituteId);
 

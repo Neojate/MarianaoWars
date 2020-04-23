@@ -32,6 +32,19 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<List<Computer>> GetComputer(int computerId)
+        {
+            return await dbContext.Computer
+                .AsNoTracking()
+                .Where(computer => computer.Id == computerId)
+                .Include(computer => computer.Resource)
+                .Include(computer => computer.Software)
+                .Include(computer => computer.Talent)
+                .Include(computer => computer.AttackScript)
+                .Include(computer => computer.DefenseScript)
+                .ToListAsync();
+        }
+
         public async Task<Enrollment> GetEnrollment(string userId, int instituteId)
         {
             return await dbContext.Enrollment

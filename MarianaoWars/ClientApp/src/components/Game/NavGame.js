@@ -27,30 +27,54 @@ export class NavGame extends Component {
 
         const nick = this.state.userId;
 
-        //const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-        /*
+        const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        
         this.setState({ hubConnection, nick }, () => {
             this.state.hubConnection
                 .start()
                 .then(() => {
                     console.log('Connection started!');
-                    this.updateResources();
+                    //setInterval(this.actualizar, 2000);
+                    this.actualizar();
+                    //this.lanzarActualización();
+                    //this.updateResources();
                 })
                 .catch(err => console.log('Error while establishing connection :('));
 
-            this.state.hubConnection.on('nombreMetodoRecibido', (receivedMessage) => {
-                this.setState({ computer: JSON.parse(receivedMessage)});
+            this.state.hubConnection.on('actualizaRecursos', (receivedMessage) => {
+                console.log(JSON.parse(receivedMessage));
+                //this.setState({ computer: JSON.parse(receivedMessage) });
             });
 
+            /*this.state.hubConnection.on('nombreMetodoRecibido', (receivedMessage) => {
+                this.setState({ computer: JSON.parse(receivedMessage)});
+            });*/
+
+
+
         });
-        */
+        
     }
 
+    /*
+    lanzarActualización() {
+        setInterval(this.actualizar, 2000, this.state.hubConnection, this.state.computer.Id);
+    }
+    */
+
+    actualizar = () => {
+        this.state.hubConnection
+            .invoke('InitAct', this.state.userId, this.state.computer.Id)
+                .catch(err => console.error(err));        
+    }
+
+    /*
     updateResources = () => {
         this.state.hubConnection
             .invoke('UpdateResources', this.state.userId, this.state.instituteId)
             .catch(err => console.error(err));
     };
+    */
 
     async systemResourceData() {
 
@@ -78,7 +102,7 @@ export class NavGame extends Component {
                     var quantity = 0;
 
                     switch (value.name) {
-                        case "Ingenio":
+                        case "Imaginacion":
                             quantity = computer.Resource.Ingenyous;
                             break;
 

@@ -64,6 +64,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetComputers(enrollmentId).Result;
         }
 
+        public List<Computer> GetComputer(int computerId)
+        {
+            return repository.GetComputer(computerId).Result;
+        }
+
         public Enrollment GetEnrollment(string userid, int instituteId)
         {
             return repository.GetEnrollment(userid, instituteId).Result;
