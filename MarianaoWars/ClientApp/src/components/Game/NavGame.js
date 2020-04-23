@@ -65,6 +65,25 @@ export class NavGame extends Component {
 
     }
 
+    static colorProgress(value, maxValue) {
+
+        var fraccion = maxValue / 3;
+        var color = "";
+
+        if (value < fraccion) {
+            color = "success";
+        }
+        else if (value >= fraccion && value <= fraccion * 2) {
+            color = "warning";
+        }
+        else {
+            color = "danger";
+        }
+
+        return color;
+
+    }
+
     static renderResources(systemResources, computer) {
 
         var comupterStyle = {
@@ -77,39 +96,45 @@ export class NavGame extends Component {
 
         return (
             <Row style={{ alignItems : 'center' }}>
-                {systemResources.map((value, index) => {
+                {systemResources.map((systemResource, index) => {
 
                     var qty = 0;
                     var quantity = 0;
+                    var maxQuantity = systemResource.lastVersion;
+                    var maxQuantityLevel = 0;
 
-                    switch (value.name) {
+                    switch (systemResource.name) {
                         case "Imaginacion":
                             quantity = computer.Resource.Ingenyous;
+                            maxQuantityLevel = computer.Resource.IngenyousLevel * maxQuantity;
                             break;
 
                         case "Cafe":
                             quantity = computer.Resource.Coffe;
+                            maxQuantityLevel = computer.Resource.CoffeLevel * maxQuantity;
                             break;
 
                         case "Descanso":
                             quantity = computer.Resource.Stress;
+                            maxQuantityLevel = computer.Resource.StressLevel * maxQuantity;
                             break;
 
                         case "Conocimiento":
                             quantity = computer.Resource.Knowledge;
+                            maxQuantityLevel = computer.Resource.KnowledgeLevel * maxQuantity;
                             break
                     }
 
-                    var color = qty < 80 ? "succes" : "danger";
+                    var color = this.colorProgress(quantity, maxQuantityLevel);
 
-                    return <Resource key={value.id}
-                        id={`recurso${value.id}`}
+                    return <Resource key={systemResource.id}
+                        id={`recurso${systemResource.id}`}
                         image="iconResource1.png"
                         quantity={quantity}
                         color={color}
-                        value={qty}
-                        popoverHeader={value.name}
-                        popoverBody={value.description}
+                        value={(quantity * 100) / maxQuantity}
+                        popoverHeader={systemResource.name}
+                        popoverBody={systemResource.description}
                     />
                 })}
 
