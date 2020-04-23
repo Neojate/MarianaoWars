@@ -87,7 +87,7 @@ export class NavGame extends Component {
                             quantity = computer.Resource.Ingenyous;
                             break;
 
-                        case "Café":
+                        case "Cafe":
                             quantity = computer.Resource.Coffe;
                             break;
 
