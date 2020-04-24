@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
-import { Panel } from './paneles/Panel';
+import { NavMenu } from '../components/main/NavMenu';
 
 export class Layout extends Component {
   static displayName = Layout.name;

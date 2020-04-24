@@ -9,10 +9,7 @@ export class Network extends Component {
     render() {
         return (
             <div>
-                <input  />
-                <table>
-
-                </table>
+                <p>tabla</p>
             </div>
         );
     }

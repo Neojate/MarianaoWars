@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
-//import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-import { Register } from './components/Register';
+import { Route } from "react-router-dom";
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-import { Chat } from './components/Chat';
-import './custom.css'
-import { Prueba } from './components/prueba';
-import { InstitutePanel } from './components/InstitutePanel';
-import { Game } from './components/game/Game';
-import { Engage } from './components/Engage';
+import { Layout } from './scenes/Layout';
+import { GameLayout } from './scenes/GameLayout';
+import { Home } from './components/main/Home';
+import { Register } from './components/main/Register';
+import { InstitutePanel } from './components/main/InstitutePanel';
+import './css/custom.css'
+
 
 
 export default class App extends Component {
@@ -27,17 +18,11 @@ export default class App extends Component {
     render() {
         return (
             <Layout>
-                
-                        <Route exact path='/' component={Home} />
-                        <Route path='/registro' component={Register} />
-                        <Route path='/chat' component={Chat} />
-                        <AuthorizeRoute path='/fetch-data' component={FetchData} />
-                        <Route path='/cacados' component={Prueba} />
-                        <Route path='/instituts' component={InstitutePanel} />
-                        <Route path="/game/:instituteId" component={Game} />
-                        <Route path="/activar" component={Engage}/>
-                        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-                    
+                <Route exact path='/' component={Home} />
+                <Route path='/registro' component={Register} />
+                <AuthorizeRoute path='/instituts' component={InstitutePanel} />
+                <Route path="/game/:instituteId" component={GameLayout} />
+                <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             </Layout>
         );
     }

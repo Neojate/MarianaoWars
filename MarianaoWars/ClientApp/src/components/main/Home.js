@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/marianao_style.css';
+import '../../css/marianao_style.css';
 import { Card } from './Card';
 import { Link } from 'react-router-dom';
 
