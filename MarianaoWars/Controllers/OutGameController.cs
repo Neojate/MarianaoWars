@@ -14,7 +14,6 @@ namespace MarianaoWars.Controllers
     [Route("/institutes")]
     public class OutGameController : ControllerBase
     {
-        private readonly IServiceInitGame contextx;
         private readonly IAsyncPregame context;
 
         public OutGameController(IAsyncPregame context, IAsyncLogic game)

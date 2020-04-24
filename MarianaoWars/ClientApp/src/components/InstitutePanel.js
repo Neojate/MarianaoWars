@@ -104,7 +104,7 @@ export class InstitutePanel extends Component {
 
     async populateState() {
         const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()]);
-        console.log(user.sub);
+        //console.log(user.sub);
         this.setState({
             isAuthenticated,
             'userId': user.sub

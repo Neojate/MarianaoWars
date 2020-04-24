@@ -15,17 +15,10 @@ namespace MarianaoWars.Middleware
     {
         public static IServiceCollection AddDependency(this IServiceCollection services)
         {
-
             //repositorios
-            //services.AddScoped<IRepositoryInstitute, RepositoryInstitute>();
             services.AddTransient<IRepositoryInstitute, RepositoryInstitute>();
 
-            
-
             //servicios
-            services.AddScoped<IServiceInstitute, ServiceInstitute>();
-            services.AddScoped<IServiceInitGame, ServiceInitGame>();
-            services.AddScoped<IServiceResource, ServiceResource>();
             services.AddTransient<IAsyncPregame, AsyncServicePregame>();
             services.AddTransient<IAsyncLogic, AsyncServiceLogic>();
 

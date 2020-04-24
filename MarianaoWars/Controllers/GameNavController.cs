@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MarianaoWars.Models;
+using MarianaoWars.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,18 @@ namespace MarianaoWars.Controllers
     public class GameNavController
     {
 
+        private IAsyncLogic context;
+
+        public GameNavController(IAsyncLogic context)
+        {
+            this.context = context;
+        }
+
+        [HttpGet("getSytemResource")]
+        public IEnumerable<SystemResource> GetSystemResource()
+        {
+            return context.GetSystemResources();
+        }
 
     }
 }

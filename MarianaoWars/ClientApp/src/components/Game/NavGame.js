@@ -28,7 +28,7 @@ export class NavGame extends Component {
         const nick = this.state.userId;
 
         const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-        
+
         this.setState({ hubConnection, nick }, () => {
             this.state.hubConnection
                 .start()
@@ -40,26 +40,23 @@ export class NavGame extends Component {
                 .catch(err => console.log('Error while establishing connection :('));
 
             this.state.hubConnection.on('updateResources', (receivedMessage) => {
-                var computers = JSON.parse(receivedMessage);
-                this.setState({ computer: computers[0] });
+                var computer = JSON.parse(receivedMessage);
+                this.setState({ computer: computer });
             });
 
-
-
-
         });
-        
+
     }
 
     InitUpdate = () => {
         this.state.hubConnection
             .invoke('InitUpdate', this.state.userId, this.state.computer.Id)
-                .catch(err => console.error(err));        
+            .catch(err => console.error(err));
     }
 
     async systemResourceData() {
 
-        const response = await fetch('game/getSytemResource');
+        const response = await fetch('gamenav/getSytemResource');
         const data = await response.json();
         this.setState({ systemResources: data, loading: false });
 
@@ -95,7 +92,7 @@ export class NavGame extends Component {
         }
 
         return (
-            <Row style={{ alignItems : 'center' }}>
+            <Row style={{ alignItems: 'center' }}>
                 {systemResources.map((systemResource, index) => {
 
                     var qty = 0;
@@ -155,7 +152,7 @@ export class NavGame extends Component {
             </Row>
         );
 
-        
+
     }
 
     render() {
@@ -170,7 +167,7 @@ export class NavGame extends Component {
             <div>
                 {contents}
             </div>
-            
+
         );
     }
 

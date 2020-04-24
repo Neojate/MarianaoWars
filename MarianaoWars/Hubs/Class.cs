@@ -13,12 +13,10 @@ namespace SignalRChat.Hubs
     public class ChatHub : Hub
     {
         private IAsyncPregame game;
-        private IServiceInitGame preGame;
         private IAsyncLogic postGame;
 
-        public ChatHub(IServiceInitGame preGame, IAsyncPregame game, IAsyncLogic postGame)
+        public ChatHub(IAsyncPregame game, IAsyncLogic postGame)
         {
-            this.preGame = preGame;
             this.game = game;
             this.postGame = postGame;
         }
@@ -44,9 +42,9 @@ namespace SignalRChat.Hubs
         public async Task InitUpdate(string user, int computerId)
         {
 
-            List<Computer> computers = game.GetComputer(computerId);
+            Computer computer = game.GetComputer(computerId);
 
-            string output = JsonConvert.SerializeObject(computers, new JsonSerializerSettings()
+            string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 Formatting = Formatting.Indented
