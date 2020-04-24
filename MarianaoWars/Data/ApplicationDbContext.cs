@@ -12,21 +12,6 @@ using System.Threading.Tasks;
 
 namespace MarianaoWars.Data
 {
-    /**
-     *Metodo con identity 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
-    {
-        public ApplicationDbContext(
-            DbContextOptions options) : base(options)
-        {
-        }
-
-    }
-    */
-
-    /**
-     *Metodo con identityServer
-     */
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         
@@ -47,8 +32,6 @@ namespace MarianaoWars.Data
         public DbSet<DefenseScript> DefenseScript { get; set; }
 
         public DbSet<SystemResource> SystemResource { get; set; }
-
-        //public DbSet<User> User { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,

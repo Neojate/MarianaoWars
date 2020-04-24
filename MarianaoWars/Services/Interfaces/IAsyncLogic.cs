@@ -12,7 +12,7 @@ namespace MarianaoWars.Services.Interfaces
 
         List<SystemResource> GetSystemResources();
 
-        List<Computer> GetComputersBySector(int instituteId, int sector);
+        List<Computer> GetComputersBySector(int instituteId, string broadcast);
 
         void SaveComputer(Computer computer);
 

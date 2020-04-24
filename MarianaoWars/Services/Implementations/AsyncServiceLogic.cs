@@ -17,8 +17,10 @@ namespace MarianaoWars.Services.Implementations
             this.repository = repository;
         }
 
-        public List<Computer> GetComputersBySector(int instituteId, int sector)
+        public List<Computer> GetComputersBySector(int instituteId, string broadcast)
         {
+            int yCoord = int.Parse(broadcast.Split('.')[3]);
+
             List<Computer> computers = new List<Computer>();
             List<Enrollment> enrollments = repository.GetEnrollments(instituteId).Result;
 
@@ -26,12 +28,11 @@ namespace MarianaoWars.Services.Implementations
             {
                 foreach (Computer computer in computers)
                 {
-                    int value = int.Parse(computer.IpDirection.Split('.')[2]);
-                    if (value == sector)
+                    int value = int.Parse(computer.IpDirection.Split('.')[3]);
+                    if (value == yCoord)
                         computers.Add(computer);
                 }
             }
-
             return computers;
         }
 
