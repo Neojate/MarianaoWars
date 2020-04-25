@@ -45,7 +45,7 @@ export class Network extends Component {
             items.push(
                 <tr>
                     <td>{ ip }</td>
-                    <td>{computerName}</td>
+                    <td>{ computerName }</td>
                     <td></td>
                     <td>Acciones</td>
                 </tr>
@@ -70,6 +70,7 @@ export class Network extends Component {
     }
 
     async sourceData(broadcast) {
+        //TODO: hacer que el instituteId se recoja por variable
         fetch('intranet/computers?instituteId=1&broadcast=' + broadcast)
             .then((response) => {
                 return response.json();
