@@ -1,6 +1,7 @@
 ﻿using MarianaoWars.Models;
 using MarianaoWars.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,18 @@ namespace MarianaoWars.Controllers
             this.context = context;
         }
 
-        [HttpGet("/ordinadors")]
-        public IEnumerable<Computer> GetUniverse(int instituteId, string broadcast)
+        [HttpGet("computers")]
+        public string GetUniverse(int instituteId, int broadcast)
         {
-            return context.GetComputersBySector(instituteId, broadcast);
+            List<Computer> computers = context.GetComputersBySector(instituteId, broadcast);
+            
+            string output = JsonConvert.SerializeObject(computers, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            return output;
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace MarianaoWars.Models
     public class Computer
     {
         // ID del Ordenador. Primary Key Autoincremental
+        [Key]
         public int Id { get; set; }
 
         // Nombre del ordenador.

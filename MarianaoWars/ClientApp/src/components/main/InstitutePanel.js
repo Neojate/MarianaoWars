@@ -74,7 +74,7 @@ export class InstitutePanel extends Component {
 
     render() {
         let content = this.state.loading ?
-            <p><label>Loading...</label></p> :
+            <p><label>Cargando...</label></p> :
             this.drawInstituteTable(this.state.data);
         return (
             <div>
@@ -104,7 +104,6 @@ export class InstitutePanel extends Component {
 
     async populateState() {
         const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()]);
-        //console.log(user.sub);
         this.setState({
             isAuthenticated,
             'userId': user.sub

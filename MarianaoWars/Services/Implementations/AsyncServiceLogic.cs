@@ -17,19 +17,17 @@ namespace MarianaoWars.Services.Implementations
             this.repository = repository;
         }
 
-        public List<Computer> GetComputersBySector(int instituteId, string broadcast)
+        public List<Computer> GetComputersBySector(int instituteId, int broadcast)
         {
-            int yCoord = int.Parse(broadcast.Split('.')[3]);
-
             List<Computer> computers = new List<Computer>();
             List<Enrollment> enrollments = repository.GetEnrollments(instituteId).Result;
 
             foreach (Enrollment enrollment in enrollments)
             {
-                foreach (Computer computer in computers)
+                foreach (Computer computer in repository.GetComputers(enrollment.Id).Result)
                 {
                     int value = int.Parse(computer.IpDirection.Split('.')[3]);
-                    if (value == yCoord)
+                    if (value == broadcast)
                         computers.Add(computer);
                 }
             }
