@@ -1,10 +1,10 @@
 ﻿import React, { Component } from 'react'
-import authService from './api-authorization/AuthorizeService';
+import authService from '../api-authorization/AuthorizeService';
 import $ from "jquery";
 import { Redirect } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
-export class Engage extends Component {
+export class InstitutePanel extends Component {
 
     constructor() {
         super();
@@ -24,7 +24,17 @@ export class Engage extends Component {
                 });                 
             } else {
                 alert('Entrando en partida...');
-                this.props.history.push(`/game/${data.instituteId}`);
+                var location = {
+                    key: 'ac3df4', // not with HashHistory!
+                    pathname: `/game/${data.instituteId}`,
+                    search: ``,
+                    hash: '#howdy',
+                    state: {
+                        ['userId']: this.state.userId
+                    }
+                }
+                //this.props.history.push(`/game/${data.instituteId}`);
+                this.props.history.push(location);
                 //return <Redirect to='/game' />
             }
         });
@@ -80,7 +90,7 @@ export class Engage extends Component {
     }
 
     async sourceData() {
-        fetch('activar')
+        fetch('institutes/openinstitutes')
             .then((response) => {
                 return response.json();
             })
@@ -94,7 +104,7 @@ export class Engage extends Component {
 
     async populateState() {
         const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()]);
-        console.log(user.sub);
+        //console.log(user.sub);
         this.setState({
             isAuthenticated,
             'userId': user.sub

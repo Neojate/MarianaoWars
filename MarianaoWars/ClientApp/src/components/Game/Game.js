@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react'
 import { NavGame } from './NavGame';
-import authService from '../api-authorization/AuthorizeService';
+import { Container } from 'reactstrap';
 
 export class Game extends Component {
 
@@ -8,15 +8,14 @@ export class Game extends Component {
         super(props);
 
         this.state = {
-            userId: this.props.location.state.userId,
-            instituteId: this.props.match.params.instituteId,
+            userId: this.props.userId,
+            instituteId: this.props.instituteId,
             computers: false,
             computerActive: false
         };
     }
 
     componentDidMount() {
-        //this.populateState();
         this.userComputers();
     }
 
@@ -24,7 +23,14 @@ export class Game extends Component {
     render() {
 
         let content = this.state.computerActive != false
-            ? <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
+            ? (<>
+                <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
+                <Container>
+                    {this.props.children}
+                </Container>
+                <div><p>footer</p></div>
+                </>
+            )
             : '';
 
         return (
@@ -34,22 +40,13 @@ export class Game extends Component {
         );
     }
 
-    async populateState() {
-        const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()]);
-        this.setState({
-            isAuthenticated,
-            'userId': user.sub
-        });
-    }
-
     async userComputers() {
         const data = { userId: this.state.userId, instituteId: this.state.instituteId };
-        console.log(data);
         var url = 'institutes/enrollmentcomputer';
 
         const response = await fetch(url, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
+            method: 'POST',
+            body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
             }

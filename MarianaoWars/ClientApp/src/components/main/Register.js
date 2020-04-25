@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import authService from './api-authorization/AuthorizeService'
+import authService from '../api-authorization/AuthorizeService'
 
 export class Register extends Component {
   static displayName = Register.name;
