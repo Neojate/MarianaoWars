@@ -6,11 +6,13 @@ using MarianaoWars.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace MarianaoWars.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/user")]
     public class AccountController : ControllerBase
     {
 
@@ -23,10 +25,12 @@ namespace MarianaoWars.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Boolean>> login()
+        [HttpPost("userLogin")]
+        public async Task<ActionResult<Boolean>> login([FromBody] JsonElement body)
         {
-            var result = await SignInMgr.PasswordSignInAsync("prueba22@prueba.es", "Test123!", true, false);
+            Dictionary<string, string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(body.ToString());
+            
+            var result = await SignInMgr.PasswordSignInAsync(json["email"], json["password"], true, false);
 
             if (result.Succeeded)
             {
@@ -38,23 +42,35 @@ namespace MarianaoWars.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<IdentityResult>> post(
-            [FromBody] string FirstName)
+        [HttpPost("userRegister")]
+        public async Task<ActionResult<IdentityResult>> post([FromBody] JsonElement body) 
         {
 
-            ApplicationUser appUser = new ApplicationUser();
+            Dictionary<string, string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(body.ToString());           
+            string password = json["password"];
+
+            ApplicationUser appUser = new ApplicationUser(json["userName"], json["firstName"], json["lastName"], json["email"]);
             IdentityResult result;
+
             ApplicationUser user = await UserMgr.FindByNameAsync(appUser.Email); 
 
                 if(user == null) 
                 {
                     appUser.NormalizedUserName = appUser.Email;
-                    result = await UserMgr.CreateAsync(appUser, "Test123!");
-                    await SignInMgr.PasswordSignInAsync(appUser.Email, "Test123!", true, false);
+                    result = await UserMgr.CreateAsync(appUser, password);
+
+                    //emaim, password, mantiente login, bloqueo por fallos
+                    await SignInMgr.PasswordSignInAsync(appUser.Email, password, true, false);
                     return result;
                 }
-            return NoContent();
+                else
+                {
+                    IdentityError error = new IdentityError();
+                    error.Code = "10";
+                    error.Description = "Usuario existente";
+                    return IdentityResult.Failed(error);
+                }
+
         }
 
         public UserManager<ApplicationUser> UserMgr { get; set; }

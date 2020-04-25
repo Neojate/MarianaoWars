@@ -14,12 +14,6 @@ export class Home extends Component {
 
     render () {
         return (
-            /*<div className="layout">
-                <div>
-                    <
-                </div>
-                <div></div>
-            </div>*/
             <div className="content">
                 <div className="row">
                     <Card title="Apertura del Instituto Marianao" body="Vuelve el mas mitico de los miticos institutos. A partir del 1 de mayo el Instituto Marianao reabre sus puertas. Modo clasico, ratios 1x, old school fashion week. Entra, programa, compite, llora, que es un bucle? Vamos! Todavia no has entrado? Se el mejor de todos y gana cuantiosos premios en forma de cafes y donuts! Ahora disponible con menos errores 404." image="laptop01.jpg" />

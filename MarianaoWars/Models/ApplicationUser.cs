@@ -25,5 +25,23 @@ namespace MarianaoWars.Models
         [InverseProperty("User")]
         public ICollection<Enrollment> Enrollments { get; set; }
 
+        public ApplicationUser()
+        {
+
+        }
+
+        public ApplicationUser(string userName)
+        {
+            this.UserName = userName;
+        }
+
+        public ApplicationUser(string UserName, string Firstname, string LastName, string Email)
+        {
+            this.UserName = UserName;
+            this.LastName = LastName;
+            this.FirstName = UserName;
+            this.Email = Email;
+        }
+
     }
 }

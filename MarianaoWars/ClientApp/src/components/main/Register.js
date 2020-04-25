@@ -1,26 +1,61 @@
 import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService'
+import { Alert, Row, Col } from 'reactstrap';
 
 export class Register extends Component {
   static displayName = Register.name;
 
   constructor(props) {
       super(props);
-      this.state = { value: '' };
+      this.state = {
+          value: '',
+          errors: []
+      };
       this.account = this.account.bind(this);
+      this.showErrors = this.showErrors.bind(this);
     }
 
     componentDidMount() {
-        this.populateWeatherData();
+        this.checkTocken();
     }
 
-  render() {
-      return (
-          <div className='container' style={{ padding: `40px 0px` }}>
-              <div className='row'>
+
+    showErrors() {
+
+        return this.state.errors.map((error, index) => {
+
+            return (
+            <Row key={index}>
+                <Col xs="12">
+                    <Alert color="danger">
+                        {error.description}
+                    </Alert>
+                </Col>
+                </Row>
+                )
+
+        });
+    }
+
+
+    render() {
+
+        const errors = (this.state.errors.length > 0)
+            ? this.showErrors()
+            : '';
+  
+        return (
+            <div className='container' style={{ padding: `40px 0px` }}>
+                <h2>Registro</h2>
+                <div className='row'>
                   <div className='col-sm-4'>
-                      <h2>Registro</h2>
                       <form onSubmit={this.account} ref='contactForm' >
+                          <div className='form-group'>
+                              <label htmlFor='userName'>User Name</label>
+                              <input type='text' className='form-control' id='userName'
+                                  placeholder='User Name' ref={userName => this.inputUserName = userName}
+                              />
+                          </div>
                           <div className='form-group'>
                               <label htmlFor='name'>Name</label>
                               <input type='text' className='form-control' id='name'
@@ -47,51 +82,70 @@ export class Register extends Component {
                           </div>
                           <button type='submit' className='btn btn-primary'>Send</button>
                       </form>
-                  </div>
+                    </div>
+                    <div className="col-sm-8">
+                        { errors }
+                    </div>
               </div>
           </div>
     );
   }
 
-  async populateWeatherData() {
-    const token = await authService.getAccessToken();
+    async checkTocken() {
+        const token = await authService.getAccessToken();
+
+      if (token != null) {
+          var location = {
+              key: 'ac3df4',
+              pathname: `/instituts`,
+              search: ``,
+              hash: ''
+          }
+          this.props.history.push(location);
+      }
     }
 
     async account(event) {
 
         event.preventDefault();
 
-        const params = {
+        const data = {
             firstName: this.inputName.value,
             lastName: this.inputLastName.value,
             userName: this.inputEmail.value,
             email: this.inputEmail.value,
             password: this.inputPassword.value
         };
+        var url = 'user/userRegister';
 
-
-        fetch('account', {
+        const response = await fetch(url, {
             method: 'POST',
-            body: JSON.stringify(params),
+            body: JSON.stringify(data),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                'Content-Type': 'application/json'
             }
         })
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                    
-                } else {
-                    throw "Error en la llamada Ajax";
-                }
 
-            })
-            .then(function (json) {
-                console.log(json);
-            })
-            .catch(function (err) {
-                console.log(err);
+        const result = await response.json();
+        
+
+        if (!result.succeeded) {
+            console.log(result.errors);
+            this.setState({
+                errors: result.errors
             });
+            return;
+        }
+
+        var location = {
+            key: 'ac3df4',
+            pathname: `/instituts`,
+            search: ``,
+            hash: ''
+        }
+        this.props.history.push(location);
+
+
     }
 
     
