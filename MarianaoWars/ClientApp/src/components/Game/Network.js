@@ -83,7 +83,7 @@ export class Network extends Component {
     }
 
     moveBroadcast(goingFoward) {
-        this.state.broadcast += 1 * goingFoward ? 1 : -1;
+        this.state.broadcast += goingFoward ? 1 : -1;
 
         if (this.state.broadcast < 0)
             this.state.broadcast = 49;
