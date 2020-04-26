@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService'
 import { Alert, Row, Col } from 'reactstrap';
 
-export class Register extends Component {
-  static displayName = Register.name;
+export class Login extends Component {
+  static displayName = Login.name;
 
   constructor(props) {
       super(props);
@@ -49,30 +49,12 @@ export class Register extends Component {
   
         return (
             <div className='container' style={{ padding: `40px 0px` }}>
-                <h2>Registro</h2>
+                <h2>Login</h2>
                 <div className='row'>
                   <div className='col-sm-4'>
                       <form onSubmit={this.account} ref='contactForm' >
                           <div className='form-group'>
-                              <label htmlFor='userName'>User Name</label>
-                              <input type='text' className='form-control' id='userName'
-                                  placeholder='User Name' ref={userName => this.inputUserName = userName}
-                              />
-                          </div>
-                          <div className='form-group'>
-                              <label htmlFor='name'>Name</label>
-                              <input type='text' className='form-control' id='name'
-                                  placeholder='Name' ref={name => this.inputName = name}
-                              />
-                          </div>
-                          <div className='form-group'>
-                              <label htmlFor='lastName'>Last Name</label>
-                              <input type='text' className='form-control' id='lastName'
-                                  placeholder='Last Name' ref={lastName => this.inputLastName = lastName}
-                              />
-                          </div>
-                          <div className='form-group'>
-                              <label htmlFor='exampleInputEmail1'>Email</label>
+                                <label htmlFor='email'>Email</label>
                               <input type='email' className='form-control' id='email'
                                   placeholder='Email' ref={email => this.inputEmail = email}
                               />
@@ -113,13 +95,10 @@ export class Register extends Component {
         event.preventDefault();
 
         const data = {
-            firstName: this.inputName.value,
-            lastName: this.inputLastName.value,
-            userName: this.inputEmail.value,
             email: this.inputEmail.value,
             password: this.inputPassword.value
         };
-        var url = 'user/userRegister';
+        var url = 'user/userLogin';
 
         const response = await fetch(url, {
             method: 'POST',
@@ -130,6 +109,8 @@ export class Register extends Component {
         })
 
         const result = await response.json();
+
+        console.log(result);
         
 
         if (!result.succeeded) {
@@ -140,6 +121,11 @@ export class Register extends Component {
             return;
         }
 
+        //
+
+        authService.signIn();
+
+        /*
         var location = {
             key: 'ac3df4',
             pathname: `/instituts`,
@@ -147,6 +133,7 @@ export class Register extends Component {
             hash: ''
         }
         this.props.history.push(location);
+        ^*/
 
 
     }

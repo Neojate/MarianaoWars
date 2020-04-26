@@ -7,6 +7,7 @@ import { Layout } from './scenes/Layout';
 import { GameLayout } from './scenes/GameLayout';
 import { Home } from './components/main/Home';
 import { Register } from './components/main/Register';
+import { Login } from './components/main/Login';
 import { InstitutePanel } from './components/main/InstitutePanel';
 import './css/custom.css'
 
@@ -20,6 +21,7 @@ export default class App extends Component {
             <Layout>
                 <Route exact path='/' component={Home} />
                 <Route path='/registro' component={Register} />
+                <Route path='/login' component={Login} />
                 <AuthorizeRoute path='/instituts' component={InstitutePanel} />
                 <Route path="/game/:instituteId" component={GameLayout} />
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
