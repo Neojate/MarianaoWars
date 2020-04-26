@@ -13,13 +13,12 @@ export class Login extends Component {
       };
       this.account = this.account.bind(this);
       this.showErrors = this.showErrors.bind(this);
+
+
     }
 
     componentDidMount() {
-        //authentifica o envia a pantalla de login
-        //authService.signIn();
-
-        //this.checkTocken();
+        this.checkTocken();
     }
 
 
@@ -76,17 +75,22 @@ export class Login extends Component {
     );
   }
 
+
+    goToHome() {
+        var location = {
+            key: 'ac3df4',
+            pathname: `/`,
+            search: ``,
+            hash: ''
+        }
+        this.props.history.push(location);
+    }
+
     async checkTocken() {
         const token = await authService.getAccessToken();
 
-      if (token != null) {
-          var location = {
-              key: 'ac3df4',
-              pathname: `/instituts`,
-              search: ``,
-              hash: ''
-          }
-          this.props.history.push(location);
+        if (token != null) {
+            this.goToHome();
       }
     }
 
@@ -109,38 +113,19 @@ export class Login extends Component {
         })
 
         const result = await response.json();
-
-        console.log(result);
         
-
         if (!result.succeeded) {
-            console.log(result.errors);
             this.setState({
-                errors: result.errors
+                errors: [{ "description": "Usuario o contraseña erroneos" }]
             });
             return;
         }
 
-        //
-
-        authService.signIn();
-
-        /*
-        var location = {
-            key: 'ac3df4',
-            pathname: `/instituts`,
-            search: ``,
-            hash: ''
-        }
-        this.props.history.push(location);
-        ^*/
-
-
+        await authService.signIn();
+        this.goToHome();
     }
 
-    
-
-
 }
+
 
 

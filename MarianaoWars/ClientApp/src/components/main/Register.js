@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService'
 import { Alert, Row, Col } from 'reactstrap';
+import accountService from '../services/AccountServices';
 
 export class Register extends Component {
   static displayName = Register.name;
@@ -15,11 +16,14 @@ export class Register extends Component {
       this.showErrors = this.showErrors.bind(this);
     }
 
-    componentDidMount() {
-        //authentifica o envia a pantalla de login
-        //authService.signIn();
+    async componentDidMount() {
 
-        //this.checkTocken();
+        let location = await accountService.checkTocken();
+        
+        if (location != false) {
+            this.props.history.push(location);
+        }
+        
     }
 
 
@@ -94,19 +98,7 @@ export class Register extends Component {
     );
   }
 
-    async checkTocken() {
-        const token = await authService.getAccessToken();
-
-      if (token != null) {
-          var location = {
-              key: 'ac3df4',
-              pathname: `/instituts`,
-              search: ``,
-              hash: ''
-          }
-          this.props.history.push(location);
-      }
-    }
+    
 
     async account(event) {
 
