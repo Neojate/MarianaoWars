@@ -50,20 +50,16 @@ namespace MarianaoWars
                 
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
+
             /*con identitiserver*/
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                options.UserInteraction.LoginUrl = "/login";
+                //options.UserInteraction.LogoutUrl = "/logout";
+            })
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            /**
-             * con identity
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            */
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

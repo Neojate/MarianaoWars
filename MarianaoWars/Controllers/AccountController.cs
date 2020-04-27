@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MarianaoWars.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using Newtonsoft.Json;
+
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace MarianaoWars.Controllers
 {
@@ -26,20 +29,13 @@ namespace MarianaoWars.Controllers
         }
 
         [HttpPost("userLogin")]
-        public async Task<ActionResult<Boolean>> login([FromBody] JsonElement body)
+        public async Task<Microsoft.AspNetCore.Identity.SignInResult> login([FromBody] JsonElement body)
         {
             Dictionary<string, string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(body.ToString());
-            
-            var result = await SignInMgr.PasswordSignInAsync(json["email"], json["password"], true, false);
 
-            if (result.Succeeded)
-            {
-                return true;
-            }
-            else
-            {
-                return NotFound();
-            }
+            Microsoft.AspNetCore.Identity.SignInResult result = await SignInMgr.PasswordSignInAsync(json["email"], json["password"], true, false);
+
+            return result;
         }
 
         [HttpPost("userRegister")]
