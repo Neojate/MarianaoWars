@@ -7,12 +7,12 @@ export class Layout extends Component {
 
   render () {
     return (
-      <div>
+      <>
         <NavMenu />
-        <Container>
+            <Container className="themed-container" fluid={true} style={{ position: "relative" }}>
           {this.props.children}
         </Container>
-      </div>
+      </>
     );
   }
 }

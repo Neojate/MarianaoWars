@@ -43,7 +43,7 @@ export class Network extends Component {
                     computerName = computer.Name;
             }
             items.push(
-                <tr>
+                <tr key={i}>
                     <td>{ ip }</td>
                     <td>{ computerName }</td>
                     <td></td>

@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react'
 import { NavGame } from './NavGame';
-import { Container } from 'reactstrap';
+import { NavSystems } from './NavSystems';
+import { Container, Row, Col } from 'reactstrap';
+
 
 export class Game extends Component {
 
@@ -23,20 +25,26 @@ export class Game extends Component {
     render() {
 
         let content = this.state.computerActive != false
-            ? (<>
+            ? (<div className={"container-game"}>
                 <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
                 <Container>
-                    {this.props.children}
+                    <Row>
+                        <Col xs={3}></Col>
+                        <Col xs={6}>
+                            {this.props.children}
+                        </Col>
+                        <Col xs={3}></Col>
+                    </Row>
                 </Container>
-                <div><p>footer</p></div>
-                </>
+                <NavSystems />
+                </div>
             )
             : '';
 
         return (
-            <div>
+            <>
                 {content}
-            </div>
+            </>
         );
     }
 

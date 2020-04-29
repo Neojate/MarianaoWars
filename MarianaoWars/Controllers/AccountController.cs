@@ -55,6 +55,8 @@ namespace MarianaoWars.Controllers
                     appUser.NormalizedUserName = appUser.Email;
                     result = await UserMgr.CreateAsync(appUser, password);
 
+                    //update
+
                     //emaim, password, mantiente login, bloqueo por fallos
                     await SignInMgr.PasswordSignInAsync(appUser.Email, password, true, false);
                     return result;

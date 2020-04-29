@@ -18,11 +18,11 @@ export class GameLayout extends Component {
 
   render () {
     return (
-        <div>
+        <>
             <Game userId={this.state.userId} instituteId={this.state.instituteId}>
                 <Route path="/game/:instituteId" component={Network} />
             </Game>
-      </div>
+      </>
     );
   }
 }
