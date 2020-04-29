@@ -4,9 +4,9 @@ export class Network extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { broadcast: 40, data: [], loading: true };
-
-        this.leftBroacast = this.moveBroadcast.bind(this);
+        this.state = { broadcast: 40, data: [], loading: true, instituteId: props.match.params.instituteId };
+        
+        this.moveBroadcast = this.moveBroadcast.bind(this);
     }
 
     componentDidMount() {
@@ -71,7 +71,7 @@ export class Network extends Component {
 
     async sourceData(broadcast) {
         //TODO: hacer que el instituteId se recoja por variable
-        fetch('intranet/computers?instituteId=1&broadcast=' + broadcast)
+        fetch('intranet/computers?instituteId=' + this.state.instituteId + '&broadcast=' + broadcast)
             .then((response) => {
                 return response.json();
             })
