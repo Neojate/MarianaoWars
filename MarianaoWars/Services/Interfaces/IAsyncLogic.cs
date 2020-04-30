@@ -12,6 +12,8 @@ namespace MarianaoWars.Services.Interfaces
 
         List<SystemResource> GetSystemResources();
 
+        List<SystemSoftware> GetSystemSoftwares();
+
         List<Computer> GetComputersBySector(int instituteId, int broadcast);
 
         void SaveComputer(Computer computer);

@@ -81,6 +81,12 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<List<SystemSoftware>> GetSystemSoftwares()
+        {
+            return await dbContext.SystemSoftware
+                .ToListAsync();
+        }
+
         public async Task<ApplicationUser> GetUser(string userId)
         {
             return await dbContext.Users
@@ -147,5 +153,6 @@ namespace MarianaoWars.Repositories.Implementations
         {
             return await dbContext.Resource.FindAsync(resourceId);
         }
+
     }
 }
