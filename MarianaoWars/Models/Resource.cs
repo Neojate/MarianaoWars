@@ -11,7 +11,7 @@ namespace MarianaoWars.Models
         public int Id { get; set; }
 
         // Indica el almacenamiento de Conocimiento invertidos en el ordenador.
-        public int Knowledge { get; set; }
+        public double Knowledge { get; set; }
 
         // Indica el almacenamiento de Habilidad invertidos en el ordenador.
         public int Ingenyous { get; set; }

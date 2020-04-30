@@ -29,7 +29,7 @@ export class Resource extends Component {
                         <img onMouseEnter={this.toogle} onMouseOut={this.toogle} /*onClick={this.toogle}*/ style={{ maxWidth: '16px' }} src={require('../../images/' + this.props.image)} />
                     </Col>
                     <Col xs="8">
-                        <p>{this.props.quantity}</p>
+                        <p>{~~this.props.quantity}</p>
                     </Col>
                 </Row>
                 <Row>
