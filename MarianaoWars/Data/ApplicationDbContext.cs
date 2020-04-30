@@ -33,6 +33,8 @@ namespace MarianaoWars.Data
 
         public DbSet<SystemResource> SystemResource { get; set; }
 
+        public DbSet<SystemSoftware> SystemSoftware { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

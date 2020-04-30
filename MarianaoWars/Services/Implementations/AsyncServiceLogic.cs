@@ -39,6 +39,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetSystemResources().Result;
         }
 
+        public List<SystemSoftware> GetSystemSoftwares()
+        {
+            return repository.GetSystemSoftwares().Result;
+        }
+
         public void SaveComputer(Computer computer)
         {
             repository.SaveComputer(computer);

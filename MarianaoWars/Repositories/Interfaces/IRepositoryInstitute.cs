@@ -29,6 +29,9 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera los recursos de sistema
         Task<List<SystemResource>> GetSystemResources();
 
+        // Método que recupera los programas del sistema
+        Task<List<SystemSoftware>> GetSystemSoftwares();
+
         // Método que recupera un usuario según su Id
         Task<ApplicationUser> GetUser(string userId);
 
