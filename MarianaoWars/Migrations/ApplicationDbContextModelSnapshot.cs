@@ -377,26 +377,26 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Coffe")
-                        .HasColumnType("int");
+                    b.Property<double>("Coffe")
+                        .HasColumnType("double");
 
                     b.Property<int>("CoffeLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("Ingenyous")
-                        .HasColumnType("int");
+                    b.Property<double>("Ingenyous")
+                        .HasColumnType("double");
 
                     b.Property<int>("IngenyousLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("Knowledge")
-                        .HasColumnType("int");
+                    b.Property<double>("Knowledge")
+                        .HasColumnType("double");
 
                     b.Property<int>("KnowledgeLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("Stress")
-                        .HasColumnType("int");
+                    b.Property<double>("Stress")
+                        .HasColumnType("double");
 
                     b.Property<int>("StressLevel")
                         .HasColumnType("int");
@@ -441,44 +441,11 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BaseCoffe")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BaseDownloads")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BaseIngenyous")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BaseKnowledge")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BaseSleep")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Coffe")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("IncrementCoffe")
-                        .HasColumnType("int");
-
-                    b.Property<double>("IncrementIngenyous")
-                        .HasColumnType("double");
-
-                    b.Property<double>("IncrementKnowledge")
-                        .HasColumnType("double");
-
-                    b.Property<int>("IncrementSleep")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ingenyous")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Knowledge")
-                        .HasColumnType("int");
+                    b.Property<string>("Increment")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("LastVersion")
                         .HasColumnType("int");
@@ -486,27 +453,50 @@ namespace MarianaoWars.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("PlusCoffe")
-                        .HasColumnType("double");
-
-                    b.Property<double>("PlusDownloads")
-                        .HasColumnType("double");
-
-                    b.Property<double>("PlusIngenyous")
-                        .HasColumnType("double");
-
-                    b.Property<double>("PlusKnowledge")
-                        .HasColumnType("double");
-
-                    b.Property<double>("PlusSleep")
-                        .HasColumnType("double");
-
-                    b.Property<int>("Sleep")
-                        .HasColumnType("int");
+                    b.Property<string>("Sleep")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
                     b.ToTable("SystemResource");
+                });
+
+            modelBuilder.Entity("MarianaoWars.Models.SystemSoftware", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Action1")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("LastVersion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Memmory")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("RequireCoffee")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("RequireIngenyous")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("RequireKnowledge")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemSoftware");
                 });
 
             modelBuilder.Entity("MarianaoWars.Models.Talent", b =>

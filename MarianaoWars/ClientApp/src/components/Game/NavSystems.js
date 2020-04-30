@@ -55,7 +55,7 @@ export class NavSystems extends Component {
 
     navStyle() {
         return {
-            position: "absolute",
+            position: "fixed",
             bottom: "5px",
             right: "5px",
             left: "5px",
@@ -68,7 +68,7 @@ export class NavSystems extends Component {
     subNavStyle() {
         return {
             display: "none",
-            position: "absolute",
+            position: "fixed",
             bottom: "130px",
             right: "5px",
             left: "5px",

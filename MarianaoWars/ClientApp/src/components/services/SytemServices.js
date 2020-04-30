@@ -1,13 +1,27 @@
 ﻿
 export class SystemServices{
 
+
     async systemResourceData() {
 
-        const response = await fetch('gamenav/getSytemResource');
-        const data = await response.json();
-        return data;
-        //this.setState({ systemResources: data, loading: false });
+        if (this.systemResource == undefined) {
+            const response = await fetch('gamenav/getSytemResource');
+            this.systemResource = await response.json();
+            return this.systemResource;
+        }
 
+        return this.systemResource;
+    }
+
+    async systemSofteareData() {
+
+        if (this.systemResource == undefined) {
+            const response = await fetch('gamenav/getSytemResource');
+            this.systemResource = await response.json();
+            return this.systemResource;
+        }
+
+        return this.systemResource;
     }
 
     static get instance() { return systemServices }
