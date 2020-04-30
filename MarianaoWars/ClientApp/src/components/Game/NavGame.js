@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Resource } from './Resource';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 
 import * as signalR from '@aspnet/signalr';
 
@@ -92,6 +92,7 @@ export class NavGame extends Component {
         }
 
         return (
+            <Container>
             <Row style={{ alignItems: 'center' }}>
                 {systemResources.map((systemResource, index) => {
 
@@ -149,7 +150,8 @@ export class NavGame extends Component {
                     <p>{computer.MemmoryUsed + '/' + computer.Memmory}</p>
                 </Col>
 
-            </Row>
+                </Row>
+            </Container>
         );
 
 
