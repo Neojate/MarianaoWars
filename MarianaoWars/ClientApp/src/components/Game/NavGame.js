@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { Resource } from './Resource';
 import { Row, Col, Container } from 'reactstrap';
-
+import systemServices from '../services/SytemServices';
 import * as signalR from '@aspnet/signalr';
+import { Link } from 'react-router-dom';
 
 
 export class NavGame extends Component {
@@ -56,13 +57,15 @@ export class NavGame extends Component {
 
     async systemResourceData() {
 
-        const response = await fetch('gamenav/getSytemResource');
-        const data = await response.json();
-        this.setState({ systemResources: data, loading: false });
+        var systemResource = await systemServices.systemResourceData();
+
+        //const response = await fetch('gamenav/getSytemResource');
+        //const data = await response.json();
+        this.setState({ systemResources: systemResource, loading: false });
 
     }
 
-    static colorProgress(value, maxValue) {
+    colorProgress(value, maxValue) {
 
         var fraccion = maxValue / 3;
         var color = "";
@@ -81,7 +84,7 @@ export class NavGame extends Component {
 
     }
 
-    static renderResources(systemResources, computer) {
+    renderResources(systemResources, computer) {
 
         var comupterStyle = {
             height: '100px',
@@ -136,8 +139,8 @@ export class NavGame extends Component {
                     />
                 })}
 
-                <Col className="text-center" xs="3">
-                    <img className="img-fluid" style={{ maxWidth: '50%' }} src={require('../../images/internet.png')} />
+                    <Col className="text-center" xs="3">
+                        <Link to={{ pathname: `/game/${this.props.instituteId}`}}><img className="img-fluid" style={{ maxWidth: '50%' }} src={require('../../images/internet.png')} /></Link>
                 </Col>
 
                 <Col xs="2">
@@ -160,7 +163,7 @@ export class NavGame extends Component {
     render() {
 
         let contents = (!this.state.loading)
-            ? NavGame.renderResources(this.state.systemResources, this.state.computer)
+            ? this.renderResources(this.state.systemResources, this.state.computer)
             : <p><em>Loading...</em></p>;
 
         let computer = this.state.computer;

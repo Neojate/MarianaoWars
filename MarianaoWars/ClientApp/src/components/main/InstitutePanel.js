@@ -28,7 +28,7 @@ export class InstitutePanel extends Component {
                     key: 'ac3df4', // not with HashHistory!
                     pathname: `/game/${data.instituteId}`,
                     search: ``,
-                    hash: '#howdy',
+                    hash: '',
                     state: {
                         ['userId']: this.state.userId
                     }

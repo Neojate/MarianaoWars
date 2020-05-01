@@ -13,14 +13,14 @@ export class Game extends Component {
             userId: this.props.userId,
             instituteId: this.props.instituteId,
             computers: false,
-            computerActive: false
+            computerActive: false,
         };
+
     }
 
     componentDidMount() {
         this.userComputers();
     }
-
 
     render() {
 
@@ -36,7 +36,7 @@ export class Game extends Component {
                         <Col xs={3}></Col>
                     </Row>
                 </Container>
-                <NavSystems />
+                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} />
                 </div>
             )
             : '';
@@ -49,6 +49,10 @@ export class Game extends Component {
     }
 
     async userComputers() {
+
+        if (this.state.userId == undefined) {
+            return;
+        }
         const data = { userId: this.state.userId, instituteId: this.state.instituteId };
         var url = 'institutes/enrollmentcomputer';
 
