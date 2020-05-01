@@ -7,8 +7,11 @@ namespace MarianaoWars.Models
 {
     public class SystemResource
     {
-        // Identificador del Recurso de Sistem.a Primary Key Autoincremental
+        // Identificador del Recurso de Sistema Primary Key Autoincremental
         public int Id { get; set; }
+
+        // Identificador general dentro del juego.
+        public int BuildId { get; set; }
 
         // Nombre del Recurso del Sistema.
         public string Name { get; set; }

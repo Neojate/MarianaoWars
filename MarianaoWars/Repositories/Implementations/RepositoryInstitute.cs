@@ -100,6 +100,28 @@ namespace MarianaoWars.Repositories.Implementations
             return attackScript;
         }
 
+        public async Task SaveBuildOrder(Build buildOrder)
+        {
+            /*try
+            {
+                var x = dbContext.Build.ToListAsync().Result;
+            } catch (Exception e)
+            {
+                string hola = "hola";
+            }*/
+
+            try
+            {
+                await dbContext.Build.AddAsync(buildOrder);
+                await dbContext.SaveChangesAsync();
+            } 
+            catch(Exception e)
+            {
+                string hola = "hola";
+            }
+            
+        }
+
         public async Task<Computer> SaveComputer(Computer computer)
         {
             await dbContext.Computer.AddAsync(computer);
