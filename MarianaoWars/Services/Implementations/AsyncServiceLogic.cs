@@ -54,6 +54,34 @@ namespace MarianaoWars.Services.Implementations
             repository.UpdateResource(resource);
         }
 
+        public void CreateBuildOrder(int computerId, int buildId)
+        {
+            int milliToFinish = 60000;
+            int building = buildId % 10;
+            switch(buildId/10)
+            {
+                case 0:
+
+                    break;
+                case 1:
+                    SystemSoftware sysSoftware = repository.GetSystemSoftwares().Result[building - 1];
+                    Software software = repository.GetComputer(computerId).Result.Software;
+                    switch(building)
+                    {
+                        case 1:
+                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[software.GeditVersion]);
+                            break;
+                        case 2:
+                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[software.MySqlVersion]);
+                            break;
+                    }
+                    break;
+            }
+            Build buildOrder = new Build(computerId, milliToFinish, buildId);
+            /*Build buildOrder = new Build(1, 1000, 11);*/
+            repository.SaveBuildOrder(buildOrder);
+        }
+
 
 
     }

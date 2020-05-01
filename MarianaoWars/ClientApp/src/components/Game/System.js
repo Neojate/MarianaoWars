@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Col } from 'reactstrap';
 
-
 export class System extends Component {
 
     static displayName = System.name;

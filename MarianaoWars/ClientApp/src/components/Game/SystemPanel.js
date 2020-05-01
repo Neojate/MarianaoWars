@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import authService from '../api-authorization/AuthorizeService';
 import { Row, Col, Container } from 'reactstrap';
 import { System } from './System';
 
@@ -14,16 +15,13 @@ export class SystemPanel extends Component {
 
             System: this.props.location.state.system,
             instituteId: this.props.match.params.instituteId,
-
             loading: true,
             hover: false,
             active: false,
 
         };
-    }
 
-    componentDidMount() {
-        console.log(this.state.System)
+        this.createOrderBuild = this.createOrderBuild.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -67,20 +65,20 @@ export class SystemPanel extends Component {
 
     }
 
-
-
-
     render() {
-        
-        //<div style={this.style()} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.active} >
-
         return (
-
             <div style={this.style()} >
                 {this.state.System.name}
+                <button className="btn btn-primary" onClick={this.createOrderBuild }>Actualizar</button>
             </div>
-
         );
+    }
+
+    createOrderBuild() {
+        console.log(this.state.System.inGameId);
+        fetch('game/createbuildorder' +
+            '?computerId=' + 1 +
+            '&buildId=' + this.state.System.buildId);
     }
 
 }
