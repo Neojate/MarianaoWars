@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col, Container } from 'reactstrap';
+import { Col } from 'reactstrap';
 
 
 export class System extends Component {

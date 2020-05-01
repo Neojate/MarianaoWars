@@ -24,7 +24,7 @@ export class Game extends Component {
 
     render() {
 
-        let content = this.state.computerActive != false
+        let content = this.state.computerActive !== false
             ? (<div className={"container-game"}>
                 <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
                 <Container>
@@ -50,7 +50,7 @@ export class Game extends Component {
 
     async userComputers() {
 
-        if (this.state.userId == undefined) {
+        if (this.state.userId === undefined) {
             return;
         }
         const data = { userId: this.state.userId, instituteId: this.state.instituteId };

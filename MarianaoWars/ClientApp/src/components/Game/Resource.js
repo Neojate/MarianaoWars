@@ -26,7 +26,7 @@ export class Resource extends Component {
             <Col id={this.props.id} xs="1">
                 <Row>
                     <Col xs="4">
-                        <img onMouseEnter={this.toogle} onMouseOut={this.toogle} /*onClick={this.toogle}*/ style={{ maxWidth: '16px' }} src={require('../../images/' + this.props.image)} />
+                        <img onMouseEnter={this.toogle} onMouseOut={this.toogle} /*onClick={this.toogle}*/ style={{ maxWidth: '16px' }} src={require('../../images/' + this.props.image)} alt={"resource"}/>
                     </Col>
                     <Col xs="8">
                         <p>{~~this.props.quantity}</p>
