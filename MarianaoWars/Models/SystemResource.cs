@@ -28,6 +28,9 @@ namespace MarianaoWars.Models
         // Arrat de puntos que consume en Sueño.
         public string Sleep { get; set; }
 
+        //Array de tiempo
+        public string Time { get; set; }
+
 
     }
 }

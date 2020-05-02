@@ -76,7 +76,7 @@ export class SystemPanel extends Component {
 
     createOrderBuild() {
         console.log(this.state.System.inGameId);
-        fetch('game/createbuildorder')
+        fetch('game/createbuildorder?computerId=1&buildId=' + this.state.System.buildId)
             .then((response) => {
                 return response.json();
             })

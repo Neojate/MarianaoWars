@@ -64,7 +64,25 @@ namespace MarianaoWars.Services.Implementations
             switch(buildId / 20)
             {
                 case 0:
+                    SystemResource sysResource = repository.GetSystemResources().Result[building - 1];
+                    switch(building)
+                    {
+                        case 1: 
+                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.KnowledgeLevel]);
+                            break;
 
+                        case 2:
+                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.IngenyousLevel]);
+                            break;
+
+                        case 3:
+                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.CoffeLevel]);
+                            break;
+
+                        case 4:
+                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.StressLevel]);
+                            break;
+                    }
                     break;
                 case 1:
                     SystemSoftware sysSoftware = repository.GetSystemSoftwares().Result[building - 1];

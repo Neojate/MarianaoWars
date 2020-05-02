@@ -19,9 +19,9 @@ namespace MarianaoWars.Controllers
         }
 
         [HttpGet("createbuildorder")]
-        public void CreateBuildOrder()
+        public void CreateBuildOrder(int computerId, int buildId)
         {
-            context.CreateBuildOrder(1, 1);
+            context.CreateBuildOrder(computerId, buildId);
         }
     }
 }
