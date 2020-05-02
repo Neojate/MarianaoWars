@@ -56,6 +56,8 @@ namespace MarianaoWars.Services.Implementations
 
         public BuildOrder CreateBuildOrder(int computerId, int buildId)
         {
+            Computer computer = repository.GetComputer(computerId).Result;
+
             int milliToFinish = 60000;
             int building = buildId % 20;
 
@@ -66,14 +68,13 @@ namespace MarianaoWars.Services.Implementations
                     break;
                 case 1:
                     SystemSoftware sysSoftware = repository.GetSystemSoftwares().Result[building - 1];
-                    Software software = repository.GetComputer(computerId).Result.Software;
                     switch(building)
                     {
                         case 1:
-                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[software.GeditVersion]);
+                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[computer.Software.GeditVersion]);
                             break;
                         case 2:
-                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[software.MySqlVersion]);
+                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[computer.Software.MySqlVersion]);
                             break;
                     }
                     break;
