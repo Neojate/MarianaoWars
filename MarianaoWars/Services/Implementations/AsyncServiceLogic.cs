@@ -54,11 +54,12 @@ namespace MarianaoWars.Services.Implementations
             repository.UpdateResource(resource);
         }
 
-        public void CreateBuildOrder(int computerId, int buildId)
+        public BuildOrder CreateBuildOrder(int computerId, int buildId)
         {
             int milliToFinish = 60000;
-            int building = buildId % 10;
-            switch(buildId/10)
+            int building = buildId % 20;
+
+            switch(buildId / 20)
             {
                 case 0:
 
@@ -77,12 +78,9 @@ namespace MarianaoWars.Services.Implementations
                     }
                     break;
             }
-            Build buildOrder = new Build(computerId, milliToFinish, buildId);
-            /*Build buildOrder = new Build(1, 1000, 11);*/
-            repository.SaveBuildOrder(buildOrder);
+            BuildOrder buildOrder = new BuildOrder(computerId, milliToFinish, buildId);
+            return repository.SaveBuildOrder(buildOrder).Result;
         }
-
-
 
     }
 }

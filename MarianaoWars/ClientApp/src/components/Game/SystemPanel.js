@@ -76,9 +76,16 @@ export class SystemPanel extends Component {
 
     createOrderBuild() {
         console.log(this.state.System.inGameId);
-        fetch('game/createbuildorder' +
-            '?computerId=' + 1 +
-            '&buildId=' + this.state.System.buildId);
+        fetch('game/createbuildorder')
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                this.setState({
+                    data: json,
+                    loading: false
+                });
+            });
     }
 
 }

@@ -210,6 +210,29 @@ namespace MarianaoWars.Migrations
                     b.ToTable("AttackScript");
                 });
 
+            modelBuilder.Entity("MarianaoWars.Models.Build", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ComputerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Build");
+                });
+
             modelBuilder.Entity("MarianaoWars.Models.Computer", b =>
                 {
                     b.Property<int>("Id")
@@ -441,6 +464,9 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("BuildId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -469,6 +495,9 @@ namespace MarianaoWars.Migrations
 
                     b.Property<string>("Action1")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("BuildId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

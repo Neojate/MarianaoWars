@@ -100,26 +100,12 @@ namespace MarianaoWars.Repositories.Implementations
             return attackScript;
         }
 
-        public async Task SaveBuildOrder(Build buildOrder)
+        public async Task<BuildOrder> SaveBuildOrder(BuildOrder buildOrder)
         {
-            /*try
-            {
-                var x = dbContext.Build.ToListAsync().Result;
-            } catch (Exception e)
-            {
-                string hola = "hola";
-            }*/
-
-            try
-            {
-                await dbContext.Build.AddAsync(buildOrder);
-                await dbContext.SaveChangesAsync();
-            } 
-            catch(Exception e)
-            {
-                string hola = "hola";
-            }
+            await dbContext.BuildOrder.AddAsync(buildOrder);
+            await dbContext.SaveChangesAsync();
             
+            return buildOrder;
         }
 
         public async Task<Computer> SaveComputer(Computer computer)
