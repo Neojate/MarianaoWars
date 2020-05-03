@@ -8,7 +8,8 @@ namespace MarianaoWars.Services.Interfaces
 {
     public interface IAsyncLogic
     {
-       
+
+        List<BuildOrder> GetBuildOrders(int computerId);
 
         List<SystemResource> GetSystemResources();
 

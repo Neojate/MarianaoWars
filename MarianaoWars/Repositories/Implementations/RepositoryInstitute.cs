@@ -19,6 +19,13 @@ namespace MarianaoWars.Repositories.Implementations
             this.dbContext = dbContext;
         }
 
+        public async Task<List<BuildOrder>> GetBuildOrders(int computerId)
+        {
+            return await dbContext.BuildOrder
+                .Where(order => order.ComputerId == computerId)
+                .ToListAsync();
+        }
+
         public async Task<Computer> GetComputer(int computerId)
         {
             return await dbContext.Computer
@@ -44,8 +51,6 @@ namespace MarianaoWars.Repositories.Implementations
                 .Include(computer => computer.DefenseScript)
                 .ToListAsync();
         }
-
-        
 
         public async Task<Enrollment> GetEnrollment(string userId, int instituteId)
         {

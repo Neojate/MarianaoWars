@@ -8,6 +8,9 @@ namespace MarianaoWars.Repositories.Interfaces
 {
     public interface IRepositoryInstitute
     {
+        // Método que recupera todas las ordenes en funcion de un ordenador.
+        Task<List<BuildOrder>> GetBuildOrders(int computerId);
+
         // Método que recupera todos los ordenadores
         Task<List<Computer>> GetComputers(int enrollmentId);
 
