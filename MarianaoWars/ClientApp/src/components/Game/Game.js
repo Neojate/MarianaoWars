@@ -2,6 +2,7 @@
 import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col } from 'reactstrap';
+import '../../css/marianao_style.css';
 
 
 export class Game extends Component {
@@ -25,7 +26,7 @@ export class Game extends Component {
     render() {
 
         let content = this.state.computerActive != false
-            ? (<div className={"container-game"}>
+            ? (<div className="background">
                 <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
                 <Container>
                     <Row>
@@ -36,7 +37,7 @@ export class Game extends Component {
                         <Col xs={3}></Col>
                     </Row>
                 </Container>
-                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} />
+                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} />hola
                 </div>
             )
             : '';
