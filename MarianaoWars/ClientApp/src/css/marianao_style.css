@@ -1,4 +1,39 @@
-﻿.layout {
+﻿.background {
+    background-image: url("../images/background.jpg");
+}
+
+.bigicon {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: inline-block;
+    max-height: 100px;
+    width: auto;
+}
+
+.box {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .40);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+}
+
+.icon-description {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 100px auto;
+}
+
+.icon-description > img {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: inline-block;
+    max-height: 100px;
+    width: auto;
+}
+
+.icon-description > p {
+    padding: 0 15px;
+    text-align: justify;
 }

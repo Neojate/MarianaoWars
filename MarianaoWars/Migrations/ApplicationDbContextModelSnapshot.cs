@@ -210,7 +210,7 @@ namespace MarianaoWars.Migrations
                     b.ToTable("AttackScript");
                 });
 
-            modelBuilder.Entity("MarianaoWars.Models.Build", b =>
+            modelBuilder.Entity("MarianaoWars.Models.BuildOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -230,7 +230,7 @@ namespace MarianaoWars.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Build");
+                    b.ToTable("BuildOrder");
                 });
 
             modelBuilder.Entity("MarianaoWars.Models.Computer", b =>
@@ -480,6 +480,9 @@ namespace MarianaoWars.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Sleep")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Time")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
