@@ -39,7 +39,7 @@ namespace MarianaoWars.Repositories.Interfaces
         Task<AttackScript> SaveAttackScript(AttackScript attackScript);
 
         // Método que guarda una Orden de construcción
-        Task SaveBuildOrder(Build buildOrder);
+        Task<BuildOrder> SaveBuildOrder(BuildOrder buildOrder);
 
         // Método que guarda un ordenador
         Task<Computer> SaveComputer(Computer computer);

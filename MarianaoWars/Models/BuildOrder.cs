@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MarianaoWars.Models
 {
-    public class Build
+    public class BuildOrder
     {
         public int Id { get; set; }
 
@@ -17,12 +17,12 @@ namespace MarianaoWars.Models
 
         public int BuildId { get; set; }
 
-        public Build()
+        public BuildOrder()
         {
 
         }
 
-        public Build(int computerId, int milliToFinish, int buildId)
+        public BuildOrder(int computerId, int milliToFinish, int buildId)
         {
             ComputerId = computerId;
             StartTime = DateTime.Now;
