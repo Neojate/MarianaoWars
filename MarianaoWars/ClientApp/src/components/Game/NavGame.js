@@ -104,23 +104,23 @@ export class NavGame extends Component {
                     var maxQuantity = systemResource.lastVersion;
                     var maxQuantityLevel = 0;
 
-                    switch (systemResource.name) {
-                        case "Imaginacion":
+                    switch (systemResource.buildId) {
+                        case 2:
                             quantity = computer.Resource.Ingenyous;
                             maxQuantityLevel = computer.Resource.IngenyousLevel * maxQuantity;
                             break;
 
-                        case "Cafe":
+                        case 3:
                             quantity = computer.Resource.Coffe;
                             maxQuantityLevel = computer.Resource.CoffeLevel * maxQuantity;
                             break;
 
-                        case "Descanso":
+                        case 4:
                             quantity = computer.Resource.Stress;
                             maxQuantityLevel = computer.Resource.StressLevel * maxQuantity;
                             break;
 
-                        case "Conocimiento":
+                        case 1:
                             quantity = computer.Resource.Knowledge;
                             maxQuantityLevel = computer.Resource.KnowledgeLevel * maxQuantity;
                             break
@@ -140,7 +140,7 @@ export class NavGame extends Component {
                 })}
 
                     <Col className="text-center" xs="3">
-                        <Link to={{ pathname: `/game/${this.props.instituteId}`}}><img className="img-fluid" style={{ maxWidth: '50%' }} src={require('../../images/internet.png')} /></Link>
+                        <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/internet.png')} /></Link>
                 </Col>
 
                 <Col xs="2">

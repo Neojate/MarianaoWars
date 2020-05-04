@@ -26,10 +26,13 @@ export class Game extends Component {
     render() {
 
 
-        let content = this.state.computerActive != false
-            ? (<div className="background">
-                <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
-                <Container>
+        let content = this.state.computerActive != false ?
+            (<div className="background">
+                <div className="navgame">
+                    <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
+                </div>
+                <div>
+                    <Container>
                     <Row>
                         <Col xs={3}></Col>
                         <Col xs={6}>
@@ -37,11 +40,11 @@ export class Game extends Component {
                         </Col>
                         <Col xs={3}></Col>
                     </Row>
-                </Container>
-                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} />hola
+                    </Container>
                 </div>
-            )
-            : '';
+                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} />
+                </div>
+            ) : '';
 
         return (
             <>
