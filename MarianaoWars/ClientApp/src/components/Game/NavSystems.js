@@ -19,18 +19,22 @@ export class NavSystems extends Component {
 
             instituteId: this.props.instituteId,
             systemActive: 0,
-            systems: [],
-            loading: true
-
+            systems: this.props.system,
         };
     }
 
     componentDidMount() {
-        this.getSystemResource();
+        
         
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (this.props.systems != prevProps.systems) {
+            this.setState({
+                systems: this.props.systems
+            })
+        }
         
         // Uso tipico (no olvides de comparar los props):
         if (this.state.systemActive !== prevState.systemActive) {
@@ -134,9 +138,9 @@ export class NavSystems extends Component {
 
     render() {
 
-        let nav = this.state.loading
-            ? ''
-            : this.draw();
+        let nav = (this.state.systems != undefined)
+            ? this.draw()
+            : '';
 
         let subnav = '';
 

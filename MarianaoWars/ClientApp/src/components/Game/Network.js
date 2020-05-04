@@ -5,7 +5,12 @@ export class Network extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { broadcast: 40, data: [], loading: true, instituteId: props.match.params.instituteId };
+        this.state = {
+            broadcast: 40,
+            data: [],
+            loading: true,
+            instituteId: props.match.params.instituteId
+        };
         
         this.moveBroadcast = this.moveBroadcast.bind(this);
 

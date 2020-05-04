@@ -3,6 +3,7 @@ import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col } from 'reactstrap';
 import '../../css/marianao_style.css';
+import { SystemPanel } from './SystemPanel';
 
 
 export class Game extends Component {
@@ -13,22 +14,60 @@ export class Game extends Component {
         this.state = {
             userId: this.props.userId,
             instituteId: this.props.instituteId,
-            computers: false,
-            computerActive: false,
+            systems: this.props.systems,
+            computers: this.props.computer,
+            computerActive: this.props.computerActive,
+            valor: 1,
         };
 
     }
 
     componentDidMount() {
-        this.userComputers();
+        //this.userComputers();
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (this.props.computerActive != prevProps.computerActive) {
+            this.setState({
+                computerActive: this.props.computerActive
+            })
+        }
+        if (this.props.systems != prevProps.systems) {
+            this.setState({
+                systems: this.props.systems
+            })
+        }
+
+    }
+
 
     render() {
 
+        /*
+        //Mapea todos los children
+        var childrenWithMoreProps = React.Children.map(this.props.children, (child) => {
 
-        let content = this.state.computerActive != false
-            ? (<div className="background">
-                <NavGame userId={this.state.userId} instituteId={this.state.instituteId} computer={this.state.computerActive} />
+            //si el componente es el mismo que buscamos modificar
+            if (child.props.component === SystemPanel) {  
+
+                //clonamos y modificamos sus prop (esto no ha fucionado...)
+                return React.cloneElement(child, {
+                    customSystem: "hola"
+                });
+                
+            } else {
+                return child;
+            }
+        });
+        */
+
+
+
+        let content = (this.state.systems != undefined)
+            ? (
+            <div className="background">
+                    <NavGame userId={this.state.userId} instituteId={this.state.instituteId} systemResources={this.state.systems[1]} computer={this.state.computerActive}  />
                 <Container>
                     <Row>
                         <Col xs={3}></Col>
@@ -38,10 +77,11 @@ export class Game extends Component {
                         <Col xs={3}></Col>
                     </Row>
                 </Container>
-                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} />hola
-                </div>
+                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} />
+             </div>
             )
-            : '';
+            :
+            '';
 
         return (
             <>

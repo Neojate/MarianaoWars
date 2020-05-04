@@ -1,7 +1,5 @@
 ﻿import React, { Component } from 'react';
-import authService from '../api-authorization/AuthorizeService';
 import { Row, Col, Container } from 'reactstrap';
-import { System } from './System';
 
 import knowledgeicon from '../../images/icon/knowledge-icon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -30,13 +28,18 @@ export class SystemPanel extends Component {
         };
 
         this.createOrderBuild = this.createOrderBuild.bind(this);
-        console.log(this.state.System);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
+        if (this.props.computerActive != prevProps.computerActive) {
+            this.setState({
+                computerActive: this.props.computerActive
+            })
+        }
+
+
         if (this.props.location.state.system.name != prevProps.location.state.system.name) {
-            console.log("actualizando");
             this.setState({
                 System: this.props.location.state.system
             });

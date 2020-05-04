@@ -1,8 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Resource } from './Resource';
 import { Row, Col, Container } from 'reactstrap';
-import systemServices from '../services/SytemServices';
-import * as signalR from '@aspnet/signalr';
 import { Link } from 'react-router-dom';
 
 
@@ -14,55 +12,30 @@ export class NavGame extends Component {
         super(props);
 
         this.state = {
-            systemResources: [],
-            loading: true,
+            systemResources: this.props.systemResources,
             userId: this.props.userId,
-            hubConnection: null,
             instituteId: this.props.instituteId,
             computer: this.props.computer
         };
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (this.props.computer != prevProps.computer) {
+            this.setState({
+                computer: this.props.computer
+            })
+        }
+        if (this.props.systemResources != prevProps.systemResources) {
+            this.setState({
+                systemResources: this.props.systemResources
+            })
+        }
     }
 
     componentDidMount() {
-        this.systemResourceData();
-
-        const nick = this.state.userId;
-
-        const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
-        this.setState({ hubConnection, nick }, () => {
-            this.state.hubConnection
-                .start()
-                .then(() => {
-
-                    setInterval(this.InitUpdate, 1000);
-
-                })
-                .catch(err => console.log('Error while establishing connection :('));
-
-            this.state.hubConnection.on('updateResources', (receivedMessage) => {
-                var computer = JSON.parse(receivedMessage);
-                this.setState({ computer: computer });
-            });
-
-        });
-
-    }
-
-    InitUpdate = () => {
-        this.state.hubConnection
-            .invoke('InitUpdate', this.state.userId, this.state.computer.Id)
-            .catch(err => console.error(err));
-    }
-
-    async systemResourceData() {
-
-        var systemResource = await systemServices.systemResourceData();
-
-        //const response = await fetch('gamenav/getSytemResource');
-        //const data = await response.json();
-        this.setState({ systemResources: systemResource, loading: false });
-
+        
     }
 
     colorProgress(value, maxValue) {
@@ -162,12 +135,10 @@ export class NavGame extends Component {
 
     render() {
 
-        let contents = (!this.state.loading)
-            ? this.renderResources(this.state.systemResources, this.state.computer)
-            : <p><em>Loading...</em></p>;
-
-        let computer = this.state.computer;
-
+        let contents = (this.state.systemResources != undefined)
+            ? this.renderResources(this.state.systemResources, this.props.computer)
+            : '';
+        
         return (
             <div>
                 {contents}
