@@ -64,21 +64,26 @@ export class Game extends Component {
 
 
 
+
         let content = (this.state.systems != undefined)
             ? (
-            <div className="background">
-                    <NavGame userId={this.state.userId} instituteId={this.state.instituteId} systemResources={this.state.systems[1]} computer={this.state.computerActive}  />
-                <Container>
-                    <Row>
-                        <Col xs={3}></Col>
-                        <Col xs={6}>
-                            {this.props.children}
-                        </Col>
-                        <Col xs={3}></Col>
-                    </Row>
-                </Container>
-                <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} />
-             </div>
+                <div className="background">
+                    <div className="navgame">
+                        <NavGame userId={this.state.userId} instituteId={this.state.instituteId} systemResources={this.state.systems[1]} computer={this.state.computerActive} />
+                    </div>
+                    <div>
+                        <Container>
+                            <Row>
+                                <Col xs={3}></Col>
+                                <Col xs={6}>
+                                    {this.props.children}
+                                </Col>
+                                <Col xs={3}></Col>
+                            </Row>
+                        </Container>
+                    </div>
+                    <NavSystems userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} />
+                </div>
             )
             :
             '';

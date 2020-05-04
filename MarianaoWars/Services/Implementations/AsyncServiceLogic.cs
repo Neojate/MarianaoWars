@@ -17,6 +17,11 @@ namespace MarianaoWars.Services.Implementations
             this.repository = repository;
         }
 
+        public List<BuildOrder> GetBuildOrders(int computerId)
+        {
+            return repository.GetBuildOrders(computerId).Result;
+        }
+
         public List<Computer> GetComputersBySector(int instituteId, int broadcast)
         {
             List<Computer> computers = new List<Computer>();

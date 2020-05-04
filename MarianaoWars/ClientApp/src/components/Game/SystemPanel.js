@@ -1,10 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { Row, Col, Container } from 'reactstrap';
 
-import knowledgeicon from '../../images/icon/knowledge-icon.png';
+import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
-import coffeeicon from '../../images/icon/coffee-icon.png';
+import coffeeicon from '../../images/icon/coffeeicon.png';
 import sleepicon from '../../images/icon/sleep-icon.png';
+
+import gediticon from '../../images/icon/gediticon.png';
+import mysqlicon from '../../images/icon/mysqlicon.png';
 
 import '../../css/marianao_style.css';
 
@@ -122,6 +125,9 @@ export class SystemPanel extends Component {
             case 2: return <img src={ingenyousicon} />
             case 3: return <img src={coffeeicon} />
             case 4: return <img src={sleepicon} />
+
+            case 21: return <img src={gediticon} />
+            case 22: return <img src={mysqlicon} />
         }
     }
 

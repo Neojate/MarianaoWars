@@ -9,7 +9,7 @@ export class Layout extends Component {
     return (
       <>
         <NavMenu />
-            <Container className="themed-container" fluid={true} style={{ position: "relative" }}>
+        <Container className="themed-container" fluid={true} style={{ position: "relative", padding: "0px" }}>
           {this.props.children}
         </Container>
       </>

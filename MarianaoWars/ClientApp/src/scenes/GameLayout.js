@@ -53,6 +53,7 @@ export class GameLayout extends Component {
                 .then(() => {
 
                     setInterval(this.InitUpdate, 1000);
+                    setInterval(this.BuildOrders, 1000);
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
@@ -68,6 +69,12 @@ export class GameLayout extends Component {
     InitUpdate = () => {
         this.state.hubConnection
             .invoke('InitUpdate', this.state.userId, this.state.computerActive.Id)
+            .catch(err => console.error(err));
+    }
+
+    BuildOrders = () => {
+        this.state.hubConnection
+            .invoke('BuildOrders', this.state.userId, this.state.computerActive.Id)
             .catch(err => console.error(err));
     }
 
