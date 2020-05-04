@@ -54,18 +54,18 @@ namespace SignalRChat.Hubs
             
         }
 
-        public async Task BuildOrders(string user, int computerId)
+        public async Task BuildOrdersList(string user, int computerId)
         {
 
-            Computer computer = game.GetComputer(computerId);
+            List<BuildOrder> buildOrders = postGame.GetBuildOrders(computerId);
 
-            string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
+            string output = JsonConvert.SerializeObject(buildOrders, new JsonSerializerSettings()
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 Formatting = Formatting.Indented
             });
 
-            await Clients.Caller.SendAsync("updateResources", output);
+            await Clients.Caller.SendAsync("buildOrders", output);
 
         }
 

@@ -16,6 +16,7 @@ export class GameLayout extends Component {
             userId: this.props.location.state.userId,
             instituteId: this.props.match.params.instituteId,
             hubConnection: null,
+            buildOrders: [],
             computers: false,
             computerActive: false,
             systems: [],
@@ -53,7 +54,7 @@ export class GameLayout extends Component {
                 .then(() => {
 
                     setInterval(this.InitUpdate, 1000);
-                    setInterval(this.BuildOrders, 1000);
+                    setInterval(this.BuildOrdersList, 1000);
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
@@ -61,6 +62,12 @@ export class GameLayout extends Component {
             this.state.hubConnection.on('updateResources', (receivedMessage) => {
                 var computer = JSON.parse(receivedMessage);
                 this.setState({ computerActive: computer });
+            });
+
+            this.state.hubConnection.on('buildOrders', (receivedMessage) => {
+                var buildOrders = JSON.parse(receivedMessage);
+                console.log(buildOrders);
+                this.setState({ buildOrders: buildOrders });
             });
 
         });
@@ -72,9 +79,9 @@ export class GameLayout extends Component {
             .catch(err => console.error(err));
     }
 
-    BuildOrders = () => {
+    BuildOrdersList = () => {
         this.state.hubConnection
-            .invoke('BuildOrders', this.state.userId, this.state.computerActive.Id)
+            .invoke('BuildOrdersList', this.state.userId, this.state.computerActive.Id)
             .catch(err => console.error(err));
     }
 
@@ -132,9 +139,9 @@ export class GameLayout extends Component {
             ? (
                 <p>Loading...</p>
             )
-            : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computerActive={this.state.computerActive} >
+            : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}>
                 <Route exact path="/game/:instituteId" component={Network} />
-                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} hubConnection={this.state.hubConnection} />} />
+                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} />} />
             </Game>
             );
         //<Route path="/game/:instituteId/system" component={SystemPanel} />

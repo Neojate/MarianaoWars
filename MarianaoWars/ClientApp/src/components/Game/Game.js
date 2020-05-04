@@ -17,6 +17,7 @@ export class Game extends Component {
             systems: this.props.systems,
             computers: this.props.computer,
             computerActive: this.props.computerActive,
+            buildOrders: [],
             valor: 1,
         };
 
@@ -38,6 +39,44 @@ export class Game extends Component {
                 systems: this.props.systems
             })
         }
+        if (this.props.buildOrders != prevProps.buildOrders) {
+            this.setState({
+                buildOrders: this.props.buildOrders
+            })
+        }
+
+    }
+
+
+    builds() {
+
+        return (
+            <>
+                {this.state.buildOrders.map((build, index) => {
+
+                    let fecha1 = new Date(build.EndTime);
+                    let fecha2 = new Date();
+
+                    let resta = fecha1.getTime() - fecha2.getTime();
+                    let time = Math.round(resta / 1000);
+                    
+                    return (
+                        <div className="buildOrders-container">
+                            <Row key={index}>
+                                <Col xs={12}>
+                                    <p>Build (cambiar por nombre de build): {build.BuildId} </p>
+                                    <p>Para finalización de construcción:</p>
+                                    <p>{time} segundos</p>
+                                </Col>
+                            </Row>
+                        </div>
+                    );
+                })
+                }
+            </>
+
+        )
+
 
     }
 
@@ -78,7 +117,9 @@ export class Game extends Component {
                                 <Col xs={6}>
                                     {this.props.children}
                                 </Col>
-                                <Col xs={3}></Col>
+                                <Col xs={3}>
+                                    {this.builds()}
+                                </Col>
                             </Row>
                         </Container>
                     </div>

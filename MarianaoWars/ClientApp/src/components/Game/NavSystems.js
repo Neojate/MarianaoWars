@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col, Container } from 'reactstrap';
+import { Row } from 'reactstrap';
 import { System } from './System';
-import systemServices from '../services/SytemServices';
 import { Link } from 'react-router-dom';
 
 import $ from "jquery";
@@ -16,17 +15,13 @@ export class NavSystems extends Component {
 
         //this.sistemActive = this.sistemActive.bind(this, id);
         this.state = {
-
             instituteId: this.props.instituteId,
             systemActive: 0,
             systems: this.props.system,
         };
     }
 
-    componentDidMount() {
-        
-        
-    }
+    componentDidMount() {}
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -43,23 +38,6 @@ export class NavSystems extends Component {
             }
         }
     }
-
-    async getSystemResource() {
-
-        const [systemResource, systemSofftware] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData()]);
-        //var systemResource = await systemServices.systemResourceData();
-
-        var stateTemp = this.state.systems.slice();
-        stateTemp[1] = systemResource;
-        stateTemp[2] = systemSofftware;
-        
-        this.setState({
-            systems: stateTemp,
-            loading: false
-        })        
-    }
-
-
 
     navStyle() {
         return {
