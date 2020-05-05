@@ -66,7 +66,6 @@ export class GameLayout extends Component {
 
             this.state.hubConnection.on('buildOrders', (receivedMessage) => {
                 var buildOrders = JSON.parse(receivedMessage);
-                console.log(buildOrders);
                 this.setState({ buildOrders: buildOrders });
             });
 
@@ -139,7 +138,7 @@ export class GameLayout extends Component {
             ? (
                 <p>Loading...</p>
             )
-            : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}>
+            : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computers={this.state.computers} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}>
                 <Route exact path="/game/:instituteId" component={Network} />
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} />} />
             </Game>

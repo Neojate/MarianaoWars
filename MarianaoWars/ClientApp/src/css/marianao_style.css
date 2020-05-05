@@ -50,7 +50,7 @@
     padding: 15px;
 }
 
-.buildOrders-container {
+.buildOrders-container, .computers-container {
     border: 1px solid #b3b7bc;
     border-radius: 10px;
     padding: 20px;

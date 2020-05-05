@@ -15,7 +15,7 @@ export class Game extends Component {
             userId: this.props.userId,
             instituteId: this.props.instituteId,
             systems: this.props.systems,
-            computers: this.props.computer,
+            computers: [],
             computerActive: this.props.computerActive,
             buildOrders: [],
             valor: 1,
@@ -44,7 +44,35 @@ export class Game extends Component {
                 buildOrders: this.props.buildOrders
             })
         }
+        if (this.props.computers != prevProps.computers) {
+            this.setState({
+                computers: this.props.computers
+            })
+        }
 
+    }
+
+    computers() {
+
+        return (
+            <>
+                {this.state.computers.map((computer, index) => {
+
+                    return (
+                        <div className="computers-container">
+                            <Row key={index}>
+                                <Col xs={12}>
+                                    <p>Ip {computer.IpDirection} </p>
+                                    <p><span>Downloads: {computer.Downloads}</span></p>
+                                    <p><span>Memm: {computer.Memmory}</span>/<span>Memm.Used: {computer.MemmoryUsed}</span></p>
+                                </Col>
+                            </Row>
+                        </div>
+                    );
+                })
+                }
+            </>
+            )
     }
 
 
@@ -113,7 +141,9 @@ export class Game extends Component {
                     <div>
                         <Container>
                             <Row>
-                                <Col xs={3}></Col>
+                                <Col xs={3}>
+                                    {this.computers()}
+                                </Col>
                                 <Col xs={6}>
                                     {this.props.children}
                                 </Col>
