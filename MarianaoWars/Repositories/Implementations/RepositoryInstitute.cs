@@ -80,6 +80,11 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<Resource> GetResource(int resourceId)
+        {
+            return await dbContext.Resource.FindAsync(resourceId);
+        }
+
         public async Task<List<SystemResource>> GetSystemResources()
         {
             return await dbContext.SystemResource
@@ -162,10 +167,14 @@ namespace MarianaoWars.Repositories.Implementations
             return resource;
         }
 
-        public async Task<Resource> GetResource(int resourceId)
+        public Resource NotAsyncUpdateResource(Resource resource)
         {
-            return await dbContext.Resource.FindAsync(resourceId);
+            dbContext.Update(resource);
+            dbContext.SaveChanges();
+            return resource;
         }
+
+        
 
     }
 }

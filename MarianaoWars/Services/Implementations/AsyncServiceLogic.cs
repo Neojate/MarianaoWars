@@ -59,36 +59,40 @@ namespace MarianaoWars.Services.Implementations
             repository.UpdateResource(resource);
         }
 
-        public BuildOrder CreateBuildOrder(int computerId, int buildId)
+        public async Task<BuildOrder> CreateBuildOrder(int computerId, int buildId)
         {
             Computer computer = repository.GetComputer(computerId).Result;
 
             int milliToFinish = 60000;
             int building = buildId % 20;
 
+            int buildLevel = calculateBuildLevel(computer, buildId) - 1;
+
             switch(buildId / 20)
             {
                 case 0:
                     SystemResource sysResource = repository.GetSystemResources().Result[building - 1];
-                    switch(building)
-                    {
-                        case 1: 
-                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.KnowledgeLevel]);
-                            break;
 
-                        case 2:
-                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.IngenyousLevel]);
-                            break;
+                    int needKnowledge = int.Parse(sysResource.NeedKnowledge.Split(',')[buildLevel]);
+                    int needIngenyous = int.Parse(sysResource.NeedIngenyous.Split(',')[buildLevel]);
 
-                        case 3:
-                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.CoffeLevel]);
-                            break;
+                    //se comprueba si hay suficientes recursos
+                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous)
+                        return null;
 
-                        case 4:
-                            milliToFinish *= int.Parse(sysResource.Time.Split(',')[computer.Resource.StressLevel]);
-                            break;
-                    }
+                    //se comprueba que no hay otra orden
+                    foreach (BuildOrder b in repository.GetBuildOrders(computerId).Result)
+                        if (b.BuildId < 40)
+                            return null;
+                    
+                    computer.Resource.Knowledge -= needKnowledge;
+                    computer.Resource.Ingenyous -= needIngenyous;
+
+                    milliToFinish *= int.Parse(sysResource.Time.Split(',')[buildLevel + 1]);
+
+                    repository.NotAsyncUpdateResource(computer.Resource);
                     break;
+
                 case 1:
                     SystemSoftware sysSoftware = repository.GetSystemSoftwares().Result[building - 1];
                     switch(building)
@@ -102,8 +106,29 @@ namespace MarianaoWars.Services.Implementations
                     }
                     break;
             }
+        
             BuildOrder buildOrder = new BuildOrder(computerId, milliToFinish, buildId);
-            return repository.SaveBuildOrder(buildOrder).Result;
+            return repository.SaveBuildOrder(buildOrder).Result;            
+        }
+
+        private int calculateBuildLevel(Computer computer, int buildId)
+        {
+            switch (buildId)
+            {
+                case 1: return computer.Resource.KnowledgeLevel;
+                case 2: return computer.Resource.IngenyousLevel;
+                case 3: return computer.Resource.CoffeLevel;
+                case 4: return computer.Resource.StressLevel;
+
+                case 21: return computer.Software.GeditVersion;
+                case 22: return computer.Software.MySqlVersion;
+                case 23: return computer.Software.GitHubVersion;
+                case 24: return computer.Software.StackOverFlowVersion;
+                case 25: return computer.Software.PostManVersion;
+                case 26: return computer.Software.VirtualMachineVersion;
+
+                default: return 0;
+            }
         }
 
     }

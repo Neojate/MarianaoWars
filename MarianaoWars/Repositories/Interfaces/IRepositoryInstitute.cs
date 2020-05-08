@@ -17,17 +17,20 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera un ordenador por su Id
         Task<Computer> GetComputer(int computerId);
 
-
         // Método que devuelve una matrícula en función del usuario y el instituto
         Task<Enrollment> GetEnrollment(string userId, int instituteId);
 
         // Método que devuelve todas las matrículas de un servidor
         Task<List<Enrollment>> GetEnrollments(int instituteId);
 
+        // Método que recupera un instituto en función de su id.
         Task<Institute> GetInstitute(int instituteId);
 
         // Método que recupera todos los institutos abiertos
         Task<List<Institute>> GetOpenInstitutes();
+
+        // Método que recupera un Recurso según su id
+        Task<Resource> GetResource(int resourceId);
 
         // Método que recupera los recursos de sistema
         Task<List<SystemResource>> GetSystemResources();
@@ -62,8 +65,11 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que guarda un talento
         Task<Talent> SaveTalent(Talent talent);
 
+        // Método que actualiza los recursos
         Task<Resource> UpdateResource(Resource resource);
 
-        Task<Resource> GetResource(int resourceId);
+        // Método que actualiza los recursos de forma síncrona
+        Resource NotAsyncUpdateResource(Resource resource);
+
     }
 }

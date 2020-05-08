@@ -25,12 +25,17 @@ namespace MarianaoWars.Models
         // Array de puntos que otorga la mina
         public string Increment { get; set; }
 
-        // Arrat de puntos que consume en Sueño.
+        // Array de puntos que consume en Sueño.
         public string Sleep { get; set; }
 
-        //Array de tiempo
+        // Array de tiempo que consume subir
         public string Time { get; set; }
 
+        // Array de los recursos de conocimiento que necesita para subir.
+        public string NeedKnowledge { get; set; }
+
+        // Array de los recursos de ingenio que necesita para subir.
+        public string NeedIngenyous { get; set; }
 
     }
 }
