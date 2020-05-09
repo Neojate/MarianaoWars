@@ -116,9 +116,18 @@ nav{
     margin: auto;
     width: 75%;
     height: 160px;
+    background-image: url("../images/pc_principal.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.prtatil-pc {
+    margin: auto;
+    width: 75%;
+    height: 160px;
     background-image: url("../images/pc.svg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 @media (min-width: 1400px) {
