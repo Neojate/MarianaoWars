@@ -1,5 +1,24 @@
-﻿.background {
+﻿
+html, body, #root{
+    height: 100%;
+}
+
+#root {
+    display: grid;
+    grid-template-rows: 30px auto;
+}
+
+.themed-container {
+    
+}
+
+
+.background {
+    height: 100%;
     background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*background-image: url("../images/background.jpg");*/
 }
 
 .bigicon {
@@ -39,15 +58,50 @@
     text-align: justify;
 }
 
+nav{
+    max-height: 30px;
+}
+
 .navgame {
     background-color: rgba(255, 255, 255, .60);
     border: 1px solid #ddd;
     border-radius: 0px 0px 10px 10px;
-    box-shadow: 0px 5px 5px #888; 
-    backdrop-filter: blur(5px);
+    box-shadow: 0px 5px 5px #888;
+    /*filter: blur(1px);*/
     margin-bottom: 30px;
-    height: 85px;
-    padding: 15px;
+    height: 60px;
+    padding: 5px;
+}
+
+.navgame p{
+    margin-bottom: 0;
+}
+
+.navsystem {
+    position: fixed;
+    bottom: 0px;
+    right: 30px;
+    left: 30px;
+    height: 80px;
+    background-color: rgba(181, 181, 181, 0.15);
+    border: 1px solid #ddd;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 0px -3px 3px #888;
+}
+
+.sub-nav {
+    display: none;
+    bottom: 80px;
+    height: 90px;
+    right: 40px;
+    left: 40px;
+    border-bottom: 0;
+}
+
+.system {
+    height: 60px;
+    width: 80px;
+    margin: auto;
 }
 
 .buildOrders-container, .computers-container {
@@ -55,4 +109,11 @@
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
+}
+
+
+@media (min-width: 1400px){
+    .container{
+        max-width: 1320px;
+    } 
 }

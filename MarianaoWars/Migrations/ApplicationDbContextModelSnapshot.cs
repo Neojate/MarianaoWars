@@ -479,6 +479,12 @@ namespace MarianaoWars.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("NeedIngenyous")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NeedKnowledge")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Sleep")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 

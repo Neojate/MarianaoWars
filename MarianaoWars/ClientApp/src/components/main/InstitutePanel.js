@@ -3,6 +3,7 @@ import authService from '../api-authorization/AuthorizeService';
 import $ from "jquery";
 import { Redirect } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { Container } from 'reactstrap';
 
 export class InstitutePanel extends Component {
 
@@ -43,6 +44,7 @@ export class InstitutePanel extends Component {
     drawInstituteTable(institutes) {
 
         return (
+
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -77,10 +79,10 @@ export class InstitutePanel extends Component {
             <p><label>Cargando...</label></p> :
             this.drawInstituteTable(this.state.data);
         return (
-            <div>
+            <Container >
                 <p>Lista de los servidores activos</p>
                 {content}
-            </div>    
+            </Container >
         )
     }
 

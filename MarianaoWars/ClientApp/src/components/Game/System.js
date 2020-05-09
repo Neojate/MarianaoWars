@@ -61,9 +61,11 @@ export class System extends Component {
         }
 
         return {
+            /*
             height: "80px",
             width: "80px",
             margin: "auto",
+            */
             border: border,
             backgroundColor: backgroundColor
         };
@@ -80,7 +82,7 @@ export class System extends Component {
                 //añadir aqui sub nav segun click.
 
             <Col xs={2} onClick={this.props.onClick}>
-                    <div style={this.systemStyle()} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.active} >
+                <div style={this.systemStyle()} className={"system"} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.active} >
                     
                      </div>
                 </Col>

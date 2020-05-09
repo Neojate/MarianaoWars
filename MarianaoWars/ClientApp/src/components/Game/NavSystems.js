@@ -41,6 +41,7 @@ export class NavSystems extends Component {
 
     navStyle() {
         return {
+            /*
             position: "fixed",
             bottom: "5px",
             right: "5px",
@@ -48,11 +49,13 @@ export class NavSystems extends Component {
             height: "120px",
             backgroundColor: "#4e0fc8c2",
             border: "1px solid black"
+            */
         }
     }
 
     subNavStyle() {
         return {
+            /*
             display: "none",
             position: "fixed",
             bottom: "130px",
@@ -61,6 +64,7 @@ export class NavSystems extends Component {
             height: "120px",
             backgroundColor: "#4e0fc8c2",
             border: "1px solid black"
+            */
         }
     }
 
@@ -86,7 +90,7 @@ export class NavSystems extends Component {
     drawSubMenu() {
 
         return (
-            <Row style={this.subNavStyle()} className={"align-items-center sub-nav"}>
+            <Row style={this.subNavStyle()} className={"d-flex align-items-center sub-nav navsystem"}>
                 {this.state.systems[this.state.systemActive].map((system, index) => {
                     return (
                         <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system } }}>
@@ -102,7 +106,7 @@ export class NavSystems extends Component {
 
     draw() {
         return (
-                <Row style={this.navStyle()} className={"d-flex align-items-center"} >
+                <Row style={this.navStyle()} className={"d-flex align-items-center navsystem"} >
                     <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, 1)} />
                     <System onClick={this.sistemActive.bind(this, 2)} />
                     <System onClick={this.sistemActive.bind(this, 3)} />
