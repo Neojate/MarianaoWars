@@ -112,7 +112,16 @@ nav{
 }
 
 
-@media (min-width: 1400px){
+.principal-pc {
+    margin: auto;
+    width: 75%;
+    height: 160px;
+    background-image: url("../images/pc.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (min-width: 1400px) {
     .container{
         max-width: 1320px;
     } 

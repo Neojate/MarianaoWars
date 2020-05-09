@@ -62,9 +62,8 @@ export class Game extends Component {
                         <div className="computers-container">
                             <Row key={index}>
                                 <Col xs={12}>
-                                    <p>Ip {computer.IpDirection} </p>
-                                    <p><span>Downloads: {computer.Downloads}</span></p>
-                                    <p><span>Memm: {computer.Memmory}</span>/<span>Memm.Used: {computer.MemmoryUsed}</span></p>
+                                    <div className={computer.IsDesk == 1 ? "principal-pc":"portatil-pc" }></div>
+                                    <p className={"text-center"}>Ip {computer.IpDirection} </p>
                                 </Col>
                             </Row>
                         </div>
