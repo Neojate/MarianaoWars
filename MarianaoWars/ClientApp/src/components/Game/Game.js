@@ -74,26 +74,57 @@ export class Game extends Component {
             )
     }
 
+    timeLeft(endTime) {
+
+        let fecha1 = new Date(endTime);
+        let fecha2 = new Date();
+
+        if (fecha1.getTime() < fecha2.getTime()) {
+            return "Finalizado";
+        }
+
+        let time = fecha1.getTime() - fecha2.getTime();
+
+        let segundos = parseInt(time / 1000, 10);
+        let dias = Math.floor(segundos / (3600 * 24));
+        segundos -= dias * 3600 * 24;
+        let horas = Math.floor(segundos / 3600);
+        segundos -= horas * 3600;
+        let minutos = Math.floor(segundos / 60);
+        segundos -= minutos * 60;
+        
+        return `${dias}d. ${String(horas).padStart(2, "0")}h. ${String(minutos).padStart(2, "")}m. ${ String(segundos).padStart(2, "")}s`;
+    }
 
     builds() {
+
 
         return (
             <>
                 {this.state.buildOrders.map((build, index) => {
 
-                    let fecha1 = new Date(build.EndTime);
-                    let fecha2 = new Date();
+                    let time = this.timeLeft(build.EndTime);
 
-                    let resta = fecha1.getTime() - fecha2.getTime();
-                    let time = Math.round(resta / 1000);
+                    //@todo: Ojo que ahora mismo systemsResources se carga en 1, y la base de datos marca 0
+                    //convierte el valor en string de dos caracteres
+                    let buildId = String(build.BuildId).padStart(2, "0");
+
+                    //primer valor marca la posición en el array de systems
+                    let indiceBuild = buildId.substring(0, 1);
+
+                    //segundo valor marca la posición en el array del tipo de systems
+                    let indiceBuildId = buildId.substring(1, 2);
                     
+                    //console.log(this.state.systems[indiceBuild]);
+                    let buildName = this.state.systems[indiceBuild][indiceBuildId - 1].name;
+
                     return (
                         <div className="buildOrders-container">
                             <Row key={index}>
                                 <Col xs={12}>
-                                    <p>Build (cambiar por nombre de build): {build.BuildId} </p>
-                                    <p>Para finalización de construcción:</p>
-                                    <p>{time} segundos</p>
+                                    <p>Actulaización de {buildName}</p>
+                                    <p>Tiempo restante</p>
+                                    <p className={"m-0"}>{time}</p>
                                 </Col>
                             </Row>
                         </div>
@@ -110,32 +141,11 @@ export class Game extends Component {
 
     render() {
 
-        /*
-        //Mapea todos los children
-        var childrenWithMoreProps = React.Children.map(this.props.children, (child) => {
-
-            //si el componente es el mismo que buscamos modificar
-            if (child.props.component === SystemPanel) {  
-
-                //clonamos y modificamos sus prop (esto no ha fucionado...)
-                return React.cloneElement(child, {
-                    customSystem: "hola"
-                });
-                
-            } else {
-                return child;
-            }
-        });
-        */
-
-
-
-
         let content = (this.state.systems != undefined)
             ? (
                 <div className="background">
                     <div className="navgame">
-                        <NavGame userId={this.state.userId} instituteId={this.state.instituteId} systemResources={this.state.systems[1]} computer={this.state.computerActive} />
+                        <NavGame userId={this.state.userId} instituteId={this.state.instituteId} systemResources={this.state.systems[1]} systems={this.state.systems} computer={this.state.computerActive} />
                     </div>
                     <div>
                         <Container>

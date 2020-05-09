@@ -1,5 +1,5 @@
 ﻿
-html, body, #root{
+html, body, #root {
     height: 100%;
 }
 
@@ -8,8 +8,12 @@ html, body, #root{
     grid-template-rows: 30px auto;
 }
 
-.themed-container {
-    
+p-0{
+    padding: 0px;
+}
+
+m-0{
+    margin: 0px;
 }
 
 
@@ -19,6 +23,11 @@ html, body, #root{
     background-repeat: no-repeat;
     background-size: cover;
     /*background-image: url("../images/background.jpg");*/
+}
+
+.card {
+    margin: 20px;
+    min-height: 570px;
 }
 
 .bigicon {
@@ -44,21 +53,21 @@ html, body, #root{
     grid-template-columns: 100px auto;
 }
 
-.icon-description > img {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    display: inline-block;
-    max-height: 100px;
-    width: auto;
-}
+    .icon-description > img {
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 5px;
+        display: inline-block;
+        max-height: 100px;
+        width: auto;
+    }
 
-.icon-description > p {
-    padding: 0 15px;
-    text-align: justify;
-}
+    .icon-description > p {
+        padding: 0 15px;
+        text-align: justify;
+    }
 
-nav{
+nav {
     max-height: 30px;
 }
 
@@ -73,9 +82,9 @@ nav{
     padding: 5px;
 }
 
-.navgame p{
-    margin-bottom: 0;
-}
+    .navgame p {
+        margin-bottom: 0;
+    }
 
 .navsystem {
     position: fixed;
@@ -107,31 +116,31 @@ nav{
 .buildOrders-container, .computers-container {
     border: 1px solid #b3b7bc;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
+    text-align: center;
 }
-
 
 .principal-pc {
-    margin: auto;
-    width: 75%;
-    height: 160px;
     background-image: url("../images/pc_principal.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 
-.prtatil-pc {
-    margin: auto;
-    width: 75%;
-    height: 160px;
+.portatil-pc {
     background-image: url("../images/pc.svg");
+}
+
+
+.principal-pc, .portatil-pc {
+    margin: auto;
+    max-width: 50%;
+    height: 65px;
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
 }
 
 @media (min-width: 1400px) {
-    .container{
+    .container {
         max-width: 1320px;
-    } 
+    }
 }
