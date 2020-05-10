@@ -59,7 +59,7 @@ namespace MarianaoWars.Services.Implementations
             repository.UpdateResource(resource);
         }
 
-        public async Task<BuildOrder> CreateBuildOrder(int computerId, int buildId)
+        public BuildOrder CreateBuildOrder(int computerId, int buildId)
         {
             Computer computer = repository.GetComputer(computerId).Result;
 

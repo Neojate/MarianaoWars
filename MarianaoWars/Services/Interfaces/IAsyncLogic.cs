@@ -21,7 +21,7 @@ namespace MarianaoWars.Services.Interfaces
 
         void UpdateResource(Resource computer);
 
-        Task<BuildOrder> CreateBuildOrder(int computerId, int buildId);
+        BuildOrder CreateBuildOrder(int computerId, int buildId);
 
     }
 }

@@ -8,6 +8,10 @@ import sleepicon from '../../images/icon/sleep-icon.png';
 
 import gediticon from '../../images/icon/gediticon.png';
 import mysqlicon from '../../images/icon/mysqlicon.png';
+import githubicon from '../../images/icon/githubicon.png';
+import stackoverflowicon from '../../images/icon/stackoverflowicon.png';
+import postmanicon from '../../images/icon/postmanicon.png';
+import virtualboxicon from '../../images/icon/virtualboxicon.png';
 
 import '../../css/marianao_style.css';
 
@@ -128,6 +132,10 @@ export class SystemPanel extends Component {
 
             case 21: return <img src={gediticon} />
             case 22: return <img src={mysqlicon} />
+            case 23: return <img src={githubicon} />
+            case 24: return <img src={stackoverflowicon} />
+            case 25: return <img src={postmanicon} />
+            case 26: return <img src={virtualboxicon} />
         }
     }
 
