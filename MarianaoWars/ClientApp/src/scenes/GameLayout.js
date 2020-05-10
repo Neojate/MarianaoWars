@@ -89,6 +89,7 @@ export class GameLayout extends Component {
         const [systemResource, systemSofftware] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData()]);
 
         var stateTemp = this.state.systems.slice();
+        stateTemp[0] = systemResource;
         stateTemp[1] = systemResource;
         stateTemp[2] = systemSofftware;
 

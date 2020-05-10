@@ -144,3 +144,10 @@ nav {
         max-width: 1320px;
     }
 }
+
+
+@media (max-width: 1200px) {
+    body {
+        font-size: 14px;
+    }
+}
