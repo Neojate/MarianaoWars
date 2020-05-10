@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Col, Container, Button } from 'reactstrap';
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -13,7 +13,7 @@ import stackoverflowicon from '../../images/icon/stackoverflowicon.png';
 import postmanicon from '../../images/icon/postmanicon.png';
 import virtualboxicon from '../../images/icon/virtualboxicon.png';
 
-import '../../css/marianao_style.css';
+
 
 
 
@@ -27,10 +27,13 @@ export class SystemPanel extends Component {
         this.state = {
 
             System: this.props.location.state.system,
+            typeSystem: this.props.location.state.typeSystem,
             instituteId: this.props.match.params.instituteId,
+            computerActive: [],
             loading: true,
             hover: false,
             active: false,
+            canBeUpdate: true,
 
         };
 
@@ -50,13 +53,14 @@ export class SystemPanel extends Component {
             this.setState({
                 System: this.props.location.state.system
             });
-
         }
 
-        // Uso tipico (no olvides de comparar los props):
-        if (this.state.systemActive !== prevState.systemActive) {
-            
+        if (this.props.location.state.typeSystem != prevProps.location.state.typeSystem) {
+            this.setState({
+                typeSystem: this.props.location.state.typeSystem
+            });
         }
+
     }
 
 
@@ -72,20 +76,92 @@ export class SystemPanel extends Component {
         });
     }
 
-    style() {
+
+    levelSystemComputer() {
+
+        let resourceValues = Object.values(this.state.computerActive.Resource);
+        let softwareValues = Object.values(this.state.computerActive.Software);
+
+        if (this.state.typeSystem == 0) {
+            return <p>{`Nivel ${resourceValues[this.state.System.buildId + 5]} de ${this.state.System.lastVersion}`}</p>
+        }
+        else if (this.state.typeSystem == 2) {
+            return <p>{`Nivel ${softwareValues[this.state.System.buildId - 19]} de ${this.state.System.lastVersion}`}</p>
+        }
+    }
+
+    systemLevel() {
+
+        let resourceValues = Object.values(this.state.computerActive.Resource);
+        let softwareValues = Object.values(this.state.computerActive.Software);
+
+        if (this.state.typeSystem == 0) {
+            return resourceValues[this.state.System.buildId + 5];
+        }
+        else if (this.state.typeSystem == 2) {
+            return softwareValues[this.state.System.buildId - 19];
+        }
+
+
+    }
+
+    neededToUpdate() {
+
+        let canBeUpdate = true;
+        let version = this.systemLevel();
+
+        let requireKnowlege = 0;
+        let requireIngenyous = 0;
+        let requireCoffee = 0;
+
+        if (this.state.typeSystem == 0) {
+
+            requireKnowlege = this.state.System.needKnowledge.split(",")[version];
+            requireIngenyous = this.state.System.needIngenyous.split(",")[version];
+
+        }
+        else if (this.state.typeSystem == 2) {
+
+            requireKnowlege = this.state.System.requireKnowledge.split(",")[version];
+            requireIngenyous = this.state.System.requireIngenyous.split(",")[version];
+            requireCoffee = this.state.System.requireCoffee.split(",")[version];
+
+        }
+
+        if (requireKnowlege > this.state.computerActive.Resource.Knowledge || requireIngenyous > this.state.computerActive.Resource.Ingenyous || requireCoffee > this.state.computerActive.Resource.Coffe) {
+            canBeUpdate = false;
+        }
 
         return {
-            height: "200px",
-            width: "100%",
-            border: "1px solid #ddd",
-            borderRadius: "10px",
-            backgroundColor: "rgba(255, 255, 255, .30)",
-            backdropFilter: "blur(5px)"
-        };
+            'conocimineto': requireKnowlege,
+            'ingenio': requireIngenyous,
+            'cafe': requireCoffee,
+            'canBeUpdate': canBeUpdate
+        }
 
     }
 
     render() {
+
+        if (this.state.computerActive.length == 0) {
+            return "";
+        }
+
+        let requeriments = this.neededToUpdate();
+        let containsRequeriment =
+            (<div className="row">
+                <div className="col-6">
+                    Requisitos:
+                        </div>
+                <div className="col-6">
+                    <div>Conocimiento: {requeriments.conocimineto}</div>
+                    <div>Ingenio: {requeriments.ingenio}</div>
+                    <div>Café: {requeriments.cafe}</div>
+                </div>
+            </div>);
+
+        let updateButton = requeriments.canBeUpdate ? <Button color="primary" onClick={this.createOrderBuild}>Actualizar</Button> : <Button color="primary" disabled>Actualizar</Button>;
+        
         return (
             <div className="box" >
                 <h2>{this.state.System.name}</h2>
@@ -96,23 +172,13 @@ export class SystemPanel extends Component {
                 </div>
                 <hr />
                 <div>
-                    Nivel X de Y
+                    {this.levelSystemComputer()}
                 </div>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-6">
-                            Requisitos:
-                        </div>
-                        <div className="col-6">
-                            <div>Conocimiento</div>
-                            <div>Ingenio</div>
-                            <div>Café</div>
-                            <div>Descanso</div>
-                        </div>
-                    </div>
+                    {containsRequeriment}
                 </div>
                 <div>
-                    <button className="btn btn-primary center" onClick={this.createOrderBuild}>Actualizar</button>
+                    {updateButton}
                 </div>
             </div>
         );

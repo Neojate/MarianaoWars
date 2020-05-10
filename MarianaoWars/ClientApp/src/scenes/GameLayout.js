@@ -6,6 +6,8 @@ import { SystemPanel } from '../components/game/SystemPanel';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';
 
+import '../css/marianao_style.css';
+
 export class GameLayout extends Component {
     static displayName = GameLayout.name;
 
@@ -90,7 +92,7 @@ export class GameLayout extends Component {
 
         var stateTemp = this.state.systems.slice();
         stateTemp[0] = systemResource;
-        stateTemp[1] = systemResource;
+        //stateTemp[1] = systemResource;
         stateTemp[2] = systemSofftware;
 
         this.setState({

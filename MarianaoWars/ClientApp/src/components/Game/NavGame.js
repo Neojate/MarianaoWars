@@ -72,7 +72,7 @@ export class NavGame extends Component {
         return (
             <Container>
             <Row style={{ alignItems: 'center' }}>
-                {systems[1].map((systemResource, index) => {
+                {systems[0].map((systemResource, index) => {
 
                     //TODO: Buscar otra manera de obtener el dato, que no sea hardcode
                     //Obtenemos array de valores máximos de capacidad

@@ -16,7 +16,7 @@ export class NavSystems extends Component {
         //this.sistemActive = this.sistemActive.bind(this, id);
         this.state = {
             instituteId: this.props.instituteId,
-            systemActive: 0,
+            systemActive: -1,
             systems: this.props.system,
         };
     }
@@ -33,38 +33,9 @@ export class NavSystems extends Component {
         
         // Uso tipico (no olvides de comparar los props):
         if (this.state.systemActive !== prevState.systemActive) {
-            if (this.state.systemActive != 0) {
+            if (this.state.systemActive != -1) {
                 $('.sub-nav').show(500);
             }
-        }
-    }
-
-    navStyle() {
-        return {
-            /*
-            position: "fixed",
-            bottom: "5px",
-            right: "5px",
-            left: "5px",
-            height: "120px",
-            backgroundColor: "#4e0fc8c2",
-            border: "1px solid black"
-            */
-        }
-    }
-
-    subNavStyle() {
-        return {
-            /*
-            display: "none",
-            position: "fixed",
-            bottom: "130px",
-            right: "5px",
-            left: "5px",
-            height: "120px",
-            backgroundColor: "#4e0fc8c2",
-            border: "1px solid black"
-            */
         }
     }
 
@@ -73,7 +44,7 @@ export class NavSystems extends Component {
         $('.sub-nav').hide(500);
 
         if (this.state.systemActive == id) {
-            id = 0;
+            id = -1;
             await this.sleep(400);
         }
         this.setState({
@@ -90,13 +61,12 @@ export class NavSystems extends Component {
     drawSubMenu() {
 
         return (
-            <Row style={this.subNavStyle()} className={"d-flex align-items-center sub-nav navsystem"}>
+            <Row className={"d-flex align-items-center sub-nav navsystem"}>
                 {this.state.systems[this.state.systemActive].map((system, index) => {
                     return (
-                        <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system } }}>
-                            <System key={index} />
-                        </Link>
-                        
+                        <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
+                            <System key={index} buildId={system.buildId} />
+                            </Link>
                     );
                 })}
             </Row>
@@ -106,8 +76,8 @@ export class NavSystems extends Component {
 
     draw() {
         return (
-                <Row style={this.navStyle()} className={"d-flex align-items-center navsystem"} >
-                    <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, 1)} />
+                <Row className={"d-flex align-items-center navsystem"} >
+                    <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, 0)} />
                     <System onClick={this.sistemActive.bind(this, 2)} />
                     <System onClick={this.sistemActive.bind(this, 3)} />
                     <System onClick={this.sistemActive.bind(this, 4)} />
@@ -127,7 +97,7 @@ export class NavSystems extends Component {
         let subnav = '';
 
         //Si tenemos un system activo y este tiene elementos, lo mostramos
-        if (this.state.systemActive != 0 && this.state.systems[this.state.systemActive] != undefined) {
+        if (this.state.systemActive != -1 && this.state.systems[this.state.systemActive] != undefined) {
             subnav = this.drawSubMenu();
         }
 

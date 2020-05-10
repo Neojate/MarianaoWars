@@ -115,7 +115,6 @@ export class Game extends Component {
                     //segundo valor marca la posición en el array del tipo de systems
                     let indiceBuildId = buildId.substring(1, 2);
                     
-                    //console.log(this.state.systems[indiceBuild]);
                     let buildName = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
                     return (

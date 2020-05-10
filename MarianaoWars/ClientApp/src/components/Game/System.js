@@ -12,12 +12,6 @@ export class System extends Component {
         this.active = this.active.bind(this);
 
         this.state = {
-            Id: 0,
-            Name: '',
-            Description: '',
-            LastVersion: 0,
-            Increment: [],
-            Sleep: [],
 
             loading: true,
             hover: false,
@@ -61,11 +55,6 @@ export class System extends Component {
         }
 
         return {
-            /*
-            height: "80px",
-            width: "80px",
-            margin: "auto",
-            */
             border: border,
             backgroundColor: backgroundColor
         };
@@ -77,15 +66,20 @@ export class System extends Component {
 
     render() {
 
+        let img = '';
+        if (this.props.buildId != undefined) {
+            img = <img src={require(`../../images/icon/${this.props.buildId}.png`)}></img>
+        }
+
         return (
 
                 //añadir aqui sub nav segun click.
 
-            <Col xs={2} onClick={this.props.onClick}>
+            <Col xs={2} onClick={this.props.onClick} >
                 <div style={this.systemStyle()} className={"system"} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.active} >
-                    
-                     </div>
-                </Col>
+                    {img}
+                 </div>
+            </Col>
 
 
         );
