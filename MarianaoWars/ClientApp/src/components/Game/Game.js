@@ -3,7 +3,6 @@ import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col } from 'reactstrap';
 import '../../css/marianao_style.css';
-import { SystemPanel } from './SystemPanel';
 
 
 export class Game extends Component {
@@ -18,6 +17,7 @@ export class Game extends Component {
             computers: [],
             computerActive: this.props.computerActive,
             buildOrders: [],
+            capacityResource: 0,
             valor: 1,
         };
 
@@ -29,22 +29,23 @@ export class Game extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if (this.props.computerActive != prevProps.computerActive) {
+        if (this.props.computerActive !== prevProps.computerActive) {
             this.setState({
                 computerActive: this.props.computerActive
             })
         }
-        if (this.props.systems != prevProps.systems) {
+        if (this.props.systems !== prevProps.systems) {
+
             this.setState({
                 systems: this.props.systems
             })
         }
-        if (this.props.buildOrders != prevProps.buildOrders) {
+        if (this.props.buildOrders !== prevProps.buildOrders) {
             this.setState({
                 buildOrders: this.props.buildOrders
             })
         }
-        if (this.props.computers != prevProps.computers) {
+        if (this.props.computers !== prevProps.computers) {
             this.setState({
                 computers: this.props.computers
             })
@@ -59,10 +60,10 @@ export class Game extends Component {
                 {this.state.computers.map((computer, index) => {
 
                     return (
-                        <div className="computers-container">
-                            <Row key={index}>
+                        <div key={index} className="computers-container">
+                            <Row>
                                 <Col xs={12}>
-                                    <div className={computer.IsDesk == 1 ? "principal-pc":"portatil-pc" }></div>
+                                    <div className={computer.IsDesk === 1 ? "principal-pc":"portatil-pc" }></div>
                                     <p className={"text-center"}>Ip {computer.IpDirection} </p>
                                 </Col>
                             </Row>
@@ -105,7 +106,6 @@ export class Game extends Component {
 
                     let time = this.timeLeft(build.EndTime);
 
-                    //@todo: Ojo que ahora mismo systemsResources se carga en 1, y la base de datos marca 0
                     //convierte el valor en string de dos caracteres
                     let buildId = String(build.BuildId).padStart(2, "0");
 
@@ -118,8 +118,8 @@ export class Game extends Component {
                     let buildName = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
                     return (
-                        <div className="buildOrders-container">
-                            <Row key={index}>
+                        <div key={index} className="buildOrders-container">
+                            <Row>
                                 <Col xs={12}>
                                     <p>Actulaización de {buildName}</p>
                                     <p>Tiempo restante</p>
@@ -140,11 +140,17 @@ export class Game extends Component {
 
     render() {
 
-        let content = (this.state.systems != undefined)
+        let content = (this.state.systems !== undefined)
             ? (
                 <div className="background">
                     <div className="navgame">
-                        <NavGame userId={this.state.userId} instituteId={this.state.instituteId} systemResources={this.state.systems[1]} systems={this.state.systems} computer={this.state.computerActive} />
+                        <NavGame
+                            userId={this.state.userId}
+                            instituteId={this.state.instituteId}
+                            systemResources={this.state.systems[1]}
+                            systems={this.state.systems}
+                            computer={this.state.computerActive}
+                        />
                     </div>
                     <div>
                         <Container>
@@ -190,8 +196,7 @@ export class Game extends Component {
             }
         })
         const result = await response.json();
-        let computer = {};
-
+        
         for (const computer of result) {
             if (computer.IsDesk) {
                 this.setState({

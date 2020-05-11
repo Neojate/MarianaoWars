@@ -1,8 +1,6 @@
 ﻿import React, { Component } from 'react'
 import authService from '../api-authorization/AuthorizeService';
 import $ from "jquery";
-import { Redirect } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import { Container } from 'reactstrap';
 
 export class InstitutePanel extends Component {

@@ -133,20 +133,14 @@ export class GameLayout extends Component {
     }
 
 
-
-
     render() {
 
-        var content = (this.loading)
-            ? (
-                <p>Loading...</p>
-            )
+        var content = (this.loading) ?
+            <p>Loading...</p>
             : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computers={this.state.computers} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}>
                 <Route exact path="/game/:instituteId" component={Network} />
-                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} />} />
-            </Game>
-            );
-        //<Route path="/game/:instituteId/system" component={SystemPanel} />
+                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}/>} />
+               </Game>);
     return (
         <>
             {content}

@@ -25,7 +25,7 @@ export class NavSystems extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if (this.props.systems != prevProps.systems) {
+        if (this.props.systems !== prevProps.systems) {
             this.setState({
                 systems: this.props.systems
             })
@@ -33,7 +33,7 @@ export class NavSystems extends Component {
         
         // Uso tipico (no olvides de comparar los props):
         if (this.state.systemActive !== prevState.systemActive) {
-            if (this.state.systemActive != -1) {
+            if (this.state.systemActive !== -1) {
                 $('.sub-nav').show(500);
             }
         }
@@ -43,7 +43,7 @@ export class NavSystems extends Component {
 
         $('.sub-nav').hide(500);
 
-        if (this.state.systemActive == id) {
+        if (this.state.systemActive === id) {
             id = -1;
             await this.sleep(400);
         }
@@ -90,14 +90,14 @@ export class NavSystems extends Component {
 
     render() {
 
-        let nav = (this.state.systems != undefined)
+        let nav = (this.state.systems !== undefined)
             ? this.draw()
             : '';
 
         let subnav = '';
 
         //Si tenemos un system activo y este tiene elementos, lo mostramos
-        if (this.state.systemActive != -1 && this.state.systems[this.state.systemActive] != undefined) {
+        if (this.state.systemActive !== -1 && this.state.systems[this.state.systemActive] !== undefined) {
             subnav = this.drawSubMenu();
         }
 

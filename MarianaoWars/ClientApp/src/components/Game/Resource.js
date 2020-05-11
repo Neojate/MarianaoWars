@@ -39,7 +39,9 @@ export class Resource extends Component {
                 </Row>
                 <Popover trigger="focus" placement="bottom" isOpen={this.state.popoverOpen} target={this.props.id}>
                     <PopoverHeader>{this.props.popoverHeader}</PopoverHeader>
-                    <PopoverBody>{this.props.popoverBody}</PopoverBody>
+                    <PopoverBody>
+                        {this.props.popoverBody}
+                    </PopoverBody>
                 </Popover>
             </Col>
         );

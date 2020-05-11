@@ -91,14 +91,15 @@ export class Network extends Component {
     }
 
     moveBroadcast(goingFoward) {
-        this.state.broadcast += goingFoward ? 1 : -1;
 
-        if (this.state.broadcast < 0)
-            this.state.broadcast = 49;
-        else if (this.state.broadcast > 49)
-            this.state.broadcast = 0;
-        
-        this.sourceData(this.state.broadcast);
+        this.setState({broadcast: this.state.broadcast + goingFoward ? 1 : -1 });
+
+        if (this.state.broadcast < 0) {
+            this.setState({ broadcast: 49 });
+        }
+        else if (this.state.broadcast > 49) {
+            this.setState({ broadcast: 0 });
+        }
     }
 
 }

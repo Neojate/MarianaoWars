@@ -38,12 +38,8 @@ export class System extends Component {
 
     systemStyle() {
 
-        let border= "1px solid black";
-        let backgroundColor= "#f0ff73";
-        let colors = {
-            border: "1px solid black",
-            backgroundColor: "#f0ff73"
-        }
+        let border = "1px solid black";
+        let backgroundColor = "#f0ff73";
 
         if (this.state.active) {
             border = "1px solid red";
@@ -67,8 +63,8 @@ export class System extends Component {
     render() {
 
         let img = '';
-        if (this.props.buildId != undefined) {
-            img = <img src={require(`../../images/icon/${this.props.buildId}.png`)}></img>
+        if (this.props.buildId !== undefined) {
+            img = <img alt="system" src={require(`../../images/icon/${this.props.buildId}.png`)}></img>
         }
 
         return (

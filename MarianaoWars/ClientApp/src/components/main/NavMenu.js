@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { LoginMenu } from './../api-authorization/LoginMenu';
 import authService from '../api-authorization/AuthorizeService';
 import '../../css/NavMenu.css';
 
@@ -35,7 +34,6 @@ export class NavMenu extends Component {
             isAuthenticated,
             'user': user
         });
-        console.log(user);
     }
 
     componentDidMount() {

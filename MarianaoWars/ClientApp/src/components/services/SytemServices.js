@@ -4,7 +4,7 @@ export class SystemServices{
 
     async systemResourceData() {
 
-        if (this.systemResource == undefined) {
+        if (this.systemResource === undefined) {
             const response = await fetch('gamenav/getSytemResource');
             this.systemResource = await response.json();
             return this.systemResource;
@@ -15,7 +15,7 @@ export class SystemServices{
 
     async systemSoftwareData() {
 
-        if (this.systemSoftware == undefined) {
+        if (this.systemSoftware === undefined) {
             const response = await fetch('gamenav/getSystemSoftware');
             this.systemSoftware = await response.json();
             return this.systemSoftware;

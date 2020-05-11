@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import authService from '../api-authorization/AuthorizeService'
 import { Alert, Row, Col } from 'reactstrap';
 import accountService from '../services/AccountServices';
 
@@ -20,7 +19,7 @@ export class Register extends Component {
 
         let location = await accountService.checkTocken();
         
-        if (location != false) {
+        if (location !== false) {
             this.props.history.push(location);
         }
         

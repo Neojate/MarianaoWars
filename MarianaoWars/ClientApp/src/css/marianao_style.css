@@ -8,11 +8,11 @@ html, body, #root {
     grid-template-rows: 30px auto;
 }
 
-p-0{
+p-0 {
     padding: 0px;
 }
 
-m-0{
+m-0 {
     margin: 0px;
 }
 
@@ -114,10 +114,10 @@ nav {
     text-align: center;
 }
 
-.system img{
-    max-width: 100%;
-    max-height: 100%;
-}
+    .system img {
+        max-width: 100%;
+        max-height: 100%;
+    }
 
 .buildOrders-container, .computers-container {
     border: 1px solid #b3b7bc;
@@ -144,6 +144,14 @@ nav {
     background-size: contain;
     background-position: center;
 }
+
+.bs-popover-bottom {
+    max-width: 330px;
+}
+
+    .bs-popover-bottom p span {
+        float: right;
+    }
 
 @media (min-width: 1400px) {
     .container {

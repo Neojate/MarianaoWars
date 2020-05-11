@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col, Container, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -30,6 +30,7 @@ export class SystemPanel extends Component {
             typeSystem: this.props.location.state.typeSystem,
             instituteId: this.props.match.params.instituteId,
             computerActive: [],
+            buildOrders: [],
             loading: true,
             hover: false,
             active: false,
@@ -42,25 +43,29 @@ export class SystemPanel extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if (this.props.computerActive != prevProps.computerActive) {
+        if (this.props.computerActive !== prevProps.computerActive) {
             this.setState({
                 computerActive: this.props.computerActive
             })
         }
 
+        if (this.props.buildOrders !== prevProps.buildOrders) {
+            this.setState({
+                buildOrders: this.props.buildOrders
+            })
+        }
 
-        if (this.props.location.state.system.name != prevProps.location.state.system.name) {
+        if (this.props.location.state.system.name !== prevProps.location.state.system.name) {
             this.setState({
                 System: this.props.location.state.system
             });
         }
 
-        if (this.props.location.state.typeSystem != prevProps.location.state.typeSystem) {
+        if (this.props.location.state.typeSystem !== prevProps.location.state.typeSystem) {
             this.setState({
                 typeSystem: this.props.location.state.typeSystem
             });
         }
-
     }
 
 
@@ -76,32 +81,30 @@ export class SystemPanel extends Component {
         });
     }
 
+    buildIsUpdating() {
 
-    levelSystemComputer() {
-
-        let resourceValues = Object.values(this.state.computerActive.Resource);
-        let softwareValues = Object.values(this.state.computerActive.Software);
-
-        if (this.state.typeSystem == 0) {
-            return <p>{`Nivel ${resourceValues[this.state.System.buildId + 5]} de ${this.state.System.lastVersion}`}</p>
+        let typeBuildsUpdating = [];
+        for (const build of this.state.buildOrders) {
+            //introdude las decenas de los systemas, para controlar los que ya estan actualizando
+            typeBuildsUpdating.push(String(build.BuildId).padStart(2, "0").substring(0, 1));
         }
-        else if (this.state.typeSystem == 2) {
-            return <p>{`Nivel ${softwareValues[this.state.System.buildId - 19]} de ${this.state.System.lastVersion}`}</p>
-        }
+
+        return typeBuildsUpdating;
+
     }
+
 
     systemLevel() {
 
         let resourceValues = Object.values(this.state.computerActive.Resource);
         let softwareValues = Object.values(this.state.computerActive.Software);
 
-        if (this.state.typeSystem == 0) {
+        if (this.state.typeSystem === 0) {
             return resourceValues[this.state.System.buildId + 5];
         }
-        else if (this.state.typeSystem == 2) {
+        else if (this.state.typeSystem === 2) {
             return softwareValues[this.state.System.buildId - 19];
         }
-
 
     }
 
@@ -114,13 +117,13 @@ export class SystemPanel extends Component {
         let requireIngenyous = 0;
         let requireCoffee = 0;
 
-        if (this.state.typeSystem == 0) {
+        if (this.state.typeSystem === 0) {
 
             requireKnowlege = this.state.System.needKnowledge.split(",")[version];
             requireIngenyous = this.state.System.needIngenyous.split(",")[version];
 
         }
-        else if (this.state.typeSystem == 2) {
+        else if (this.state.typeSystem === 2) {
 
             requireKnowlege = this.state.System.requireKnowledge.split(",")[version];
             requireIngenyous = this.state.System.requireIngenyous.split(",")[version];
@@ -128,7 +131,8 @@ export class SystemPanel extends Component {
 
         }
 
-        if (requireKnowlege > this.state.computerActive.Resource.Knowledge || requireIngenyous > this.state.computerActive.Resource.Ingenyous || requireCoffee > this.state.computerActive.Resource.Coffe) {
+        //si hay uno del mismo tipo o no cumple requisitos
+        if (this.buildIsUpdating().includes(this.state.typeSystem.toString()) || requireKnowlege > this.state.computerActive.Resource.Knowledge || requireIngenyous > this.state.computerActive.Resource.Ingenyous || requireCoffee > this.state.computerActive.Resource.Coffe) {
             canBeUpdate = false;
         }
 
@@ -143,7 +147,7 @@ export class SystemPanel extends Component {
 
     render() {
 
-        if (this.state.computerActive.length == 0) {
+        if (this.state.computerActive.length === 0) {
             return "";
         }
 
@@ -172,7 +176,7 @@ export class SystemPanel extends Component {
                 </div>
                 <hr />
                 <div>
-                    {this.levelSystemComputer()}
+                    <p>{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}</p>
                 </div>
                 <div className="container">
                     {containsRequeriment}
@@ -191,17 +195,19 @@ export class SystemPanel extends Component {
 
     selectIcon(id) {
         switch (id) {
-            case 1: return <img src={knowledgeicon} />
-            case 2: return <img src={ingenyousicon} />
-            case 3: return <img src={coffeeicon} />
-            case 4: return <img src={sleepicon} />
+            case 1: return <img alt="img" src={knowledgeicon} />
+            case 2: return <img alt="img" src={ingenyousicon} />
+            case 3: return <img alt="img" src={coffeeicon} />
+            case 4: return <img alt="img" src={sleepicon} />
 
-            case 21: return <img src={gediticon} />
-            case 22: return <img src={mysqlicon} />
-            case 23: return <img src={githubicon} />
-            case 24: return <img src={stackoverflowicon} />
-            case 25: return <img src={postmanicon} />
-            case 26: return <img src={virtualboxicon} />
+            case 21: return <img alt="img" src={gediticon} />
+            case 22: return <img alt="img" src={mysqlicon} />
+            case 23: return <img alt="img" src={githubicon} />
+            case 24: return <img alt="img" src={stackoverflowicon} />
+            case 25: return <img alt="img" src={postmanicon} />
+            case 26: return <img alt="img" src={virtualboxicon} />
+            default:
+                break;
         }
     }
 
