@@ -49,6 +49,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetSystemSoftwares().Result;
         }
 
+        public List<SystemTalent> GetSystemTalents()
+        {
+            return repository.GetSystemTalents().Result;
+        }
+
         public void SaveComputer(Computer computer)
         {
             repository.SaveComputer(computer);
@@ -66,15 +71,19 @@ namespace MarianaoWars.Services.Implementations
             int milliToFinish = 60000;
             int building = buildId % 20;
 
-            int buildLevel = calculateBuildLevel(computer, buildId) - 1;
+            int buildLevel = calculateBuildLevel(computer, buildId);
+
+            int needKnowledge = 0;
+            int needIngenyous = 0;
+            int needCoffee = 0;
 
             switch(buildId / 20)
             {
                 case 0:
                     SystemResource sysResource = repository.GetSystemResources().Result[building - 1];
 
-                    int needKnowledge = int.Parse(sysResource.NeedKnowledge.Split(',')[buildLevel]);
-                    int needIngenyous = int.Parse(sysResource.NeedIngenyous.Split(',')[buildLevel]);
+                    needKnowledge = int.Parse(sysResource.NeedKnowledge.Split(',')[buildLevel]);
+                    needIngenyous = int.Parse(sysResource.NeedIngenyous.Split(',')[buildLevel]);
 
                     //se comprueba si hay suficientes recursos
                     if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous)
@@ -84,26 +93,46 @@ namespace MarianaoWars.Services.Implementations
                     foreach (BuildOrder b in repository.GetBuildOrders(computerId).Result)
                         if (b.BuildId < 40)
                             return null;
+
+                    //se comprueba que no hayas llegado al límite
+                    if (building == 1 && computer.Resource.KnowledgeLevel >= sysResource.LastVersion)
+                        return null;
+                    else if (building == 2 && computer.Resource.IngenyousLevel >= sysResource.LastVersion)
+                        return null;
+                    else if (building == 3 && computer.Resource.CoffeLevel >= sysResource.LastVersion)
+                        return null;
+                    else if (building == 4 && computer.Resource.StressLevel >= sysResource.LastVersion)
+                        return null;
                     
                     computer.Resource.Knowledge -= needKnowledge;
                     computer.Resource.Ingenyous -= needIngenyous;
 
-                    milliToFinish *= int.Parse(sysResource.Time.Split(',')[buildLevel + 1]);
+                    milliToFinish *= int.Parse(sysResource.Time.Split(',')[buildLevel]);
 
                     repository.NotAsyncUpdateResource(computer.Resource);
                     break;
 
                 case 1:
                     SystemSoftware sysSoftware = repository.GetSystemSoftwares().Result[building - 1];
-                    switch(building)
-                    {
-                        case 1:
-                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[computer.Software.GeditVersion]);
-                            break;
-                        case 2:
-                            milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[computer.Software.MySqlVersion]);
-                            break;
-                    }
+
+                    needKnowledge = int.Parse(sysSoftware.NeedKnowledge.Split(',')[buildLevel]);
+                    needIngenyous = int.Parse(sysSoftware.NeedIngenyous.Split(',')[buildLevel]);
+                    needCoffee = int.Parse(sysSoftware.NeedCoffee.Split(',')[buildLevel]);
+
+                    //se comprueba si hay suficientes recursos
+                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffe < needCoffee)
+                        return null;
+
+                    //se comprueba que no hay otra orden
+                    foreach (BuildOrder b in repository.GetBuildOrders(computerId).Result)
+                        if (b.BuildId < 40)
+                            return null;
+
+                    //TODO comprobar que no llegue al limite
+
+                    milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[buildLevel + 1]);
+
+                    repository.NotAsyncUpdateResource(computer.Resource);
                     break;
             }
         

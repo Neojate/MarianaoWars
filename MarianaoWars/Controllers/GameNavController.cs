@@ -32,5 +32,11 @@ namespace MarianaoWars.Controllers
             return context.GetSystemSoftwares();
         }
 
+        [HttpGet("getSystemTalent")]
+        public IEnumerable<SystemTalent> GetSystemTalent()
+        {
+            return context.GetSystemTalents();
+        }
+
     }
 }
