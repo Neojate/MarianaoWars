@@ -2,6 +2,7 @@
 import { Resource } from './Resource';
 import { Row, Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { BuildIdName } from '../services/SystemConstants'
 
 
 export class NavGame extends Component {
@@ -74,42 +75,18 @@ export class NavGame extends Component {
             <Row style={{ alignItems: 'center' }}>
                 {systems[0].map((systemResource, index) => {
 
-                    //TODO: Buscar otra manera de obtener el dato, que no sea hardcode
-                    //Obtenemos array de valores máximos de capacidad
-                    //let action1 = systems[2][1].action1.split(",");
-                    //let capacity = action1[computer.Software.MySqlVersion];
+                    //capacidad de almacenamiento
                     const mySql = systems[2].find(element => element.name === "MySql");
                     let capacity = mySql.action1.split(",")[computer.Software.MySqlVersion];
-                    let quantity = 0;
 
+                    //nombre en columna del recurso
+                    let resourceName = BuildIdName[systemResource.buildId];
+
+                    let quantity = computer.Resource[resourceName];
+
+                    //incremento x minuto (mirar que si estamos en negativo, el incremento es la mitad)
                     let increments = systemResource.increment.split(",");
-                    let increment = 0;
-
-                    switch (systemResource.buildId) {
-
-                        case 1:
-                            quantity = computer.Resource.Knowledge;
-                            increment = increments[computer.Resource.KnowledgeLevel];
-                            break
-
-                        case 2:
-                            quantity = computer.Resource.Ingenyous;
-                            increment = increments[computer.Resource.IngenyousLevel];
-                            break;
-
-                        case 3:
-                            quantity = computer.Resource.Coffe;
-                            increment = increments[computer.Resource.CoffeLevel];
-                            break;
-
-                        case 4:
-                            quantity = computer.Resource.Stress;
-                            increment = increments[computer.Resource.StressLevel];
-                            break;
-
-                        default:
-                            break;
-                    }
+                    let increment = increments[computer.Resource[`${resourceName}Level`]];
 
                     var color = this.colorProgress(quantity, capacity);
 

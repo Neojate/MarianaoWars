@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import { BuildIdName } from '../services/SystemConstants'
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -96,14 +97,11 @@ export class SystemPanel extends Component {
 
     systemLevel() {
 
-        let resourceValues = Object.values(this.state.computerActive.Resource);
-        let softwareValues = Object.values(this.state.computerActive.Software);
-
         if (this.state.typeSystem === 0) {
-            return resourceValues[this.state.System.buildId + 5];
+            return this.state.computerActive.Resource[`${BuildIdName[this.state.System.buildId]}Level`];
         }
         else if (this.state.typeSystem === 2) {
-            return softwareValues[this.state.System.buildId - 19];
+            return this.state.computerActive.Software[`${BuildIdName[this.state.System.buildId]}Version`];
         }
 
     }
