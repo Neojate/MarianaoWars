@@ -97,6 +97,12 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<List<SystemTalent>> GetSystemTalents()
+        {
+            return await dbContext.SystemTalent
+                .ToListAsync();
+        }
+
         public async Task<ApplicationUser> GetUser(string userId)
         {
             return await dbContext.Users

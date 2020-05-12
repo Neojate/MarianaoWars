@@ -123,9 +123,9 @@ export class SystemPanel extends Component {
         }
         else if (this.state.typeSystem === 2) {
 
-            requireKnowlege = this.state.System.requireKnowledge.split(",")[version];
-            requireIngenyous = this.state.System.requireIngenyous.split(",")[version];
-            requireCoffee = this.state.System.requireCoffee.split(",")[version];
+            requireKnowlege = this.state.System.needKnowledge.split(",")[version];
+            requireIngenyous = this.state.System.needIngenyous.split(",")[version];
+            requireCoffee = this.state.System.needCoffee.split(",")[version];
 
         }
 

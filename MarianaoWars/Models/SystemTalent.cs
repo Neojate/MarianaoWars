@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarianaoWars.Models
 {
-    public class SystemSoftware
+    public class SystemTalent
     {
-        [Key]
         public int Id { get; set; }
 
         public int BuildId { get; set; }
@@ -19,8 +17,6 @@ namespace MarianaoWars.Models
 
         public int LastVersion { get; set; }
 
-        public string Memmory { get; set; }
-
         public string Action1 { get; set; }
 
         public string Time { get; set; }
@@ -30,5 +26,7 @@ namespace MarianaoWars.Models
         public string NeedIngenyous { get; set; }
 
         public string NeedCoffee { get; set; }
+
+        public string NeedBuild { get; set; }
     }
 }

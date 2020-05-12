@@ -35,6 +35,8 @@ namespace MarianaoWars.Data
 
         public DbSet<SystemSoftware> SystemSoftware { get; set; }
 
+        public DbSet<SystemTalent> SystemTalent { get; set; }
+
         public DbSet<BuildOrder> BuildOrder { get; set; }
 
         public ApplicationDbContext(
