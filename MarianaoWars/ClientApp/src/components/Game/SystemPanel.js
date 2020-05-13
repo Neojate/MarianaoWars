@@ -140,10 +140,13 @@ export class SystemPanel extends Component {
         if (this.buildIsUpdating().includes(this.state.typeSystem.toString())){
             canBeUpdate = false;
         }
+
+        let time = this.state.System.time.split(",")[version] * 60;
         
         return {
             'needs': requeriments,
-            'canBeUpdate': canBeUpdate
+            'canBeUpdate': canBeUpdate,
+            'time': time
         }
     }
 
@@ -181,7 +184,7 @@ export class SystemPanel extends Component {
                 </div>
                 <hr />
                 <div>
-                    <p>{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}</p>
+                    <p>{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización: {requeriments.time}</span></p>
                 </div>
                 <div className="container">
                     {containsRequeriment}

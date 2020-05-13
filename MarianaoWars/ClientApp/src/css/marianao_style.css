@@ -48,6 +48,10 @@ m-0 {
     padding: 15px;
 }
 
+.box p span{
+    float: right;
+}
+
 .icon-description {
     display: grid;
     grid-template-columns: 100px auto;
