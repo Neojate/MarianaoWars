@@ -520,13 +520,13 @@ namespace MarianaoWars.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("RequireCoffee")
+                    b.Property<string>("NeedCoffee")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("RequireIngenyous")
+                    b.Property<string>("NeedIngenyous")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("RequireKnowledge")
+                    b.Property<string>("NeedKnowledge")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Time")
@@ -535,6 +535,47 @@ namespace MarianaoWars.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemSoftware");
+                });
+
+            modelBuilder.Entity("MarianaoWars.Models.SystemTalent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Action1")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("BuildId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("LastVersion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NeedBuild")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NeedCoffee")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NeedIngenyous")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NeedKnowledge")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemTalent");
                 });
 
             modelBuilder.Entity("MarianaoWars.Models.Talent", b =>

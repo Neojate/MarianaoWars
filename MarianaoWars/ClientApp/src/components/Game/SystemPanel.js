@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import { BuildIdName } from '../services/SystemConstants'
+import { BuildIdName, NeedNames } from '../services/SystemConstants'
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -13,9 +13,6 @@ import githubicon from '../../images/icon/githubicon.png';
 import stackoverflowicon from '../../images/icon/stackoverflowicon.png';
 import postmanicon from '../../images/icon/postmanicon.png';
 import virtualboxicon from '../../images/icon/virtualboxicon.png';
-
-
-
 
 
 export class SystemPanel extends Component {
@@ -103,6 +100,9 @@ export class SystemPanel extends Component {
         else if (this.state.typeSystem === 2) {
             return this.state.computerActive.Software[`${BuildIdName[this.state.System.buildId]}Version`];
         }
+        else if (this.state.typeSystem === 4) {
+            return this.state.computerActive.Talent[`${BuildIdName[this.state.System.buildId]}Level`];
+        }
 
     }
 
@@ -111,36 +111,40 @@ export class SystemPanel extends Component {
         let canBeUpdate = true;
         let version = this.systemLevel();
 
-        let requireKnowlege = 0;
-        let requireIngenyous = 0;
-        let requireCoffee = 0;
-
-        if (this.state.typeSystem === 0) {
-
-            requireKnowlege = this.state.System.needKnowledge.split(",")[version];
-            requireIngenyous = this.state.System.needIngenyous.split(",")[version];
-
-        }
-        else if (this.state.typeSystem === 2) {
-
-            requireKnowlege = this.state.System.needKnowledge.split(",")[version];
-            requireIngenyous = this.state.System.needIngenyous.split(",")[version];
-            requireCoffee = this.state.System.needCoffee.split(",")[version];
-
+        let requeriments = {
+            needKnowledge: 0,
+            needIngenyous: 0,
+            needCoffee: 0,
+            needSleep: 0,
+            needBuild: 0
         }
 
-        //si hay uno del mismo tipo o no cumple requisitos
-        if (this.buildIsUpdating().includes(this.state.typeSystem.toString()) || requireKnowlege > this.state.computerActive.Resource.Knowledge || requireIngenyous > this.state.computerActive.Resource.Ingenyous || requireCoffee > this.state.computerActive.Resource.Coffe) {
+        for (const need in requeriments) {
+
+            //si el requerimiento es una propiedad del system
+            if (need in this.state.System) {
+                requeriments[need] = this.state.System[need].split(",")[version];
+
+                //comparamos la cantidad que tenemos con la necesidad del recurso
+                let recurso = need.split("need")[1];
+                if (need !== "needBuild" && requeriments[need] > this.state.computerActive.Resource[recurso]) {
+                    canBeUpdate = false;
+                }
+                else if (need === "needBuild" && requeriments[need] > this.state.computerActive.Software.StackOverFlowVersion) {
+                    canBeUpdate = false;
+                }
+
+            }
+        }
+
+        if (this.buildIsUpdating().includes(this.state.typeSystem.toString())){
             canBeUpdate = false;
         }
-
+        
         return {
-            'conocimineto': requireKnowlege,
-            'ingenio': requireIngenyous,
-            'cafe': requireCoffee,
+            'needs': requeriments,
             'canBeUpdate': canBeUpdate
         }
-
     }
 
     render() {
@@ -150,15 +154,18 @@ export class SystemPanel extends Component {
         }
 
         let requeriments = this.neededToUpdate();
+
         let containsRequeriment =
             (<div className="row">
                 <div className="col-6">
                     Requisitos:
                         </div>
                 <div className="col-6">
-                    <div>Conocimiento: {requeriments.conocimineto}</div>
-                    <div>Ingenio: {requeriments.ingenio}</div>
-                    <div>Café: {requeriments.cafe}</div>
+                    {Object.keys(requeriments.needs).map(function (key) {
+                        if (requeriments.needs[key] > 0) {
+                            return <div key={key}>{`${NeedNames[key]}: ${requeriments.needs[key]}`}</div>
+                        }
+                    })}
                 </div>
             </div>);
 
@@ -205,6 +212,7 @@ export class SystemPanel extends Component {
             case 25: return <img alt="img" src={postmanicon} />
             case 26: return <img alt="img" src={virtualboxicon} />
             default:
+                return <img alt="img" src={knowledgeicon} />
                 break;
         }
     }

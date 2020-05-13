@@ -88,12 +88,12 @@ export class GameLayout extends Component {
 
     async getSystemResource() {
 
-        const [systemResource, systemSofftware] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData()]);
+        const [systemResource, systemSofftware, systemTalent] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData(), systemServices.systemTalentData()]);
 
         var stateTemp = this.state.systems.slice();
         stateTemp[0] = systemResource;
-        //stateTemp[1] = systemResource;
         stateTemp[2] = systemSofftware;
+        stateTemp[4] = systemTalent;
 
         this.setState({
             systems: stateTemp,

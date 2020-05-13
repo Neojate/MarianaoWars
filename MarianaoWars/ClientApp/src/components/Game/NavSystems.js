@@ -79,10 +79,10 @@ export class NavSystems extends Component {
                 <Row className={"d-flex align-items-center navsystem"} >
                     <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, 0)} />
                     <System onClick={this.sistemActive.bind(this, 2)} />
-                    <System onClick={this.sistemActive.bind(this, 3)} />
                     <System onClick={this.sistemActive.bind(this, 4)} />
-                    <System onClick={this.sistemActive.bind(this, 5)} />
                     <System onClick={this.sistemActive.bind(this, 6)} />
+                    <System onClick={this.sistemActive.bind(this, 8)} />
+                    <System onClick={this.sistemActive.bind(this, 10)} />
                 </Row>            
         );
     }

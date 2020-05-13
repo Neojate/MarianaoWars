@@ -8,6 +8,15 @@ export const BuildIdName = {
     23: 'GitHub',
     24: 'StackOverFlow',
     25: 'PostMan',
-    26: 'VirtualMachine'
+    26: 'VirtualMachine',
+    41: 'Refactor'
 };
+
+export const NeedNames = {
+    'needKnowledge': 'CONOCIMIENTO',
+    'needIngenyous': 'INGENIO',
+    'needCoffee': 'CAFE',
+    'needSleep': 'DESCANSO',
+    'needBuild': 'STACKOVETFLOW'
+}
 

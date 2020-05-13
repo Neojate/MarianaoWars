@@ -24,6 +24,17 @@ export class SystemServices{
         return this.systemResource;
     }
 
+    async systemTalentData() {
+
+        if (this.systemTalent === undefined) {
+            const response = await fetch('gamenav/getSystemTalent');
+            this.systemTalent = await response.json();
+            return this.systemTalent;
+        }
+
+        return this.systemTalent;
+    }
+
 
     static get instance() { return systemServices }
 }
