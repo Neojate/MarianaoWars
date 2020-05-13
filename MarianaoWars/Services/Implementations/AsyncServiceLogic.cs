@@ -64,11 +64,12 @@ namespace MarianaoWars.Services.Implementations
             repository.UpdateResource(resource);
         }
 
-        public BuildOrder CreateBuildOrder(int computerId, int buildId)
+        public BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId)
         {
             Computer computer = repository.GetComputer(computerId).Result;
+            Institute institute = repository.GetInstitute(instituteId).Result;
 
-            int milliToFinish = 60000;
+            int milliToFinish = 60000 / (int)institute.RateTime;
             int building = buildId % 20;
 
             int buildLevel = calculateBuildLevel(computer, buildId);
@@ -76,6 +77,7 @@ namespace MarianaoWars.Services.Implementations
             int needKnowledge = 0;
             int needIngenyous = 0;
             int needCoffee = 0;
+            int needBuild = 0;
 
             switch(buildId / 20)
             {
@@ -104,9 +106,6 @@ namespace MarianaoWars.Services.Implementations
                     else if (building == 4 && computer.Resource.StressLevel >= sysResource.LastVersion)
                         return null;
                     
-                    computer.Resource.Knowledge -= needKnowledge;
-                    computer.Resource.Ingenyous -= needIngenyous;
-
                     milliToFinish *= int.Parse(sysResource.Time.Split(',')[buildLevel]);
 
                     repository.NotAsyncUpdateResource(computer.Resource);
@@ -128,14 +127,73 @@ namespace MarianaoWars.Services.Implementations
                         if (b.BuildId < 40)
                             return null;
 
-                    //TODO comprobar que no llegue al limite
+                    //se comprueba que no hayas llegado al límite
+                    if (building == 1 && computer.Software.GeditVersion >= sysSoftware.LastVersion)
+                        return null;
+                    else if (building == 2 && computer.Software.MySqlVersion >= sysSoftware.LastVersion)
+                        return null;
+                    else if (building == 3 && computer.Software.GitHubVersion >= sysSoftware.LastVersion)
+                        return null;
+                    else if (building == 4 && computer.Software.StackOverFlowVersion >= sysSoftware.LastVersion)
+                        return null;
+                    else if (building == 5 && computer.Software.PostManVersion >= sysSoftware.LastVersion)
+                        return null;
+                    else if (building == 6 && computer.Software.VirtualMachineVersion >= sysSoftware.LastVersion)
+                        return null;
 
-                    milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[buildLevel + 1]);
+                    milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[buildLevel]);
+
+                    repository.NotAsyncUpdateResource(computer.Resource);
+                    break;
+
+                case 2:
+                    SystemTalent sysTalent = repository.GetSystemTalents().Result[building - 1];
+
+                    needKnowledge = int.Parse(sysTalent.NeedKnowledge.Split(',')[buildLevel]);
+                    needIngenyous = int.Parse(sysTalent.NeedIngenyous.Split(',')[buildLevel]);
+                    needCoffee = int.Parse(sysTalent.NeedCoffee.Split(',')[buildLevel]);
+                    needBuild = int.Parse(sysTalent.NeedBuild.Split(',')[buildLevel]);
+
+                    //se comprueba si hay suficientes recursos
+                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffe < needCoffee || computer.Software.StackOverFlowVersion < needBuild)
+                        return null;
+
+                    //se comprueba que no haya otra orden
+                    foreach (BuildOrder b in repository.GetBuildOrders(computerId).Result)
+                        if (b.BuildId >= 40 && b.BuildId < 60)
+                            return null;
+
+                    //se comprueba que no hayas llegado al límite
+                    if (building == 1 && computer.Talent.RefactorLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 2 && computer.Talent.InheritanceLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 3 && computer.Talent.InjectionLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 4 && computer.Talent.UdpLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 5 && computer.Talent.TcpIpLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 6 && computer.Talent.SftpLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 7 && computer.Talent.EcbLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 8 && computer.Talent.RsaLevel >= sysTalent.LastVersion)
+                        return null;
+                    else if (building == 9 && computer.Talent.SslLevel >= sysTalent.LastVersion)
+                        return null;
+
+                    milliToFinish *= int.Parse(sysTalent.Time.Split(',')[buildLevel]);
 
                     repository.NotAsyncUpdateResource(computer.Resource);
                     break;
             }
-        
+
+            //consumo de recursos
+            computer.Resource.Knowledge -= needKnowledge;
+            computer.Resource.Ingenyous -= needIngenyous;
+            computer.Resource.Coffe -= needCoffee;
+
             BuildOrder buildOrder = new BuildOrder(computerId, milliToFinish, buildId);
             return repository.SaveBuildOrder(buildOrder).Result;            
         }
@@ -155,6 +213,16 @@ namespace MarianaoWars.Services.Implementations
                 case 24: return computer.Software.StackOverFlowVersion;
                 case 25: return computer.Software.PostManVersion;
                 case 26: return computer.Software.VirtualMachineVersion;
+
+                case 41: return computer.Talent.RefactorLevel;
+                case 42: return computer.Talent.InheritanceLevel;
+                case 43: return computer.Talent.InjectionLevel;
+                case 44: return computer.Talent.UdpLevel;
+                case 45: return computer.Talent.TcpIpLevel;
+                case 46: return computer.Talent.SftpLevel;
+                case 47: return computer.Talent.EcbLevel;
+                case 48: return computer.Talent.RsaLevel;
+                case 49: return computer.Talent.SslLevel;
 
                 default: return 0;
             }
