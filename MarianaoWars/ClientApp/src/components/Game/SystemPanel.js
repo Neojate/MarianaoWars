@@ -194,7 +194,7 @@ export class SystemPanel extends Component {
     }
 
     createOrderBuild() {
-        fetch(`game/createbuildorder?computerId=${this.state.computerActive.Id}&buildId=${this.state.System.buildId}`)
+        fetch(`game/createbuildorder?instituteId=${this.state.instituteId}&computerId=${this.state.computerActive.Id}&buildId=${this.state.System.buildId}`)
             .then((response) => {});
     }
 
