@@ -39,20 +39,20 @@ export class System extends Component {
     systemStyle() {
 
         let border = "1px solid black";
-        let backgroundColor = "#f0ff73";
+        //let backgroundColor = "#f0ff73";
 
         if (this.state.active) {
             border = "1px solid red";
-            backgroundColor = "#ffc107";
+            //backgroundColor = "#ffc107";
         }
         else if (this.state.hover){
             border = "1px solid red";
-            backgroundColor = "#f0ff73";
+            //backgroundColor = "#f0ff73";
         }
 
         return {
             border: border,
-            backgroundColor: backgroundColor
+            //backgroundColor: backgroundColor
         };
 
     }

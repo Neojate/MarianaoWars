@@ -92,8 +92,10 @@ export class Network extends Component {
 
     moveBroadcast(goingFoward) {
 
-        this.setState({broadcast: this.state.broadcast + goingFoward ? 1 : -1 });
 
+        let value = goingFoward ? 1 : -1;
+        this.setState({broadcast: this.state.broadcast + value });
+        
         if (this.state.broadcast < 0) {
             this.setState({ broadcast: 49 });
         }

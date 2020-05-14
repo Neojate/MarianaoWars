@@ -114,14 +114,16 @@ nav {
         width: 60px;
         margin: auto;
         text-align: center;
+        background-color: white;
     }
 
-    .system {
-        height: 60px;
-        width: 60px;
-        margin: auto;
-        text-align: center;
-    }
+.system {
+    height: 60px;
+    width: 60px;
+    margin: auto;
+    text-align: center;
+    background-color: white;
+}
 
     .system img {
         max-width: 100%;
