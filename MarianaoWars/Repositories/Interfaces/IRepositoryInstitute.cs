@@ -26,6 +26,12 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera un instituto en función de su id.
         Task<Institute> GetInstitute(int instituteId);
 
+        // Método que recupera un mensaje en función de su id.
+        Task<Message> GetMessage(int messageId);
+
+        // Método que recupera la lista de todos los mensajes de una matrícula
+        Task<List<Message>> GetMessages(int enrollmentId);
+
         // Método que recupera todos los institutos abiertos
         Task<List<Institute>> GetOpenInstitutes();
 
@@ -73,6 +79,9 @@ namespace MarianaoWars.Repositories.Interfaces
 
         // Método que actualiza los recursos de forma síncrona
         Resource NotAsyncUpdateResource(Resource resource);
+
+        // Método que borra un mensaje en función de su id
+        Task DeleteMessage(int messageId);
 
     }
 }

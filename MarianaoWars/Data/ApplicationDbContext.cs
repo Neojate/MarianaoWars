@@ -39,6 +39,8 @@ namespace MarianaoWars.Data
 
         public DbSet<BuildOrder> BuildOrder { get; set; }
 
+        public DbSet<Message> Message { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

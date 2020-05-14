@@ -180,7 +180,23 @@ namespace MarianaoWars.Repositories.Implementations
             return resource;
         }
 
-        
+        public async Task<Message> GetMessage(int messageId)
+        {
+            return await dbContext.Message
+                .FindAsync(messageId);
+        }
 
+        public async Task<List<Message>> GetMessages(int enrollmentId)
+        {
+            return await dbContext.Message
+                .Where(message => message.EnrollmentId == enrollmentId)
+                .ToListAsync();
+        }
+
+        public async Task DeleteMessage(int messageId)
+        {
+            dbContext.Message.
+                Remove(GetMessage(messageId).Result);
+        }
     }
 }

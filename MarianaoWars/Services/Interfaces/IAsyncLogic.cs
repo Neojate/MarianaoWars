@@ -17,6 +17,12 @@ namespace MarianaoWars.Services.Interfaces
 
         List<SystemTalent> GetSystemTalents();
 
+        Message GetMessage(int messageId);
+
+        List<Message> GetMessages(int enrollmentId);
+
+        void DeleteMessage(int messageId);
+
         List<Computer> GetComputersBySector(int instituteId, int broadcast);
 
         void SaveComputer(Computer computer);

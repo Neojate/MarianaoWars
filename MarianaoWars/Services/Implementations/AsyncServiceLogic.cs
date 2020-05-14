@@ -198,6 +198,21 @@ namespace MarianaoWars.Services.Implementations
             return repository.SaveBuildOrder(buildOrder).Result;            
         }
 
+        public Message GetMessage(int messageId)
+        {
+            return repository.GetMessage(messageId).Result;
+        }
+
+        public List<Message> GetMessages(int enrollmentId)
+        {
+            return repository.GetMessages(enrollmentId).Result;
+        }
+
+        public void DeleteMessage(int messageId)
+        {
+            repository.DeleteMessage(messageId);
+        }
+
         private int calculateBuildLevel(Computer computer, int buildId)
         {
             switch (buildId)
