@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Row } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 import { System } from './System';
 import { Link } from 'react-router-dom';
 
@@ -61,7 +61,8 @@ export class NavSystems extends Component {
     drawSubMenu() {
 
         return (
-            <Row className={"d-flex align-items-center sub-nav navsystem"}>
+            <Row>
+                <Col xs={6} className="navsystem sub-nav d-flex justify-content-between align-items-center flex-wrap">
                 {this.state.systems[this.state.systemActive].map((system, index) => {
                     return (
                         <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
@@ -69,6 +70,7 @@ export class NavSystems extends Component {
                             </Link>
                     );
                 })}
+                </Col>
             </Row>
          );
     }
@@ -76,14 +78,18 @@ export class NavSystems extends Component {
 
     draw() {
         return (
-                <Row className={"d-flex align-items-center navsystem"} >
+            
+            <Row>
+                <Col xs={6} className="navsystem d-flex justify-content-between align-items-center flex-wrap">
                     <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, 0)} />
                     <System onClick={this.sistemActive.bind(this, 2)} />
                     <System onClick={this.sistemActive.bind(this, 4)} />
                     <System onClick={this.sistemActive.bind(this, 6)} />
                     <System onClick={this.sistemActive.bind(this, 8)} />
                     <System onClick={this.sistemActive.bind(this, 10)} />
-                </Row>            
+                </Col>
+            </Row>
+                
         );
     }
 

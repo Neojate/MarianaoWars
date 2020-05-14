@@ -156,13 +156,13 @@ export class Game extends Component {
                     <div>
                         <Container>
                             <Row>
-                                <Col xs={3}>
+                                <Col xs={{ size: 2, order: 1, offset: 0 }}>
                                     {this.computers()}
                                 </Col>
-                                <Col xs={6}>
+                                <Col xs={{ size: 6, order: 2, offset: 1 }}>
                                     {this.props.children}
                                 </Col>
-                                <Col xs={3}>
+                                <Col xs={{ size: 2, order: 3, offset: 1 }}>
                                     {this.builds()}
                                 </Col>
                             </Row>

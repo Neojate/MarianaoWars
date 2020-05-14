@@ -92,9 +92,8 @@ nav {
 
 .navsystem {
     position: fixed;
+    left: 25%;
     bottom: 0px;
-    right: 30px;
-    left: 30px;
     height: 80px;
     background-color: rgba(181, 181, 181, 0.15);
     border: 1px solid #ddd;
@@ -106,17 +105,23 @@ nav {
     display: none;
     bottom: 80px;
     height: 90px;
-    right: 40px;
-    left: 40px;
+    right: 25%;
+    left: 25%;
     border-bottom: 0;
 }
+    .sub-nav a {
+        height: 60px;
+        width: 60px;
+        margin: auto;
+        text-align: center;
+    }
 
-.system {
-    height: 60px;
-    width: 80px;
-    margin: auto;
-    text-align: center;
-}
+    .system {
+        height: 60px;
+        width: 60px;
+        margin: auto;
+        text-align: center;
+    }
 
     .system img {
         max-width: 100%;
