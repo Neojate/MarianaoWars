@@ -118,6 +118,7 @@ export class NavGame extends Component {
 
                 <Col className="text-center" xs="4">
                     <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/internet.png')} /></Link>
+                    <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}><span>Mensaje</span></Link>
                 </Col>
 
                 <Col xs="2">

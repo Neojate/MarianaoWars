@@ -19,10 +19,22 @@ namespace MarianaoWars.Controllers
             this.context = context;
         }
 
-        [HttpGet("getmessages")]
-        public IEnumerable<Message> GetMessages(int enrollmentId)
+        [HttpGet("messages")]
+        public IEnumerable<Message> GetMessages(int instituteId, string userId, int pageIndex)
         {
-            return context.GetMessages(enrollmentId);
+            return context.GetMessages(instituteId, userId, pageIndex);
+        }
+
+        [HttpGet("message")]
+        public Message GetMessage(int messageId)
+        {
+            return context.GetMessage(messageId);
+        } 
+
+        [HttpGet("messagereaded")]
+        public void UpdateMessage(int messageId)
+        {
+            context.ReadMessage(messageId);
         }
 
     }

@@ -10,17 +10,18 @@ namespace MarianaoWars.Models
         // Id del mensaje. Primary Key Autoincremental.
         public int Id { get; set; }
 
-        // Id de la matrícula a la que hace referencia.
-        public int EnrollmentId { get; set; }
+        public int InstituteId { get; set; }
+
+        public string UserId { get; set; }
 
         // Fecha en la que fue generado el mensaje
         public DateTime Date { get; set; }
 
         // A quién se envía el mensaje
-        public string ToSend { get; set; }
+        public string SendTo { get; set; }
 
         // Quien envía el mensaje
-        public string FromSend { get; set; }
+        public string SendFrom { get; set; }
 
         // Título del mensaje
         public string Title { get; set; }
@@ -29,6 +30,6 @@ namespace MarianaoWars.Models
         public string Body { get; set; }
 
         // Si el mensaje se ha visto
-        public bool IsWatched { get; set; }
+        public bool IsRead { get; set; }
     }
 }

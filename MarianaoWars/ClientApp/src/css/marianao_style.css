@@ -158,6 +158,13 @@ nav {
     background-image: url("../images/pc.svg");
 }
 
+.notreaded {
+    color: red;
+}
+
+.readed {
+    color: rgb(33, 37, 41);
+}
 
 .principal-pc, .portatil-pc {
     margin: auto;

@@ -13,6 +13,7 @@ namespace MarianaoWars.Repositories.Implementations
     public class RepositoryInstitute : IRepositoryInstitute
     {
         private readonly ApplicationDbContext dbContext;
+        private int pageSize = 10;
 
         public RepositoryInstitute(ApplicationDbContext dbContext)
         {
@@ -166,6 +167,13 @@ namespace MarianaoWars.Repositories.Implementations
             return talent;
         }
 
+        public async Task<Message> UpdateMessage(Message message)
+        {
+            dbContext.Update(message);
+            await dbContext.SaveChangesAsync();
+            return message;
+        }
+
         public async Task<Resource> UpdateResource(Resource resource)
         {
             dbContext.Update(resource);
@@ -193,10 +201,13 @@ namespace MarianaoWars.Repositories.Implementations
                 .FindAsync(messageId);
         }
 
-        public async Task<List<Message>> GetMessages(int enrollmentId)
+        public async Task<List<Message>> GetMessages(int instituteId, string userId, int pageIndex)
         {
             return await dbContext.Message
-                .Where(message => message.EnrollmentId == enrollmentId)
+                .Where(message => message.InstituteId == instituteId && message.UserId.Equals(userId))
+                .OrderByDescending(message => message.Date)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
 
