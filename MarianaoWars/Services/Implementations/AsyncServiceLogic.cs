@@ -64,6 +64,16 @@ namespace MarianaoWars.Services.Implementations
             repository.UpdateResource(resource);
         }
 
+        public Computer UpdateComputer(int computerId, string name)
+        {
+            Computer computer = repository.GetComputer(computerId).Result;
+            computer.Name = name;
+            return repository.UpdateComputer(computer).Result;
+
+        }
+
+
+
         public BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId)
         {
             Computer computer = repository.GetComputer(computerId).Result;

@@ -173,6 +173,13 @@ namespace MarianaoWars.Repositories.Implementations
             return resource;
         }
 
+        public async Task<Computer> UpdateComputer(Computer computer)
+        {
+            dbContext.Update(computer);
+            await dbContext.SaveChangesAsync();
+            return computer;
+        }
+
         public Resource NotAsyncUpdateResource(Resource resource)
         {
             dbContext.Update(resource);

@@ -136,11 +136,23 @@ nav {
     padding: 10px;
     margin: 10px;
     text-align: center;
+    transition: all 0.5s;
 }
 
-.principal-pc {
-    background-image: url("../images/pc_principal.svg");
-}
+    .computers-container.desk {
+        border: 2px solid #d7d7d7;
+    }
+
+    .computers-container:hover {
+        cursor: pointer;
+        -webkit-box-shadow: 0 4px 6px 5px #777;
+        -moz-box-shadow: 0 4px 6px 5px #777;
+        box-shadow: 0 4px 6px 5px #777;
+    }
+
+    .principal-pc {
+        background-image: url("../images/pc_principal.svg");
+    }
 
 .portatil-pc {
     background-image: url("../images/pc.svg");

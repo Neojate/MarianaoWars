@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react'
 import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label } from 'reactstrap';
 import '../../css/marianao_style.css';
 
 
@@ -19,9 +19,72 @@ export class Game extends Component {
             buildOrders: [],
             capacityResource: 0,
             valor: 1,
+            modal: false
         };
 
+        this.changeComputerName = this.changeComputerName.bind(this);
+        this.toggle = this.toggle.bind(this);
+
     }
+
+    componentWillUpdate(prevProps, prevState, snapshot) {
+
+    }
+
+    async changeComputerName(event) {
+
+        event.preventDefault();
+
+        const data = {
+            computerName: this.inputName.value,
+            computerId: this.state.computerId
+        };
+
+        var url = 'game/updatecomputername';
+
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        let result = '';
+        try {
+            result = await response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+
+        let computers = this.state.computers.slice();
+        for (let i = 0; i < computers.length; i++) {
+            if (computers[i].Id == result.Id) {
+                computers[i] = result;
+            }
+        }
+        
+        this.setState({
+            modal: !this.state.modal,
+            computers: computers
+        });
+
+    }
+
+    toogleOpen(computerId, nameComputer) {
+        this.setState({
+            modal: !this.state.modal,
+            computerId: computerId,
+            nameComputer: nameComputer
+        });
+    }
+
+    toggle() {
+        console.log(this.state.modal);
+        this.setState({ modal: !this.state.modal });
+    }
+
 
     componentDidMount() {
         //this.userComputers();
@@ -60,10 +123,10 @@ export class Game extends Component {
                 {this.state.computers.map((computer, index) => {
 
                     return (
-                        <div key={index} className="computers-container">
+                        <div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
-                                    <div className={computer.IsDesk === 1 ? "principal-pc":"portatil-pc" }></div>
+                                    <div className={computer.IsDesk == 1 ? "principal-pc":"portatil-pc" }></div>
                                     <p className={"text-center"}>Ip {computer.IpDirection} </p>
                                 </Col>
                             </Row>
@@ -71,6 +134,20 @@ export class Game extends Component {
                     );
                 })
                 }
+                <Modal isOpen={this.state.modal} toggle={this.toogle} className="">
+                    <Form>
+                        <ModalHeader toggle={this.toogle}>{this.state.nameComputer}</ModalHeader>
+                        <ModalBody>
+                            <Label for="computerName">Puedes cambiar el nombre de tu ordenador si lo desas</Label>
+                            <Input type="text" name="name" id="computerName" innerRef={name => this.inputName = name} placeholder={this.state.nameComputer} />
+                        </ModalBody>
+                    </Form>
+                    <ModalFooter>
+                        <Button onClick={this.changeComputerName} id="submit" color="primary">Cambiar</Button>{' '}
+                        <Button color="secondary" id="cancel" onClick={this.toggle}>Cancelar</Button>
+                    </ModalFooter>
+                    
+                </Modal>
             </>
             )
     }

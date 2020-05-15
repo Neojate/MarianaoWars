@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
+using Newtonsoft.Json;
+using MarianaoWars.Models;
+
+
 
 namespace MarianaoWars.Controllers
 {
@@ -22,6 +27,25 @@ namespace MarianaoWars.Controllers
         public void CreateBuildOrder(int instituteId, int computerId, int buildId)
         {
             context.CreateBuildOrder(instituteId, computerId, buildId);
+        }
+
+        [HttpPost("updatecomputername")]
+        public string UpdateComputerName([FromBody] JsonElement body)
+        {
+
+            Dictionary<string, string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(body.ToString());
+            string computerId = json["computerId"];
+            string computerName = json["computerName"];
+
+            Computer computer = context.UpdateComputer(Int32.Parse(computerId), computerName);
+
+            string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            return output;
         }
     }
 }
