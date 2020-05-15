@@ -30,7 +30,7 @@ namespace MarianaoWars.Repositories.Interfaces
         Task<Message> GetMessage(int messageId);
 
         // Método que recupera la lista de todos los mensajes de una matrícula
-        Task<List<Message>> GetMessages(int enrollmentId);
+        Task<List<Message>> GetMessages(int instituteId, string userId, int pageIndex);
 
         // Método que recupera todos los institutos abiertos
         Task<List<Institute>> GetOpenInstitutes();
@@ -73,6 +73,9 @@ namespace MarianaoWars.Repositories.Interfaces
 
         // Método que guarda un talento
         Task<Talent> SaveTalent(Talent talent);
+
+        // Método que actualiza el mensaje
+        Task<Message> UpdateMessage(Message message);
 
         // Método que actualiza los recursos
         Task<Resource> UpdateResource(Resource resource);

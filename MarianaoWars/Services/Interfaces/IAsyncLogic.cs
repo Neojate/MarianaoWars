@@ -19,7 +19,7 @@ namespace MarianaoWars.Services.Interfaces
 
         Message GetMessage(int messageId);
 
-        List<Message> GetMessages(int enrollmentId);
+        List<Message> GetMessages(int instituteId, string userId, int pageIndex);
 
         void DeleteMessage(int messageId);
 
@@ -28,6 +28,8 @@ namespace MarianaoWars.Services.Interfaces
         void SaveComputer(Computer computer);
 
         void UpdateResource(Resource computer);
+
+        Message ReadMessage(int messageId);
 
         BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId);
 

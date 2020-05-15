@@ -3,6 +3,8 @@ import { Route } from "react-router-dom";
 import { Game } from '../components/game/Game';
 import { Network } from '../components/game/Network';
 import { SystemPanel } from '../components/game/SystemPanel';
+import { Messages } from '../components/game/Messages';
+import { MessagePanel } from '../components/game/MessagePanel';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';
 
@@ -139,8 +141,10 @@ export class GameLayout extends Component {
             <p>Loading...</p>
             : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computers={this.state.computers} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}>
                 <Route exact path="/game/:instituteId" component={Network} />
-                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}/>} />
-               </Game>);
+                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} />} />
+                <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
+                <Route path="/game/:instituteId/message" component={MessagePanel} />
+            </Game>);
     return (
         <>
             {content}

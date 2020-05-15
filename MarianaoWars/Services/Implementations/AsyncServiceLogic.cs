@@ -203,9 +203,16 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetMessage(messageId).Result;
         }
 
-        public List<Message> GetMessages(int enrollmentId)
+        public List<Message> GetMessages(int instituteId, string userId, int pageIndex)
         {
-            return repository.GetMessages(enrollmentId).Result;
+            return repository.GetMessages(instituteId, userId, pageIndex).Result;
+        }
+
+        public Message ReadMessage(int messageId)
+        {
+            Message message = GetMessage(messageId);
+            message.IsRead = true;
+            return repository.UpdateMessage(message).Result;
         }
 
         public void DeleteMessage(int messageId)

@@ -6,12 +6,96 @@ export class Messages extends Component {
         super(props);
         this.state = {
             data: [],
+            instituteId: this.props.match.params.instituteId,
+            userId: this.props.userId,
+            pageIndex: 1,
             loading: true,
         };
     }
 
+    handleClick(message) {
+        var location = {
+            key: 'ac3df4',
+            pathname: `/game/${this.state.instituteId}/message`,
+            search: '',
+            hash: '',
+            state: {
+                ['message']: message
+            }
+        };
+        this.props.history.push(location);
+    }
+
+    deleteMessage(message) {
+        if (window.confirm('¿Deseas borrar este mensaje?')) {
+            
+        }
+    }
+
+    componentDidMount() {
+        this.sourceData(0);
+    }
+
     render() {
-        return <h1>Hola Eloy</h1>
+        let content = this.state.loading ?
+            <p><label>Cargando...</label></p> :
+            this.drawMessagesTable(this.state.data);
+        return (
+            <div>
+                { content }
+            </div>
+        );
+
+
+    }
+
+    drawMessagesTable(messages) {
+        return (
+            <div>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Desde</th>
+                            <th>Titulo</th>
+                            <th>Borrar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {messages.map((message, index) => 
+                            <tr key={index} className={message.isRead ? '' : 'notreaded'}>
+                                <td onClick={() => this.handleClick(message)}>{message.sendFrom}</td>
+                                <td onClick={() => this.handleClick(message)}>{message.date}</td>
+                                <td onClick={() => this.handleClick(message)}>{message.title}</td>
+                                <td><span onClick={() => this.deleteMessage(message)}>X</span></td>
+                            </tr>  
+                        )}
+                    </tbody>
+                </table>
+                <button onClick={() => this.sourceData(-1)}>Atrás</button>
+                <button onClick={() => this.sourceData(1)}>Siguiente</button>
+            </div>
+        );
+    }
+
+    async sourceData(dir) {
+        let index = this.state.pageIndex + dir;
+        if ((index - 1) * 10 > this.state.data.length)
+            index = 1;
+        if (index <= 0)
+            index = this.state.data.length / 10 + 1;
+
+        fetch(`message/messages?instituteId=${this.state.instituteId}&userId=${this.state.userId}&pageIndex=${index}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                this.setState({
+                    data: json,
+                    pageIndex: index,
+                    loading: false
+                });
+            });
     }
 
 }
