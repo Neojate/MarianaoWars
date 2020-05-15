@@ -22,6 +22,8 @@ namespace MarianaoWars.Middleware
             services.AddTransient<IAsyncPregame, AsyncServicePregame>();
             services.AddTransient<IAsyncLogic, AsyncServiceLogic>();
 
+            services.AddScoped<IDatabaseChangeNotificationService, DatabaseChangeNotificationService>();
+
             return services;
         }
 

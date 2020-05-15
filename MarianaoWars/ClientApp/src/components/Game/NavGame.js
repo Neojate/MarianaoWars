@@ -4,6 +4,8 @@ import { Row, Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { BuildIdName } from '../services/SystemConstants'
 
+import { Mailclose } from '../../images/icon/mailclose.png';
+
 
 export class NavGame extends Component {
 
@@ -118,7 +120,7 @@ export class NavGame extends Component {
 
                 <Col className="text-center" xs="4">
                     <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/internet.png')} /></Link>
-                    <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}><span>Mensaje</span></Link>
+                    <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}><img alt="mail" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} /></Link>
                 </Col>
 
                 <Col xs="2">

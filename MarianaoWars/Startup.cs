@@ -87,7 +87,7 @@ namespace MarianaoWars
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDatabaseChangeNotificationService notificationService)
         {
             if (env.IsDevelopment())
             {
@@ -133,6 +133,8 @@ namespace MarianaoWars
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            notificationService.Config();
 
         }
     }
