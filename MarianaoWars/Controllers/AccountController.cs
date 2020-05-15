@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MarianaoWars.Services.Interfaces;
 using MarianaoWars.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -20,12 +21,14 @@ namespace MarianaoWars.Controllers
     {
 
         private readonly ILogger<AccountController> _logger;
+        private IAsyncLogic context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IAsyncLogic context)
         {
             UserMgr = userManager;
             SignInMgr = signInManager;
             _logger = logger;
+            this.context = context;
         }
 
         [HttpPost("userLogin")]
@@ -45,19 +48,22 @@ namespace MarianaoWars.Controllers
             Dictionary<string, string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(body.ToString());           
             string password = json["password"];
 
-            ApplicationUser appUser = new ApplicationUser(json["userName"], json["firstName"], json["lastName"], json["email"]);
+            ApplicationUser appUser = new ApplicationUser(json["email"], json["firstName"], json["lastName"], json["email"]);
             IdentityResult result;
 
             ApplicationUser user = await UserMgr.FindByNameAsync(appUser.Email); 
 
                 if(user == null) 
                 {
-                    appUser.NormalizedUserName = appUser.Email;
+                    //appUser.NormalizedUserName = appUser.Email;
                     result = await UserMgr.CreateAsync(appUser, password);
+                    user = await UserMgr.FindByNameAsync(appUser.Email);
 
                     //update
-
-                    //emaim, password, mantiente login, bloqueo por fallos
+                    user.UserName = json["userName"];
+                    context.UpdateUser(appUser);
+                
+                    //emaim, password, mantiente login, bloqueo por x fallos
                     await SignInMgr.PasswordSignInAsync(appUser.Email, password, true, false);
                     return result;
                 }

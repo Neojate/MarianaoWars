@@ -188,6 +188,13 @@ namespace MarianaoWars.Repositories.Implementations
             return computer;
         }
 
+        public async Task<ApplicationUser> UpdateApplicationUser(ApplicationUser user)
+        {
+            dbContext.Update(user);
+            await dbContext.SaveChangesAsync();
+            return user;
+        }
+
         public Resource NotAsyncUpdateResource(Resource resource)
         {
             dbContext.Update(resource);

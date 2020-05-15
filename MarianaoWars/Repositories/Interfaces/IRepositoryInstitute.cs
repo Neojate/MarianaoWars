@@ -83,6 +83,9 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que actualiza los recursos
         Task<Computer> UpdateComputer(Computer computer);
 
+        // Método que actualiza el usuario
+        Task<ApplicationUser> UpdateApplicationUser(ApplicationUser user);
+
         // Método que actualiza los recursos de forma síncrona
         Resource NotAsyncUpdateResource(Resource resource);
 

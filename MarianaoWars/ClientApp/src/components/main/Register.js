@@ -106,7 +106,7 @@ export class Register extends Component {
         const data = {
             firstName: this.inputName.value,
             lastName: this.inputLastName.value,
-            userName: this.inputEmail.value,
+            userName: this.inputUserName.value,
             email: this.inputEmail.value,
             password: this.inputPassword.value
         };

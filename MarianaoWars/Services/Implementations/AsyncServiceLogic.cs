@@ -72,6 +72,11 @@ namespace MarianaoWars.Services.Implementations
 
         }
 
+        public ApplicationUser UpdateUser(ApplicationUser user)
+        {
+            return repository.UpdateApplicationUser(user).Result;
+        }
+
 
 
         public BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId)

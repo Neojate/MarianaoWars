@@ -31,6 +31,8 @@ namespace MarianaoWars.Services.Interfaces
 
         Computer UpdateComputer(int computerId, string computerName);
 
+        ApplicationUser UpdateUser(ApplicationUser user);
+
         Message ReadMessage(int messageId);
 
         BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId);
