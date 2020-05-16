@@ -1,4 +1,5 @@
-﻿
+﻿import { SystemsType } from './SystemConstants';
+
 export class SystemServices{
 
 
@@ -33,6 +34,13 @@ export class SystemServices{
         }
 
         return this.systemTalent;
+    }
+
+    async getSystems() {
+        let systems = [];
+        [systems[SystemsType.RESOURCE], systems[SystemsType.SOFTWARE], systems[SystemsType.TALENT]] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData(), systemServices.systemTalentData()]);
+
+        return systems;
     }
 
 

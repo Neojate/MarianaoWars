@@ -2,6 +2,7 @@
 import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label } from 'reactstrap';
+import { SystemsType } from '../services/SystemConstants';
 import '../../css/marianao_style.css';
 
 
@@ -230,7 +231,7 @@ export class Game extends Component {
                         <NavGame
                             userId={this.state.userId}
                             instituteId={this.state.instituteId}
-                            systemResources={this.state.systems[1]}
+                            systemResources={this.state.systems[SystemsType.RESOURCE]}
                             systems={this.state.systems}
                             computer={this.state.computerActive}
                             messagesNotRead={this.state.messagesNotRead}
