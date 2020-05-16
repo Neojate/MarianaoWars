@@ -2,7 +2,7 @@
 import { Resource } from './Resource';
 import { Row, Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { BuildIdName } from '../services/SystemConstants'
+import { BuildIdName, SystemsType } from '../services/SystemConstants'
 
 import { Mailclose } from '../../images/icon/mailclose.png';
 
@@ -81,49 +81,49 @@ export class NavGame extends Component {
 
         return (
             <Container>
-            <Row style={{ alignItems: 'center' }}>
-                {systems[0].map((systemResource, index) => {
+                <Row style={{ alignItems: 'center' }}>
+                    {systems[SystemsType.RESOURCE].map((systemResource, index) => {
 
-                    //capacidad de almacenamiento
-                    const mySql = systems[2].find(element => element.name === "MySql");
-                    let capacity = mySql.action1.split(",")[computer.Software.MySqlVersion];
+                        //capacidad de almacenamiento
+                        const mySql = systems[SystemsType.SOFTWARE].find(element => element.name === "MySql");
+                        let capacity = mySql.action1.split(",")[computer.Software.MySqlVersion];
 
-                    //nombre en columna del recurso
-                    let resourceName = BuildIdName[systemResource.buildId];
+                        //nombre en columna del recurso
+                        let resourceName = BuildIdName[systemResource.buildId];
 
-                    let quantity = computer.Resource[resourceName];
+                        let quantity = computer.Resource[resourceName];
 
-                    //incremento x minuto (mirar que si estamos en negativo, el incremento es la mitad)
-                    let increments = systemResource.increment.split(",");
-                    let increment = increments[computer.Resource[`${resourceName}Level`]];
+                        //incremento x minuto (mirar que si estamos en negativo, el incremento es la mitad)
+                        let increments = systemResource.increment.split(",");
+                        let increment = increments[computer.Resource[`${resourceName}Level`]];
 
-                    var color = this.colorProgress(quantity, capacity);
+                        var color = this.colorProgress(quantity, capacity);
 
-                    if (systemResource.buildId === 4 && quantity < 0) {
-                        color = "danger";
-                    }
-                    else if (systemResource.buildId === 4 && quantity < 0) {
-                        color = "success";
-                    }
+                        if (systemResource.buildId === 4 && quantity < 0) {
+                            color = "danger";
+                        }
+                        else if (systemResource.buildId === 4 && quantity < 0) {
+                            color = "success";
+                        }
 
-                    let popoverBody =
-                        (<>
-                            <p>{systemResource.description}</p>
-                            <hr />
-                            <p className={"pop-capacity"}>Capacidad Maxima: <span>{capacity}</span></p>
-                            <p className={"pop-increment"}>Incremento por Hora: <span>{increment * 60}</span></p>
-                        </>);
+                        let popoverBody =
+                            (<>
+                                <p>{systemResource.description}</p>
+                                <hr />
+                                <p className={"pop-capacity"}>Capacidad Maxima: <span>{capacity}</span></p>
+                                <p className={"pop-increment"}>Incremento por Hora: <span>{increment * 60}</span></p>
+                            </>);
 
-                    return <Resource key={systemResource.id}
-                        id={`recurso${systemResource.id}`}
-                        image="iconResource1.png"
-                        quantity={quantity}
-                        color={color}
-                        value={(Math.abs(quantity) * 100) / capacity}
-                        popoverHeader={systemResource.name}
-                        popoverBody={popoverBody}
-                    />
-                })}
+                        return <Resource key={systemResource.id}
+                            id={`recurso${systemResource.id}`}
+                            image="iconResource1.png"
+                            quantity={quantity}
+                            color={color}
+                            value={(Math.abs(quantity) * 100) / capacity}
+                            popoverHeader={systemResource.name}
+                            popoverBody={popoverBody}
+                        />
+                    })}
 
                
 

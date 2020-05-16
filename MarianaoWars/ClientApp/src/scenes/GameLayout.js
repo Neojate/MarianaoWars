@@ -5,6 +5,7 @@ import { Network } from '../components/game/Network';
 import { SystemPanel } from '../components/game/SystemPanel';
 import { Messages } from '../components/game/Messages';
 import { MessagePanel } from '../components/game/MessagePanel';
+import authService from '../components/api-authorization/AuthorizeService';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';
 
@@ -17,7 +18,7 @@ export class GameLayout extends Component {
         super(props);
 
         this.state = {
-            userId: this.props.location.state.userId,
+            userId: false,
             instituteId: this.props.match.params.instituteId,
             hubConnection: null,
             buildOrders: [],
@@ -35,14 +36,13 @@ export class GameLayout extends Component {
 
     async load() {
 
+        const user = await authService.getUser();
+        this.setState({userId: user.sub})
+
         await this.userComputers();
-        await this.getSystemResource();
+        await this.getSystems();
 
-
-
-        this.setState({
-            loading: false
-        })
+        this.setState({loading: false})
 
     }
 
@@ -103,19 +103,9 @@ export class GameLayout extends Component {
             .catch(err => console.error(err));
     }
 
-    async getSystemResource() {
-
-        const [systemResource, systemSofftware, systemTalent] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData(), systemServices.systemTalentData()]);
-
-        var stateTemp = this.state.systems.slice();
-        stateTemp[0] = systemResource;
-        stateTemp[2] = systemSofftware;
-        stateTemp[4] = systemTalent;
-
-        this.setState({
-            systems: stateTemp,
-            loading: false
-        })
+    async getSystems() {
+        const systems = await systemServices.getSystems();
+        this.setState({systems: systems})
     }
 
 

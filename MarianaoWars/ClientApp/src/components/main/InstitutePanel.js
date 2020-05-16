@@ -23,18 +23,8 @@ export class InstitutePanel extends Component {
                 });                 
             } else {
                 alert('Entrando en partida...');
-                var location = {
-                    key: 'ac3df4', // not with HashHistory!
-                    pathname: `/game/${data.instituteId}`,
-                    search: ``,
-                    hash: '',
-                    state: {
-                        ['userId']: this.state.userId
-                    }
-                }
-                //this.props.history.push(`/game/${data.instituteId}`);
+                var location = {pathname: `/game/${data.instituteId}`}
                 this.props.history.push(location);
-                //return <Redirect to='/game' />
             }
         });
     }
@@ -53,11 +43,7 @@ export class InstitutePanel extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {institutes.map((institute, index) =>
-
-                            //<Link to={`/game/${institute.id}`}> {institute.name}</Link>
-                            //{ institute.name }
-                                    
+                    {institutes.map((institute, index) =>                                    
                             <tr key={index} onClick={() => this.handleClick(institute)}>
                                 <td>
                                     {institute.name}

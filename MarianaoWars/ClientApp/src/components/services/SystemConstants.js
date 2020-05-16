@@ -20,3 +20,9 @@ export const NeedNames = {
     'needBuild': 'STACKOVETFLOW'
 }
 
+export const SystemsType = {
+    RESOURCE: 0,
+    SOFTWARE: 2,
+    TALENT: 4    
+}
+
