@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 
+import $ from "jquery";
+
 export class Messages extends Component {
 
     constructor(props) {
@@ -27,8 +29,14 @@ export class Messages extends Component {
     }
 
     deleteMessage(message) {
+        console.log(message);
         if (window.confirm('¿Deseas borrar este mensaje?')) {
-            
+            $.ajax({
+                url: '/message/deletemessage',
+                data: { messageId: message.id },
+                type: 'GET',
+                success: this.sourceDataDelete()
+            });
         }
     }
 
@@ -64,10 +72,10 @@ export class Messages extends Component {
                     <tbody>
                         {messages.map((message, index) => 
                             <tr key={index} className={message.isRead ? '' : 'notreaded'}>
-                                <td onClick={() => this.handleClick(message)}>{message.sendFrom}</td>
                                 <td onClick={() => this.handleClick(message)}>{message.date}</td>
+                                <td onClick={() => this.handleClick(message)}>{message.sendFrom}</td>
                                 <td onClick={() => this.handleClick(message)}>{message.title}</td>
-                                <td><span onClick={() => this.deleteMessage(message)}>X</span></td>
+                                <td><span onClick={() => this.deleteMessage(message)}><img src={require('../../images/icon/deleteicon.png')} className="link" /></span></td>
                             </tr>  
                         )}
                     </tbody>
@@ -80,10 +88,11 @@ export class Messages extends Component {
 
     async sourceData(dir) {
         let index = this.state.pageIndex + dir;
+        console.log(index);
         if ((index - 1) * 10 > this.state.data.length)
             index = 1;
         if (index <= 0)
-            index = this.state.data.length / 10 + 1;
+            index = 1
 
         fetch(`message/messages?instituteId=${this.state.instituteId}&userId=${this.state.userId}&pageIndex=${index}`)
             .then((response) => {
@@ -93,6 +102,20 @@ export class Messages extends Component {
                 this.setState({
                     data: json,
                     pageIndex: index,
+                    loading: false
+                });
+            });
+    }
+
+    async sourceDataDelete() {
+        fetch(`message/messages?instituteId=${this.state.instituteId}&userId=${this.state.userId}&pageIndex=0`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                this.setState({
+                    data: json,
+                    pageIndex: 0,
                     loading: false
                 });
             });

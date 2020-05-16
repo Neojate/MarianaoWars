@@ -20,6 +20,20 @@ namespace MarianaoWars.Repositories.Implementations
             this.dbContext = dbContext;
         }
 
+
+
+        #region ATTACKSCRIPT
+        public async Task<AttackScript> SaveAttackScript(AttackScript attackScript)
+        {
+            await dbContext.AttackScript.AddAsync(attackScript);
+            await dbContext.SaveChangesAsync();
+            return attackScript;
+        }
+        #endregion
+
+
+
+        #region BUILDORDER
         public async Task<List<BuildOrder>> GetBuildOrders(int computerId)
         {
             return await dbContext.BuildOrder
@@ -27,6 +41,18 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<BuildOrder> SaveBuildOrder(BuildOrder buildOrder)
+        {
+            await dbContext.BuildOrder.AddAsync(buildOrder);
+            await dbContext.SaveChangesAsync();
+
+            return buildOrder;
+        }
+        #endregion
+
+
+
+        #region COMPUTER
         public async Task<Computer> GetComputer(int computerId)
         {
             return await dbContext.Computer
@@ -53,6 +79,35 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<Computer> SaveComputer(Computer computer)
+        {
+            await dbContext.Computer.AddAsync(computer);
+            await dbContext.SaveChangesAsync();
+            return computer;
+        }
+
+        public async Task<Computer> UpdateComputer(Computer computer)
+        {
+            dbContext.Update(computer);
+            await dbContext.SaveChangesAsync();
+            return computer;
+        }
+        #endregion
+
+
+
+        #region DEFENSESCRIPT
+        public async Task<DefenseScript> SaveDefenseScript(DefenseScript defenseScript)
+        {
+            await dbContext.DefenseScript.AddAsync(defenseScript);
+            await dbContext.SaveChangesAsync();
+            return defenseScript;
+        }
+        #endregion
+
+
+
+        #region ENROLLMENT
         public async Task<Enrollment> GetEnrollment(string userId, int instituteId)
         {
             return await dbContext.Enrollment
@@ -68,6 +123,17 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<Enrollment> SaveEnrollment(Enrollment enrollment)
+        {
+            await dbContext.Enrollment.AddAsync(enrollment);
+            await dbContext.SaveChangesAsync();
+            return enrollment;
+        }
+        #endregion
+
+
+
+        #region INSTITUTE
         public async Task<Institute> GetInstitute(int instituteId)
         {
             return await dbContext.Institute
@@ -80,128 +146,11 @@ namespace MarianaoWars.Repositories.Implementations
                 .Where(institute => !institute.IsClosed)
                 .ToListAsync();
         }
+        #endregion
 
-        public async Task<Resource> GetResource(int resourceId)
-        {
-            return await dbContext.Resource.FindAsync(resourceId);
-        }
 
-        public async Task<List<SystemResource>> GetSystemResources()
-        {
-            return await dbContext.SystemResource
-                .ToListAsync();
-        }
 
-        public async Task<List<SystemSoftware>> GetSystemSoftwares()
-        {
-            return await dbContext.SystemSoftware
-                .ToListAsync();
-        }
-
-        public async Task<List<SystemTalent>> GetSystemTalents()
-        {
-            return await dbContext.SystemTalent
-                .ToListAsync();
-        }
-
-        public async Task<ApplicationUser> GetUser(string userId)
-        {
-            return await dbContext.Users
-                .FindAsync(userId);
-        }
-
-        public async Task<AttackScript> SaveAttackScript(AttackScript attackScript)
-        {
-            await dbContext.AttackScript.AddAsync(attackScript);
-            await dbContext.SaveChangesAsync();
-            return attackScript;
-        }
-
-        public async Task<BuildOrder> SaveBuildOrder(BuildOrder buildOrder)
-        {
-            await dbContext.BuildOrder.AddAsync(buildOrder);
-            await dbContext.SaveChangesAsync();
-            
-            return buildOrder;
-        }
-
-        public async Task<Computer> SaveComputer(Computer computer)
-        {
-            await dbContext.Computer.AddAsync(computer);
-            await dbContext.SaveChangesAsync();
-            return computer;
-        }
-
-        public async Task<Enrollment> SaveEnrollment(Enrollment enrollment)
-        {
-            await dbContext.Enrollment.AddAsync(enrollment);
-            await dbContext.SaveChangesAsync();
-            return enrollment;
-        }
-
-        public async Task<DefenseScript> SaveDefenseScript(DefenseScript defenseScript)
-        {
-            await dbContext.DefenseScript.AddAsync(defenseScript);
-            await dbContext.SaveChangesAsync();
-            return defenseScript;
-        }
-
-        public async Task<Resource> SaveResource(Resource resource)
-        {
-            await dbContext.Resource.AddAsync(resource);
-            await dbContext.SaveChangesAsync();
-            return resource;
-        }
-
-        public async Task<Software> SaveSoftware(Software software)
-        {
-            await dbContext.Software.AddAsync(software);
-            await dbContext.SaveChangesAsync();
-            return software;
-        }
-
-        public async Task<Talent> SaveTalent(Talent talent)
-        {
-            await dbContext.Talent.AddAsync(talent);
-            await dbContext.SaveChangesAsync();
-            return talent;
-        }
-
-        public async Task<Message> UpdateMessage(Message message)
-        {
-            dbContext.Update(message);
-            await dbContext.SaveChangesAsync();
-            return message;
-        }
-
-        public async Task<Resource> UpdateResource(Resource resource)
-        {
-            dbContext.Update(resource);
-            await dbContext.SaveChangesAsync();
-            return resource;
-        }
-
-        public async Task<Computer> UpdateComputer(Computer computer)
-        {
-            dbContext.Update(computer);
-            await dbContext.SaveChangesAsync();
-            return computer;
-        }
-
-        public async Task<ApplicationUser> UpdateApplicationUser(ApplicationUser user)
-        {
-            dbContext.Update(user);
-            await dbContext.SaveChangesAsync();
-            return user;
-        }
-
-        public Resource NotAsyncUpdateResource(Resource resource)
-        {
-            dbContext.Update(resource);
-            dbContext.SaveChanges();
-            return resource;
-        }
-
+        #region MESSAGE
         public async Task<Message> GetMessage(int messageId)
         {
             return await dbContext.Message
@@ -218,18 +167,176 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
-        public async Task DeleteMessage(int messageId)
-        {
-            dbContext.Message.
-                Remove(GetMessage(messageId).Result);
-        }
-
         public async Task<List<Message>> IsNotReadMessages(int instituteId, string userId)
         {
             return await dbContext.Message
-                .Where(message => !message.IsRead)
+                .Where(message => 
+                    message.InstituteId == instituteId && 
+                    message.UserId.Equals(userId) &&
+                    !message.IsRead)
                 .ToListAsync();
         }
+
+        public async Task<Message> UpdateMessage(Message message)
+        {
+            dbContext.Update(message);
+            await dbContext.SaveChangesAsync();
+            return message;
+        }
+
+        void IRepositoryInstitute.DeleteMessage(int messageId)
+        {
+            Message message = GetMessage(messageId).Result;    
+            dbContext.Message.Remove(message);
+            dbContext.SaveChanges();
+        }
+        #endregion
+
+
+
+        #region RESOURCE
+        public async Task<Resource> GetResource(int resourceId)
+        {
+            return await dbContext.Resource.FindAsync(resourceId);
+        }
+
+        public async Task<Resource> SaveResource(Resource resource)
+        {
+            await dbContext.Resource.AddAsync(resource);
+            await dbContext.SaveChangesAsync();
+            return resource;
+        }
+
+        public async Task<Resource> UpdateResource(Resource resource)
+        {
+            dbContext.Update(resource);
+            await dbContext.SaveChangesAsync();
+            return resource;
+        }
+
+        public Resource NotAsyncUpdateResource(Resource resource)
+        {
+            dbContext.Update(resource);
+            dbContext.SaveChanges();
+            return resource;
+        }
+        #endregion
+
+
+
+        #region SOFTWARE
+        public async Task<Software> SaveSoftware(Software software)
+        {
+            await dbContext.Software.AddAsync(software);
+            await dbContext.SaveChangesAsync();
+            return software;
+        }
+        #endregion
+
+
+
+        #region SYSTEMRESOURCE
+        public async Task<List<SystemResource>> GetSystemResources()
+        {
+            return await dbContext.SystemResource
+                .ToListAsync();
+        }
+        #endregion
+
+
+
+        #region SYSTEMSOFTWARE
+        public async Task<List<SystemSoftware>> GetSystemSoftwares()
+        {
+            return await dbContext.SystemSoftware
+                .ToListAsync();
+        }
+        #endregion
+
+
+
+        #region SYSTEMTALENT
+        public async Task<List<SystemTalent>> GetSystemTalents()
+        {
+            return await dbContext.SystemTalent
+                .ToListAsync();
+        }
+        #endregion
+
+
+
+        #region TALENT
+        public async Task<Talent> SaveTalent(Talent talent)
+        {
+            await dbContext.Talent.AddAsync(talent);
+            await dbContext.SaveChangesAsync();
+            return talent;
+        }
+        #endregion
+
+
+
+        #region USER
+        public async Task<ApplicationUser> GetUser(string userId)
+        {
+            return await dbContext.Users
+                .FindAsync(userId);
+        }
+
+        public async Task<ApplicationUser> UpdateApplicationUser(ApplicationUser user)
+        {
+            dbContext.Update(user);
+            await dbContext.SaveChangesAsync();
+            return user;
+        }        
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

@@ -159,11 +159,11 @@ nav {
 }
 
 .notreaded {
-    color: red;
+    color: orangered;
 }
 
-.readed {
-    color: rgb(33, 37, 41);
+.link {
+    cursor: pointer;
 }
 
 .principal-pc, .portatil-pc {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MarianaoWars.Controllers
@@ -35,6 +36,12 @@ namespace MarianaoWars.Controllers
         public void UpdateMessage(int messageId)
         {
             context.ReadMessage(messageId);
+        }
+
+        [HttpGet("deletemessage")]
+        public void DeleteMessage(int messageId)
+        {
+            context.DeleteMessage(messageId);
         }
 
     }
