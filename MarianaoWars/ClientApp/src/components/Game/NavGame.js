@@ -131,7 +131,7 @@ export class NavGame extends Component {
                     <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/internet.png')} /></Link>
                         <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
                             <img alt="mail" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} />
-                            {this.state.messagesNotRead.length !== 0 ? <span class="badge badge-pill badge-danger">{this.state.messagesNotRead.length}</span> : ''}
+                            {this.state.messagesNotRead.length !== 0 ? <span className="badge badge-pill badge-danger">{this.state.messagesNotRead.length}</span> : ''}
                         </Link>
                 </Col>
 

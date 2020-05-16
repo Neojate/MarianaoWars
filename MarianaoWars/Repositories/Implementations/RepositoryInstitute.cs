@@ -227,7 +227,7 @@ namespace MarianaoWars.Repositories.Implementations
         public async Task<List<Message>> IsNotReadMessages(int instituteId, string userId)
         {
             return await dbContext.Message
-                .Where(message => !message.IsRead)
+                .Where(message => !message.IsRead && message.InstituteId == instituteId && message.UserId.Equals(userId))
                 .ToListAsync();
         }
 

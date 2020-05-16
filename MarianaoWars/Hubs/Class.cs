@@ -21,27 +21,10 @@ namespace SignalRChat.Hubs
             this.postGame = postGame;
         }
 
-        public async Task SendMessege(string user, string message)
-        {
-            await Clients.All.SendAsync("SendMessege", user, message);
-
-        }
-        public async Task InitCount(string user, string message)
-        {   
-            //while (true)
-    
-            //{
-                for (int i = 0; i < 10; i++)
-                {
-                    await Clients.Caller.SendAsync("nombreMetodoRecibido", user, i);
-                }
-                Thread.Sleep(1000);
-            //}
-        }
-
         public async Task InitUpdate(string user, int computerId)
         {
 
+            //computers
             Computer computer = game.GetComputer(computerId);
 
             string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
@@ -51,7 +34,19 @@ namespace SignalRChat.Hubs
             });
 
             await Clients.Caller.SendAsync("updateResources", output);
-            
+
+
+            //builds
+            List<BuildOrder> buildOrders = postGame.GetBuildOrders(computerId);
+
+            output = JsonConvert.SerializeObject(buildOrders, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            await Clients.Caller.SendAsync("buildOrders", output);
+
         }
 
         public async Task BuildOrdersList(string user, int computerId)

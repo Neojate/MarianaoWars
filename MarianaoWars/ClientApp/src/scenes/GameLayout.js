@@ -59,7 +59,7 @@ export class GameLayout extends Component {
                 .then(() => {
 
                     setInterval(this.InitUpdate, 1000);
-                    setInterval(this.BuildOrdersList, 1000);
+                    //setInterval(this.BuildOrdersList, 1000);
                     setInterval(this.MessagesNotReading, 1000);
 
                 })
