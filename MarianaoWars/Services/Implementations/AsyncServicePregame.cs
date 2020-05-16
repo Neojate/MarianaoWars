@@ -55,6 +55,7 @@ namespace MarianaoWars.Services.Implementations
                 defenseScript,
                 enrollment);
             computer = repository.SaveComputer(computer).Result;
+
             CreateWelcomeMessage(institute, userId, computer);
 
             return enrollment;
@@ -103,10 +104,10 @@ namespace MarianaoWars.Services.Implementations
                    computer.Name,
                    "Sistema",
                    "Bienvenido!",
-                   string.Format("Bienvenido a {0}. Comienza tu etapa escolar. No te rindas ni te des por vencido, de ti, " +
+                   string.Format("Bienvenido a {0}. Comienza tu etapa escolar. No te rindas ni te des por vencido. De ti, " +
                    "y tu habilidad para ser el último en quedar en pie, depende que seas el mejor de clase o no. Si en algún " +
                    "momento necesitas un empujoncito, no dudes en sobornar a los profesores. Ellos te ayudarán y potenciarán " +
-                   "todas tus carencias por un módico precio. No tienes excusa. Sal ahí y machácalos. Y recuerda, esperamos grandes cosas de ti",
+                   "todas tus carencias por un módico precio. No tienes excusa. Sal ahí y machácalos. Y recuerda, esperamos grandes cosas de tu persona.",
                    institute.Name)
             );
             return repository.SaveMessage(message).Result;
