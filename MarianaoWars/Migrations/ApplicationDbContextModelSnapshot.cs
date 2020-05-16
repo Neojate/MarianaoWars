@@ -435,10 +435,10 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<double>("Coffe")
+                    b.Property<double>("Coffee")
                         .HasColumnType("double");
 
-                    b.Property<int>("CoffeLevel")
+                    b.Property<int>("CoffeeLevel")
                         .HasColumnType("int");
 
                     b.Property<double>("Ingenyous")

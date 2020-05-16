@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import { BuildIdName, NeedNames } from '../services/SystemConstants'
+import { BuildIdName, NeedNames, SystemsType } from '../services/SystemConstants'
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -94,13 +94,13 @@ export class SystemPanel extends Component {
 
     systemLevel() {
 
-        if (this.state.typeSystem === 0) {
+        if (this.state.typeSystem === SystemsType.RESOURCE) {
             return this.state.computerActive.Resource[`${BuildIdName[this.state.System.buildId]}Level`];
         }
-        else if (this.state.typeSystem === 2) {
+        else if (this.state.typeSystem === SystemsType.SOFTWARE) {
             return this.state.computerActive.Software[`${BuildIdName[this.state.System.buildId]}Version`];
         }
-        else if (this.state.typeSystem === 4) {
+        else if (this.state.typeSystem === SystemsType.TALENT) {
             return this.state.computerActive.Talent[`${BuildIdName[this.state.System.buildId]}Level`];
         }
 
@@ -127,6 +127,7 @@ export class SystemPanel extends Component {
 
                 //comparamos la cantidad que tenemos con la necesidad del recurso
                 let recurso = need.split("need")[1];
+                
                 if (need !== "needBuild" && requeriments[need] > this.state.computerActive.Resource[recurso]) {
                     canBeUpdate = false;
                 }
