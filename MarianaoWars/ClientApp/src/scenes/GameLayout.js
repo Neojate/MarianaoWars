@@ -24,7 +24,8 @@ export class GameLayout extends Component {
             computers: false,
             computerActive: false,
             systems: [],
-            loading: true
+            loading: true,
+            messagesNotRead: [],
         };
 
         this.load = this.load.bind(this);
@@ -59,6 +60,7 @@ export class GameLayout extends Component {
 
                     setInterval(this.InitUpdate, 1000);
                     setInterval(this.BuildOrdersList, 1000);
+                    setInterval(this.MessagesNotReading, 1000);
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
@@ -73,6 +75,13 @@ export class GameLayout extends Component {
                 this.setState({ buildOrders: buildOrders });
             });
 
+            this.state.hubConnection.on('notReadMessagesResponse', (receivedMessage) => {
+                var messages = JSON.parse(receivedMessage);
+                    this.setState({
+                        messagesNotRead: messages
+                    });
+            });
+
         });
     }
 
@@ -85,6 +94,12 @@ export class GameLayout extends Component {
     BuildOrdersList = () => {
         this.state.hubConnection
             .invoke('BuildOrdersList', this.state.userId, this.state.computerActive.Id)
+            .catch(err => console.error(err));
+    }
+
+    MessagesNotReading = () => {
+        this.state.hubConnection
+            .invoke('NotReadMessages', parseInt(this.state.instituteId), this.state.userId)
             .catch(err => console.error(err));
     }
 
@@ -139,11 +154,16 @@ export class GameLayout extends Component {
 
         var content = (this.loading) ?
             <p>Loading...</p>
-            : (<Game userId={this.state.userId} instituteId={this.state.instituteId} systems={this.state.systems} computers={this.state.computers} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders}>
+            : (<Game userId={this.state.userId}
+                instituteId={this.state.instituteId} systems={this.state.systems}
+                computers={this.state.computers} computerActive={this.state.computerActive}
+                buildOrders={this.state.buildOrders} messagesNotRead={this.state.messagesNotRead}>
+
                 <Route exact path="/game/:instituteId" component={Network} />
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
+
             </Game>);
     return (
         <>

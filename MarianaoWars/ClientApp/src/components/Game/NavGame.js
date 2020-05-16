@@ -19,7 +19,9 @@ export class NavGame extends Component {
             userId: this.props.userId,
             instituteId: this.props.instituteId,
             computer: this.props.computer,
-            systems: []
+            notRead: false,
+            systems: [],
+            messagesNotRead: []
         };
 
     }
@@ -39,6 +41,11 @@ export class NavGame extends Component {
         if (this.props.systems !== prevProps.systems) {
             this.setState({
                 systems: this.props.systems
+            })
+        }
+        if (this.props.messagesNotRead !== prevProps.messagesNotRead) {
+            this.setState({
+                messagesNotRead: this.props.messagesNotRead
             })
         }
     }
@@ -118,9 +125,14 @@ export class NavGame extends Component {
                     />
                 })}
 
+               
+
                 <Col className="text-center" xs="4">
                     <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/internet.png')} /></Link>
-                    <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}><img alt="mail" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} /></Link>
+                        <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
+                            <img alt="mail" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} />
+                            {this.state.messagesNotRead.length !== 0 ? <span class="badge badge-pill badge-danger">{this.state.messagesNotRead.length}</span> : ''}
+                        </Link>
                 </Col>
 
                 <Col xs="2">

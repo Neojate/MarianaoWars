@@ -92,5 +92,8 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que borra un mensaje en función de su id
         Task DeleteMessage(int messageId);
 
+        //Método para ver si tenemos mensajes sin leer
+        Task<List<Message>> IsNotReadMessages(int instituteId, string userId);
+
     }
 }

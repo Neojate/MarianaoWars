@@ -235,6 +235,10 @@ namespace MarianaoWars.Services.Implementations
             repository.DeleteMessage(messageId);
         }
 
+        public List<Message> IsNotReadMesages(int instituteId, string userId){
+            return repository.IsNotReadMessages(instituteId, userId).Result;
+        }
+
         private int calculateBuildLevel(Computer computer, int buildId)
         {
             switch (buildId)

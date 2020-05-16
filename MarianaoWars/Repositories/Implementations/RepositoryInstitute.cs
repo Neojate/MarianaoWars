@@ -223,5 +223,13 @@ namespace MarianaoWars.Repositories.Implementations
             dbContext.Message.
                 Remove(GetMessage(messageId).Result);
         }
+
+        public async Task<List<Message>> IsNotReadMessages(int instituteId, string userId)
+        {
+            return await dbContext.Message
+                .Where(message => !message.IsRead)
+                .ToListAsync();
+        }
+
     }
 }

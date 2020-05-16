@@ -19,7 +19,8 @@ export class Game extends Component {
             buildOrders: [],
             capacityResource: 0,
             valor: 1,
-            modal: false
+            modal: false,
+            messagesNotRead: [],
         };
 
         this.changeComputerName = this.changeComputerName.bind(this);
@@ -113,7 +114,11 @@ export class Game extends Component {
                 computers: this.props.computers
             })
         }
-
+        if (this.props.messagesNotRead !== prevProps.messagesNotRead) {
+            this.setState({
+                messagesNotRead: this.props.messagesNotRead
+            })
+        }
     }
 
     computers() {
@@ -228,6 +233,7 @@ export class Game extends Component {
                             systemResources={this.state.systems[1]}
                             systems={this.state.systems}
                             computer={this.state.computerActive}
+                            messagesNotRead={this.state.messagesNotRead}
                         />
                     </div>
                     <div>

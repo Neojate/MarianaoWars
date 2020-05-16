@@ -35,6 +35,8 @@ namespace MarianaoWars.Services.Interfaces
 
         Message ReadMessage(int messageId);
 
+        List<Message> IsNotReadMesages(int instituteId, string userId);
+
         BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId);
 
     }
