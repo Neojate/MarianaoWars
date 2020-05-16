@@ -94,6 +94,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetResource(resourceId).Result;
         }
 
+        private Message CreateWelcomeMessage(int instituteId, int computerId)
+        {
+            return null;
+        }
+
 
 
         #region MÉTODOS PRIVADOS

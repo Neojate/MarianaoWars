@@ -31,5 +31,19 @@ namespace MarianaoWars.Models
 
         // Si el mensaje se ha visto
         public bool IsRead { get; set; }
+
+        public Message() { }
+
+        public Message(int instituteId, string userId, string sendTo, string sendFrom, string title, string body)
+        {
+            InstituteId = instituteId;
+            UserId = userId;
+            Date = DateTime.Now;
+            SendTo = sendTo;
+            SendFrom = sendFrom;
+            Title = title;
+            Body = body;
+            IsRead = false;
+        }
     }
 }

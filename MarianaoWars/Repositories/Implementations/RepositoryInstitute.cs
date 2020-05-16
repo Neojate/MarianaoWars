@@ -177,6 +177,13 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<Message> SaveMessage(Message message)
+        {
+            dbContext.Message.Add(message);
+            await dbContext.SaveChangesAsync();
+            return message;
+        }
+
         public async Task<Message> UpdateMessage(Message message)
         {
             dbContext.Update(message);

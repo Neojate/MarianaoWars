@@ -95,5 +95,7 @@ namespace MarianaoWars.Repositories.Interfaces
         //Método para ver si tenemos mensajes sin leer
         Task<List<Message>> IsNotReadMessages(int instituteId, string userId);
 
+        Task<Message> SaveMessage(Message message);
+
     }
 }

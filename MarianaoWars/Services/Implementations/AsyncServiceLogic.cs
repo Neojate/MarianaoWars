@@ -116,7 +116,7 @@ namespace MarianaoWars.Services.Implementations
                         return null;
                     else if (building == 2 && computer.Resource.IngenyousLevel >= sysResource.LastVersion)
                         return null;
-                    else if (building == 3 && computer.Resource.CoffeLevel >= sysResource.LastVersion)
+                    else if (building == 3 && computer.Resource.CoffeeLevel >= sysResource.LastVersion)
                         return null;
                     else if (building == 4 && computer.Resource.StressLevel >= sysResource.LastVersion)
                         return null;
@@ -134,7 +134,7 @@ namespace MarianaoWars.Services.Implementations
                     needCoffee = int.Parse(sysSoftware.NeedCoffee.Split(',')[buildLevel]);
 
                     //se comprueba si hay suficientes recursos
-                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffe < needCoffee)
+                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffee < needCoffee)
                         return null;
 
                     //se comprueba que no hay otra orden
@@ -170,7 +170,7 @@ namespace MarianaoWars.Services.Implementations
                     needBuild = int.Parse(sysTalent.NeedBuild.Split(',')[buildLevel]);
 
                     //se comprueba si hay suficientes recursos
-                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffe < needCoffee || computer.Software.StackOverFlowVersion < needBuild)
+                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffee < needCoffee || computer.Software.StackOverFlowVersion < needBuild)
                         return null;
 
                     //se comprueba que no haya otra orden
@@ -207,7 +207,7 @@ namespace MarianaoWars.Services.Implementations
             //consumo de recursos
             computer.Resource.Knowledge -= needKnowledge;
             computer.Resource.Ingenyous -= needIngenyous;
-            computer.Resource.Coffe -= needCoffee;
+            computer.Resource.Coffee -= needCoffee;
 
             BuildOrder buildOrder = new BuildOrder(computerId, milliToFinish, buildId);
             return repository.SaveBuildOrder(buildOrder).Result;            
@@ -235,7 +235,7 @@ namespace MarianaoWars.Services.Implementations
             repository.DeleteMessage(messageId);
         }
 
-        public List<Message> IsNotReadMesages(int instituteId, string userId){
+        public List<Message> IsNotReadMesages(int instituteId, string userId) {
             return repository.IsNotReadMessages(instituteId, userId).Result;
         }
 
@@ -245,7 +245,7 @@ namespace MarianaoWars.Services.Implementations
             {
                 case 1: return computer.Resource.KnowledgeLevel;
                 case 2: return computer.Resource.IngenyousLevel;
-                case 3: return computer.Resource.CoffeLevel;
+                case 3: return computer.Resource.CoffeeLevel;
                 case 4: return computer.Resource.StressLevel;
 
                 case 21: return computer.Software.GeditVersion;
