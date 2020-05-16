@@ -1,7 +1,7 @@
 export const BuildIdName = {
     1: 'Knowledge',
     2: 'Ingenyous',
-    3: 'Coffe',
+    3: 'Coffee',
     4: 'Stress',
     21: 'Gedit',
     22: 'MySql',
