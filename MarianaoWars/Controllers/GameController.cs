@@ -29,6 +29,20 @@ namespace MarianaoWars.Controllers
             context.CreateBuildOrder(instituteId, computerId, buildId);
         }
 
+        [HttpGet("getinstitute")]
+        public string GetInstitute(int instituteId)
+        {
+            Institute institute = context.GetInstitute(instituteId);
+            string output = JsonConvert.SerializeObject(institute, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            return output;
+
+        }
+
         [HttpPost("updatecomputername")]
         public string UpdateComputerName([FromBody] JsonElement body)
         {

@@ -54,6 +54,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetSystemTalents().Result;
         }
 
+        public Institute GetInstitute(int instituteId)
+        {
+            return repository.GetInstitute(instituteId).Result;
+        }
+
         public void SaveComputer(Computer computer)
         {
             repository.SaveComputer(computer);

@@ -3,6 +3,7 @@ import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label } from 'reactstrap';
 import { SystemsType } from '../services/SystemConstants';
+import { stringUtils } from '../services/Utils';
 import '../../css/marianao_style.css';
 
 
@@ -15,6 +16,7 @@ export class Game extends Component {
             userId: this.props.userId,
             instituteId: this.props.instituteId,
             systems: this.props.systems,
+            institute: this.props.institute,
             computers: [],
             computerActive: this.props.computerActive,
             buildOrders: [],
@@ -95,8 +97,12 @@ export class Game extends Component {
                 computerActive: this.props.computerActive
             })
         }
+        if (this.props.institute !== prevProps.institute) {
+            this.setState({
+                institute: this.props.institute
+            })
+        }
         if (this.props.systems !== prevProps.systems) {
-
             this.setState({
                 systems: this.props.systems
             })
@@ -116,6 +122,7 @@ export class Game extends Component {
                 messagesNotRead: this.props.messagesNotRead
             })
         }
+
     }
 
     computers() {
@@ -165,15 +172,8 @@ export class Game extends Component {
 
         let time = fecha1.getTime() - fecha2.getTime();
 
-        let segundos = parseInt(time / 1000, 10);
-        let dias = Math.floor(segundos / (3600 * 24));
-        segundos -= dias * 3600 * 24;
-        let horas = Math.floor(segundos / 3600);
-        segundos -= horas * 3600;
-        let minutos = Math.floor(segundos / 60);
-        segundos -= minutos * 60;
-        
-        return `${dias}d. ${String(horas).padStart(2, "0")}h. ${String(minutos).padStart(2, "")}m. ${ String(segundos).padStart(2, "")}s`;
+        return stringUtils.timeToString(time);
+
     }
 
     builds() {
@@ -231,6 +231,7 @@ export class Game extends Component {
                             systems={this.state.systems}
                             computer={this.state.computerActive}
                             messagesNotRead={this.state.messagesNotRead}
+                            institute={this.state.institute}
                         />
                     </div>
                     <div>
