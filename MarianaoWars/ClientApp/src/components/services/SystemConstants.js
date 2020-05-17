@@ -26,3 +26,8 @@ export const SystemsType = {
     TALENT: 4    
 }
 
+export const BuildTypes = {
+    0: [0,2,4],
+    2: [0, 2, 4],
+    4: [0, 2, 4]
+}

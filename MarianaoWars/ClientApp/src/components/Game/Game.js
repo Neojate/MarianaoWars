@@ -29,10 +29,6 @@ export class Game extends Component {
 
     }
 
-    componentWillUpdate(prevProps, prevState, snapshot) {
-
-    }
-
     async changeComputerName(event) {
 
         event.preventDefault();

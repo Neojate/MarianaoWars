@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
-
-import $ from "jquery";
+import authService from '../api-authorization/AuthorizeService';
 
 export class Messages extends Component {
 
@@ -28,20 +27,18 @@ export class Messages extends Component {
         this.props.history.push(location);
     }
 
-    deleteMessage(message) {
-        console.log(message);
+    async deleteMessage(message) {
+
         if (window.confirm('¿Deseas borrar este mensaje?')) {
-            $.ajax({
-                url: '/message/deletemessage',
-                data: { messageId: message.id },
-                type: 'GET',
-                success: this.sourceDataDelete()
-            });
+            const response = await fetch(`/message/deletemessage?messageId=${message.id}`);
+            await response;
+            await this.sourceData(0);
         }
     }
 
-    componentDidMount() {
-        this.sourceData(0);
+    async componentDidMount() {
+        await this.getUser();
+        await this.sourceData(0);
     }
 
     render() {
@@ -53,8 +50,6 @@ export class Messages extends Component {
                 { content }
             </div>
         );
-
-
     }
 
     drawMessagesTable(messages) {
@@ -87,18 +82,21 @@ export class Messages extends Component {
     }
 
     async sourceData(dir) {
+        
         let index = this.state.pageIndex + dir;
-        console.log(index);
-        if ((index - 1) * 10 > this.state.data.length)
-            index = 1;
-        if (index <= 0)
+        if ((index - 1) * 10 > this.state.data.length) {
+            index = this.state.pageIndex;
+        }
+        if (index <= 0) {
             index = 1
+        }
 
         fetch(`message/messages?instituteId=${this.state.instituteId}&userId=${this.state.userId}&pageIndex=${index}`)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
+                console.log(json);
                 this.setState({
                     data: json,
                     pageIndex: index,
@@ -107,18 +105,11 @@ export class Messages extends Component {
             });
     }
 
-    async sourceDataDelete() {
-        fetch(`message/messages?instituteId=${this.state.instituteId}&userId=${this.state.userId}&pageIndex=0`)
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                this.setState({
-                    data: json,
-                    pageIndex: 0,
-                    loading: false
-                });
-            });
+    async getUser() {
+        const user = await authService.getUser();
+        this.setState({
+            'userId': user.sub
+        });
     }
 
 }

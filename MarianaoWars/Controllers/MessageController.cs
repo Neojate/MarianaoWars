@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace MarianaoWars.Controllers
 {
@@ -39,9 +40,15 @@ namespace MarianaoWars.Controllers
         }
 
         [HttpGet("deletemessage")]
-        public void DeleteMessage(int messageId)
+        public IActionResult DeleteMessage(int messageId)
         {
+            if (context.ReadMessage(messageId) == null)
+            {
+                return new NotFoundResult();
+            }
+
             context.DeleteMessage(messageId);
+            return new OkResult();
         }
 
     }
