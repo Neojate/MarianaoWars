@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import { BuildIdName, NeedNames, SystemsType } from '../services/SystemConstants'
+import { BuildIdName, NeedNames, SystemsType, BuildTypes } from '../services/SystemConstants'
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -79,15 +79,21 @@ export class SystemPanel extends Component {
         });
     }
 
-    buildIsUpdating() {
+    buildIsUpdating(typeBuildToUpdating) {
 
-        let typeBuildsUpdating = [];
         for (const build of this.state.buildOrders) {
             //introdude las decenas de los systemas, para controlar los que ya estan actualizando
-            typeBuildsUpdating.push(String(build.BuildId).padStart(2, "0").substring(0, 1));
+            let types = parseInt(String(build.BuildId).padStart(2, "0").substring(0, 1));
+            if (types % 2 !== 0) {
+                types--;
+            }
+
+            if (typeBuildToUpdating.includes(types)) {
+                return true;
+            }
         }
 
-        return typeBuildsUpdating;
+        return false;
 
     }
 
@@ -138,9 +144,10 @@ export class SystemPanel extends Component {
             }
         }
 
-        if (this.buildIsUpdating().includes(this.state.typeSystem.toString())){
+        if (this.buildIsUpdating(BuildTypes[this.state.typeSystem])){
             canBeUpdate = false;
         }
+            
 
         let time = this.state.System.time.split(",")[version] * 60;
         

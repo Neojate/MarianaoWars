@@ -27,7 +27,7 @@ export const SystemsType = {
 }
 
 export const BuildTypes = {
-    0: [0,2,4],
+    0: [0, 2, 4],
     2: [0, 2, 4],
     4: [0, 2, 4]
 }
