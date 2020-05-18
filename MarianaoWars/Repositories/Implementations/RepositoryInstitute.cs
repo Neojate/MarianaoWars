@@ -258,6 +258,14 @@ namespace MarianaoWars.Repositories.Implementations
         #endregion
 
 
+        #region SYSTEMSCRIPT
+        public async Task<List<SystemScript>> GetSystemScripts()
+        {
+            return await dbContext.SystemScript
+                .ToListAsync();
+        }
+        #endregion
+
 
         #region TALENT
         public async Task<Talent> SaveTalent(Talent talent)

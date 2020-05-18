@@ -28,7 +28,7 @@ export class SystemPanel extends Component {
             System: this.props.location.state.system,
             typeSystem: this.props.location.state.typeSystem,
             instituteId: this.props.match.params.instituteId,
-            institute: [],
+            institute: false,
             computerActive: [],
             buildOrders: [],
             loading: true,
@@ -41,13 +41,16 @@ export class SystemPanel extends Component {
         this.createOrderBuild = this.createOrderBuild.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentWillReceiveProps(next_props) {
 
-        if (this.props.institute !== prevProps.institute) {
+        if (this.state.institute !== next_props.institute) {
             this.setState({
-                institute: this.props.institute
+                institute: next_props.institute
             })
         }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (this.props.computerActive !== prevProps.computerActive) {
             this.setState({
@@ -169,7 +172,7 @@ export class SystemPanel extends Component {
 
     render() {
 
-        if (this.state.computerActive.length === 0) {
+        if (this.state.computerActive.length === 0 || this.state.institute == false) {
             return "";
         }
 
@@ -196,7 +199,7 @@ export class SystemPanel extends Component {
                 <h2>{this.state.System.name}</h2>
                 <hr />
                 <div className="icon-description">
-                    {this.selectIcon(this.state.System.buildId)}
+                    <img alt="img" src={require(`../../images/icon/${this.state.System.buildId}.png`)} />
                     <p>{this.state.System.description}</p>
                 </div>
                 <hr />

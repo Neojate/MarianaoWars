@@ -38,5 +38,11 @@ namespace MarianaoWars.Controllers
             return context.GetSystemTalents();
         }
 
+        [HttpGet("getSystemScript")]
+        public IEnumerable<SystemScript> GetSystemScript()
+        {
+            return context.GetSystemScripts();
+        }
+
     }
 }

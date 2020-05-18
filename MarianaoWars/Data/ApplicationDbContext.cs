@@ -35,7 +35,7 @@ namespace MarianaoWars.Data
 
         public DbSet<SystemTalent> SystemTalent { get; set; }
 
-        public DbSet<Script> SystemScript { get; set; }
+        public DbSet<SystemScript> SystemScript { get; set; }
 
         public DbSet<BuildOrder> BuildOrder { get; set; }
 

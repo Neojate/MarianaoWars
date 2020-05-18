@@ -17,6 +17,14 @@ export const BuildIdName = {
     46: 'Sftp',
     47: 'Ecb',
     48: 'Rsa',
+    61: 'Comparator',
+    62: 'Conditional',
+    63: 'Iterator',
+    64: 'Json',
+    65: 'Class',
+    66: 'BreakPoint',
+    67: 'Throws',
+    68: 'TryCatch'
 };
 
 export const NeedNames = {
@@ -30,7 +38,8 @@ export const NeedNames = {
 export const SystemsType = {
     RESOURCE: 0,
     SOFTWARE: 2,
-    TALENT: 4    
+    TALENT: 4,
+    SCRIPT: 6
 }
 
 export const BuildTypes = {

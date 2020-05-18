@@ -169,47 +169,6 @@ namespace MarianaoWars.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MarianaoWars.Models.AttackScript", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArrayScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BreakpointScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CollectionScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ForScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FunctionScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IfScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LambdaScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ObjectScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SwitchScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WhileScript")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AttackScript");
-                });
-
             modelBuilder.Entity("MarianaoWars.Models.BuildOrder", b =>
                 {
                     b.Property<int>("Id")
@@ -239,12 +198,6 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AttackScriptId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DefenseScriptId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Downloads")
                         .HasColumnType("int");
 
@@ -269,6 +222,9 @@ namespace MarianaoWars.Migrations
                     b.Property<int>("ResourceId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ScriptId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SoftwareId")
                         .HasColumnType("int");
 
@@ -277,16 +233,12 @@ namespace MarianaoWars.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttackScriptId")
-                        .IsUnique();
-
-                    b.HasIndex("DefenseScriptId")
-                        .IsUnique();
-
                     b.HasIndex("EnrollmentId");
 
                     b.HasIndex("ResourceId")
                         .IsUnique();
+
+                    b.HasIndex("ScriptId");
 
                     b.HasIndex("SoftwareId")
                         .IsUnique();
@@ -295,38 +247,6 @@ namespace MarianaoWars.Migrations
                         .IsUnique();
 
                     b.ToTable("Computer");
-                });
-
-            modelBuilder.Entity("MarianaoWars.Models.DefenseScript", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("AbstractScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DeprecatedScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InterfaceScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OverrideScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParseFloatScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParseIntScript")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TryCatchScript")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DefenseScript");
                 });
 
             modelBuilder.Entity("MarianaoWars.Models.Enrollment", b =>
@@ -464,6 +384,41 @@ namespace MarianaoWars.Migrations
                     b.ToTable("Resource");
                 });
 
+            modelBuilder.Entity("MarianaoWars.Models.Script", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BreakPoint")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Class")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Comparator")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Conditional")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Iterator")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Json")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Throws")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TryCatch")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Script");
+                });
+
             modelBuilder.Entity("MarianaoWars.Models.Software", b =>
                 {
                     b.Property<int>("Id")
@@ -529,6 +484,50 @@ namespace MarianaoWars.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemResource");
+                });
+
+            modelBuilder.Entity("MarianaoWars.Models.SystemScript", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("BaseDefense")
+                        .HasColumnType("double");
+
+                    b.Property<double>("BaseIntegrity")
+                        .HasColumnType("double");
+
+                    b.Property<double>("BasePower")
+                        .HasColumnType("double");
+
+                    b.Property<int>("BuildId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("NeedCoffee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NeedIngenyous")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NeedKnowledge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemScript");
                 });
 
             modelBuilder.Entity("MarianaoWars.Models.SystemSoftware", b =>
@@ -794,18 +793,6 @@ namespace MarianaoWars.Migrations
 
             modelBuilder.Entity("MarianaoWars.Models.Computer", b =>
                 {
-                    b.HasOne("MarianaoWars.Models.AttackScript", "AttackScript")
-                        .WithOne("Computer")
-                        .HasForeignKey("MarianaoWars.Models.Computer", "AttackScriptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MarianaoWars.Models.DefenseScript", "DefenseScript")
-                        .WithOne("Computer")
-                        .HasForeignKey("MarianaoWars.Models.Computer", "DefenseScriptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MarianaoWars.Models.Enrollment", "Enrollment")
                         .WithMany("Computers")
                         .HasForeignKey("EnrollmentId")
@@ -815,6 +802,12 @@ namespace MarianaoWars.Migrations
                     b.HasOne("MarianaoWars.Models.Resource", "Resource")
                         .WithOne("Computer")
                         .HasForeignKey("MarianaoWars.Models.Computer", "ResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MarianaoWars.Models.Script", "Script")
+                        .WithMany()
+                        .HasForeignKey("ScriptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

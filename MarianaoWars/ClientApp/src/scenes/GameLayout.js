@@ -30,10 +30,9 @@ export class GameLayout extends Component {
             messagesNotRead: [],
         };
 
-        this.load = this.load.bind(this);
-        this.load();
         this.getInstitute = this.getInstitute.bind(this);
-        
+        this.load = this.load.bind(this);
+        this.load(); 
     }
 
     async load() {
@@ -45,7 +44,7 @@ export class GameLayout extends Component {
         await this.getSystems();
         await this.getInstitute(this.props.match.params.instituteId);
 
-        this.setState({loading: false})
+        this.setState({ loading: false })
 
     }
 

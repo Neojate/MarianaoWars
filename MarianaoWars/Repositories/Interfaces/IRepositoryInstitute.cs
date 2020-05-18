@@ -47,6 +47,9 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera los talentos del sistema
         Task<List<SystemTalent>> GetSystemTalents();
 
+        // Método que recupera los talentos del sistema
+        Task<List<SystemScript>> GetSystemScripts();
+
         // Método que recupera un usuario según su Id
         Task<ApplicationUser> GetUser(string userId);
 

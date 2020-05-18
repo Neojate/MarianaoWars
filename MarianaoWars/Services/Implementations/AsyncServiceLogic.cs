@@ -54,6 +54,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetSystemTalents().Result;
         }
 
+        public List<SystemScript> GetSystemScripts()
+        {
+            return repository.GetSystemScripts().Result;
+        }
+
         public Institute GetInstitute(int instituteId)
         {
             return repository.GetInstitute(instituteId).Result;
