@@ -33,8 +33,7 @@ export class GameLayout extends Component {
         this.load = this.load.bind(this);
         this.load();
         this.getInstitute = this.getInstitute.bind(this);
-        this.getInstitute(this.props.match.params.instituteId);
-
+        
     }
 
     async load() {
@@ -44,7 +43,7 @@ export class GameLayout extends Component {
 
         await this.userComputers();
         await this.getSystems();
-        //await this.getInstitute(this.props.match.params.instituteId);
+        await this.getInstitute(this.props.match.params.instituteId);
 
         this.setState({loading: false})
 

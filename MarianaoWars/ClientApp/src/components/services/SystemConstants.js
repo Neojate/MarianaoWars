@@ -9,7 +9,14 @@ export const BuildIdName = {
     24: 'StackOverFlow',
     25: 'PostMan',
     26: 'VirtualMachine',
-    41: 'Refactor'
+    41: 'Refactor',
+    42: 'Inheritance',
+    43: 'Injection',
+    44: 'Udp',
+    45: 'TcpIp',
+    46: 'Sftp',
+    47: 'Ecb',
+    48: 'Rsa',
 };
 
 export const NeedNames = {

@@ -18,9 +18,6 @@ var stringUtils = {
 
         let stringTime = '';
 
-        console.log("minutos", minutos);
-        console.log("segundos", segundos);
-
         if (dias != 0) {
             stringTime += `${dias}d. `;
         }
