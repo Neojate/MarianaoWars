@@ -268,7 +268,6 @@ namespace MarianaoWars.Services.Implementations
                 case 46: return computer.Talent.SftpLevel;
                 case 47: return computer.Talent.EcbLevel;
                 case 48: return computer.Talent.RsaLevel;
-                case 49: return computer.Talent.SslLevel;
 
                 default: return 0;
             }
