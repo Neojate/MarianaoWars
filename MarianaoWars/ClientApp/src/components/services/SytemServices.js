@@ -43,6 +43,12 @@ export class SystemServices{
         return systems;
     }
 
+    async getInstitute(id) {
+
+        const response = await fetch(`game/getinstitute?instituteId=${id}`);
+        return await response.json();
+    }
+
 
     static get instance() { return systemServices }
 }

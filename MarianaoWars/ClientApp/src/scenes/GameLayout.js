@@ -24,6 +24,7 @@ export class GameLayout extends Component {
             buildOrders: [],
             computers: false,
             computerActive: false,
+            institute: false,
             systems: [],
             loading: true,
             messagesNotRead: [],
@@ -31,6 +32,8 @@ export class GameLayout extends Component {
 
         this.load = this.load.bind(this);
         this.load();
+        this.getInstitute = this.getInstitute.bind(this);
+        this.getInstitute(this.props.match.params.instituteId);
 
     }
 
@@ -41,6 +44,7 @@ export class GameLayout extends Component {
 
         await this.userComputers();
         await this.getSystems();
+        //await this.getInstitute(this.props.match.params.instituteId);
 
         this.setState({loading: false})
 
@@ -108,6 +112,11 @@ export class GameLayout extends Component {
         this.setState({systems: systems})
     }
 
+    async getInstitute(id) {
+        const institute = await systemServices.getInstitute(id);
+        this.setState({ institute: institute })
+    }
+
 
     async userComputers() {
 
@@ -147,10 +156,11 @@ export class GameLayout extends Component {
             : (<Game userId={this.state.userId}
                 instituteId={this.state.instituteId} systems={this.state.systems}
                 computers={this.state.computers} computerActive={this.state.computerActive}
-                buildOrders={this.state.buildOrders} messagesNotRead={this.state.messagesNotRead}>
+                buildOrders={this.state.buildOrders} messagesNotRead={this.state.messagesNotRead}
+                institute={this.state.institute}>
 
                 <Route exact path="/game/:instituteId" component={Network} />
-                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} />} />
+                <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
 

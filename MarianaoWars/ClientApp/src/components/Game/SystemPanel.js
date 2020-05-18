@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import { BuildIdName, NeedNames, SystemsType } from '../services/SystemConstants'
+import { BuildIdName, NeedNames, SystemsType, BuildTypes } from '../services/SystemConstants'
+import { stringUtils } from '../services/Utils';
 
 import knowledgeicon from '../../images/icon/knowledgeicon.png';
 import ingenyousicon from '../../images/icon/ingenyous-icon.png';
@@ -27,6 +28,7 @@ export class SystemPanel extends Component {
             System: this.props.location.state.system,
             typeSystem: this.props.location.state.typeSystem,
             instituteId: this.props.match.params.instituteId,
+            institute: [],
             computerActive: [],
             buildOrders: [],
             loading: true,
@@ -40,6 +42,12 @@ export class SystemPanel extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (this.props.institute !== prevProps.institute) {
+            this.setState({
+                institute: this.props.institute
+            })
+        }
 
         if (this.props.computerActive !== prevProps.computerActive) {
             this.setState({
@@ -79,15 +87,21 @@ export class SystemPanel extends Component {
         });
     }
 
-    buildIsUpdating() {
+    buildIsUpdating(typeBuildToUpdating) {
 
-        let typeBuildsUpdating = [];
         for (const build of this.state.buildOrders) {
             //introdude las decenas de los systemas, para controlar los que ya estan actualizando
-            typeBuildsUpdating.push(String(build.BuildId).padStart(2, "0").substring(0, 1));
+            let types = parseInt(String(build.BuildId).padStart(2, "0").substring(0, 1));
+            if (types % 2 !== 0) {
+                types--;
+            }
+
+            if (typeBuildToUpdating.includes(types)) {
+                return true;
+            }
         }
 
-        return typeBuildsUpdating;
+        return false;
 
     }
 
@@ -105,7 +119,7 @@ export class SystemPanel extends Component {
         }
 
     }
-
+    
     neededToUpdate() {
 
         let canBeUpdate = true;
@@ -138,16 +152,18 @@ export class SystemPanel extends Component {
             }
         }
 
-        if (this.buildIsUpdating().includes(this.state.typeSystem.toString())){
+        if (this.buildIsUpdating(BuildTypes[this.state.typeSystem])){
             canBeUpdate = false;
         }
+            
+        //convertimos tiempo en milisegundos y fraccionamos por el ratio del instituto
+        let time = (this.state.System.time.split(",")[version] * 60 * 1000) / this.state.institute.RateTime;
 
-        let time = this.state.System.time.split(",")[version] * 60;
         
         return {
             'needs': requeriments,
             'canBeUpdate': canBeUpdate,
-            'time': time
+            'time': stringUtils.timeToString(time)
         }
     }
 
@@ -184,10 +200,11 @@ export class SystemPanel extends Component {
                     <p>{this.state.System.description}</p>
                 </div>
                 <hr />
-                <div>
-                    <p>{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización: {requeriments.time}</span></p>
+                <div className="container panel-body">
+                    <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización:</span></p>
+                    <p className="panel-needTime"><span>{requeriments.time}</span></p>
                 </div>
-                <div className="container">
+                <div className="container panel-requeriments">
                     {containsRequeriment}
                 </div>
                 <div>

@@ -20,6 +20,7 @@ export class NavGame extends Component {
             instituteId: this.props.instituteId,
             computer: this.props.computer,
             notRead: false,
+            institute: this.props.institute,
             systems: [],
             messagesNotRead: []
         };
@@ -46,6 +47,11 @@ export class NavGame extends Component {
         if (this.props.messagesNotRead !== prevProps.messagesNotRead) {
             this.setState({
                 messagesNotRead: this.props.messagesNotRead
+            })
+        }
+        if (this.props.institute !== prevProps.institute) {
+            this.setState({
+                institute: this.props.institute
             })
         }
     }
@@ -95,8 +101,13 @@ export class NavGame extends Component {
 
                         //incremento x minuto (mirar que si estamos en negativo, el incremento es la mitad)
                         let increments = systemResource.increment.split(",");
-                        let increment = increments[computer.Resource[`${resourceName}Level`]];
+                        let increment = increments[computer.Resource[`${resourceName}Level`]] * this.state.institute.RateUpdate;
 
+                        if (computer.Resource.Stress < 0) {
+                            increment = increment / 2;
+                        }
+
+                        
                         var color = this.colorProgress(quantity, capacity);
 
                         if (systemResource.buildId === 4 && quantity < 0) {

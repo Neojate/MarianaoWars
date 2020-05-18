@@ -52,6 +52,18 @@ m-0 {
     float: right;
 }
 
+    .box .panel-body {
+        min-height: 95px;
+    }
+
+    .box .panel-needTime{
+        font-weight: 500;
+    }
+
+    .box .panel-requeriments {
+        min-height: 120px;
+    }
+
 .icon-description {
     display: grid;
     grid-template-columns: 100px auto;

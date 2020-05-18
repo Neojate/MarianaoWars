@@ -17,6 +17,9 @@ namespace MarianaoWars.Services.Interfaces
 
         List<SystemTalent> GetSystemTalents();
 
+        // Método que devuelve los parametros de un Instituto.
+        Institute GetInstitute(int instituteId);
+
         Message GetMessage(int messageId);
 
         List<Message> GetMessages(int instituteId, string userId, int pageIndex);

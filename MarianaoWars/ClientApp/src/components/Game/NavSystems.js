@@ -2,6 +2,7 @@
 import { Row, Col, Container } from 'reactstrap';
 import { System } from './System';
 import { Link } from 'react-router-dom';
+import { SystemsType } from '../services/SystemConstants';
 
 import $ from "jquery";
 
@@ -81,9 +82,9 @@ export class NavSystems extends Component {
             
             <Row>
                 <Col xs={6} className="navsystem d-flex justify-content-between align-items-center flex-wrap">
-                    <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, 0)} />
-                    <System onClick={this.sistemActive.bind(this, 2)} />
-                    <System onClick={this.sistemActive.bind(this, 4)} />
+                    <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, SystemsType.RESOURCE)} />
+                    <System onClick={this.sistemActive.bind(this, SystemsType.SOFTWARE)} />
+                    <System onClick={this.sistemActive.bind(this, SystemsType.TALENT)} />
                     <System onClick={this.sistemActive.bind(this, 6)} />
                     <System onClick={this.sistemActive.bind(this, 8)} />
                     <System onClick={this.sistemActive.bind(this, 10)} />
