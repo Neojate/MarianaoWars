@@ -218,7 +218,9 @@ export class SystemPanel extends Component {
                 </div>
                 <hr />
                 <div className="container panel-body">
-                    <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización:</span></p>
+                    {(this.state.typeSystem === SystemsType.SCRIPT) ?
+                        <p className="panel-level"><span>Tiempo necesario para finalizar actualización:</span></p>
+                        : <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización:</span></p>}
                     <p className="panel-needTime"><span>{requeriments.time}</span></p>
                 </div>
                 <div className="container panel-requeriments">

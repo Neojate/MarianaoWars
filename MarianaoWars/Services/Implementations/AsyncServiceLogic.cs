@@ -168,7 +168,6 @@ namespace MarianaoWars.Services.Implementations
 
                     milliToFinish *= int.Parse(sysSoftware.Time.Split(',')[buildLevel]);
 
-                    repository.NotAsyncUpdateResource(computer.Resource);
                     break;
 
                 case 2:
@@ -210,7 +209,28 @@ namespace MarianaoWars.Services.Implementations
 
                     milliToFinish *= int.Parse(sysTalent.Time.Split(',')[buildLevel]);
 
-                    repository.NotAsyncUpdateResource(computer.Resource);
+                    break;
+
+                case 3:
+                    SystemScript sysScript = repository.GetSystemScripts().Result[building - 1];
+
+                    needKnowledge = sysScript.NeedKnowledge;
+                    needIngenyous = sysScript.NeedIngenyous;
+                    needCoffee = sysScript.NeedCoffee;
+
+                    //se comprueba si hay suficientes recursos
+                    if (computer.Resource.Knowledge < needKnowledge || computer.Resource.Ingenyous < needIngenyous || computer.Resource.Coffee < needCoffee)
+                        return null;
+
+                    //se comprueba que no haya otra orden
+                    foreach (BuildOrder b in repository.GetBuildOrders(computerId).Result)
+                        if (b.BuildId >= 60)
+                            return null;
+
+                    //TODO: se comprueba que no hayas llegado al límite
+
+                    milliToFinish *= sysScript.Time;
+
                     break;
             }
 
@@ -218,6 +238,8 @@ namespace MarianaoWars.Services.Implementations
             computer.Resource.Knowledge -= needKnowledge;
             computer.Resource.Ingenyous -= needIngenyous;
             computer.Resource.Coffee -= needCoffee;
+
+            repository.NotAsyncUpdateResource(computer.Resource);
 
             BuildOrder buildOrder = new BuildOrder(computerId, milliToFinish, buildId);
             return repository.SaveBuildOrder(buildOrder).Result;            
@@ -273,6 +295,15 @@ namespace MarianaoWars.Services.Implementations
                 case 46: return computer.Talent.SftpLevel;
                 case 47: return computer.Talent.EcbLevel;
                 case 48: return computer.Talent.RsaLevel;
+
+                case 61: return computer.Script.Comparator;
+                case 62: return computer.Script.Conditional;
+                case 63: return computer.Script.Iterator;
+                case 64: return computer.Script.Json;
+                case 65: return computer.Script.Class;
+                case 66: return computer.Script.BreakPoint;
+                case 67: return computer.Script.Throws;
+                case 68: return computer.Script.TryCatch;
 
                 default: return 0;
             }
