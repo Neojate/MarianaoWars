@@ -88,7 +88,6 @@ export class Messages extends Component {
 
     async sourceData(dir) {
         let index = this.state.pageIndex + dir;
-        console.log(index);
         if ((index - 1) * 10 > this.state.data.length)
             index = 1;
         if (index <= 0)
