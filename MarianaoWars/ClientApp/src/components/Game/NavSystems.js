@@ -85,7 +85,7 @@ export class NavSystems extends Component {
                     <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, SystemsType.RESOURCE)} />
                     <System onClick={this.sistemActive.bind(this, SystemsType.SOFTWARE)} />
                     <System onClick={this.sistemActive.bind(this, SystemsType.TALENT)} />
-                    <System onClick={this.sistemActive.bind(this, 6)} />
+                    <System onClick={this.sistemActive.bind(this, SystemsType.SCRIPT)} />
                     <System onClick={this.sistemActive.bind(this, 8)} />
                     <System onClick={this.sistemActive.bind(this, 10)} />
                 </Col>

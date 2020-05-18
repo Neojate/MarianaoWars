@@ -140,7 +140,14 @@ export class SystemPanel extends Component {
 
             //si el requerimiento es una propiedad del system
             if (need in this.state.System) {
-                requeriments[need] = this.state.System[need].split(",")[version];
+
+                if (this.state.typeSystem === SystemsType.SCRIPT) {
+                    requeriments[need] = this.state.System[need];
+                }
+                else {
+                    requeriments[need] = this.state.System[need].split(",")[version];
+                }
+                
 
                 //comparamos la cantidad que tenemos con la necesidad del recurso
                 let recurso = need.split("need")[1];
@@ -158,9 +165,16 @@ export class SystemPanel extends Component {
         if (this.buildIsUpdating(BuildTypes[this.state.typeSystem])){
             canBeUpdate = false;
         }
-            
+
+        let time = '';
         //convertimos tiempo en milisegundos y fraccionamos por el ratio del instituto
-        let time = (this.state.System.time.split(",")[version] * 60 * 1000) / this.state.institute.RateTime;
+        if (this.state.typeSystem === SystemsType.SCRIPT) {
+            time = (this.state.System.time * 60 * 1000) / this.state.institute.RateTime;
+        }
+        else {
+            time = (this.state.System.time.split(",")[version] * 60 * 1000) / this.state.institute.RateTime;
+        }
+        
 
         
         return {
