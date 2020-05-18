@@ -7,6 +7,11 @@ namespace MarianaoWars.Models
 {
     public class SystemScript
     {
+        public static int ATTACK = 1;
+        public static int DEFENSE = 2;
+        public static int TRANSPORT = 3;
+        public static int COLONIZATOR = 4;
+
         // Identificador del systemscript. Primary key autoincremental.
         public int Id { get; set; }
 
