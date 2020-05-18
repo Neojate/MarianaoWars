@@ -33,10 +33,7 @@ namespace MarianaoWars.Services.Implementations
             Talent talent = repository.SaveTalent(new Talent()).Result;
 
             //inicializamos scripts de ataque
-            AttackScript attackScript = repository.SaveAttackScript(new AttackScript()).Result;
-
-            //inicializamos scripts de defensa
-            DefenseScript defenseScript = repository.SaveDefenseScript(new DefenseScript()).Result;
+            Script script = repository.SaveScript(new Script()).Result;
 
             //TODO: inicializamos profesores
 
@@ -51,8 +48,7 @@ namespace MarianaoWars.Services.Implementations
                 resource,
                 software,
                 talent,
-                attackScript,
-                defenseScript,
+                script,
                 enrollment);
             computer = repository.SaveComputer(computer).Result;
 

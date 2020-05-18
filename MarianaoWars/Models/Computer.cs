@@ -42,11 +42,8 @@ namespace MarianaoWars.Models
         // Campo que se relaciona con la tabla Talent.
         public int TalentId { get; set; }
 
-        // Campo que se relaciona con la tabla AttackScript.
-        public int AttackScriptId { get; set; }
-
-        // Campo que se relaciona con la tabla DefenseScript.
-        public int DefenseScriptId { get; set; }
+        // Campo que se relaciona con la tabla Script.
+        public int ScriptId { get; set; }
 
         // Campo que se relaciona con la tabla Enrollment
         public int EnrollmentId { get; set; }
@@ -62,18 +59,15 @@ namespace MarianaoWars.Models
         // Talento que utiliza el ordenador.
         public Talent Talent { get; set; }
 
-        // Scripts de ataque almacenados en el ordenador.
-        public AttackScript AttackScript { get; set; }
-
-        // Scripts de defensa almacenados en el ordenador.
-        public DefenseScript DefenseScript { get; set; }
+        // Scripts almacenados en el ordenador.
+        public Script Script{ get; set; }
 
         public Computer()
         {
 
         }
 
-        public Computer(string name, string ipDirection, bool isDesk, Resource resource, Software software, Talent talent, AttackScript attackScript, DefenseScript defenseScript, Enrollment enrollment)
+        public Computer(string name, string ipDirection, bool isDesk, Resource resource, Software software, Talent talent, Script script, Enrollment enrollment)
         {
             Name = name;
             IpDirection = ipDirection;
@@ -84,8 +78,7 @@ namespace MarianaoWars.Models
             Resource = resource;
             Software = software;
             Talent = talent;
-            AttackScript = attackScript;
-            DefenseScript = defenseScript;
+            Script = script;
             Enrollment = enrollment;
         }
 

@@ -50,17 +50,14 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera un usuario según su Id
         Task<ApplicationUser> GetUser(string userId);
 
-        // Método que guarda un script de ataque
-        Task<AttackScript> SaveAttackScript(AttackScript attackScript);
+        // Método que guarda un script
+        Task<Script> SaveScript(Script script);
 
         // Método que guarda una Orden de construcción
         Task<BuildOrder> SaveBuildOrder(BuildOrder buildOrder);
 
         // Método que guarda un ordenador
         Task<Computer> SaveComputer(Computer computer);
-
-        // Método que guarda un script de defensa
-        Task<DefenseScript> SaveDefenseScript(DefenseScript defenseScript);
 
         // Método que guarda una matrícula
         Task<Enrollment> SaveEnrollment(Enrollment enrollment);

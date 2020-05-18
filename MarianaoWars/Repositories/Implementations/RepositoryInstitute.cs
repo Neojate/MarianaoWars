@@ -22,17 +22,6 @@ namespace MarianaoWars.Repositories.Implementations
 
 
 
-        #region ATTACKSCRIPT
-        public async Task<AttackScript> SaveAttackScript(AttackScript attackScript)
-        {
-            await dbContext.AttackScript.AddAsync(attackScript);
-            await dbContext.SaveChangesAsync();
-            return attackScript;
-        }
-        #endregion
-
-
-
         #region BUILDORDER
         public async Task<List<BuildOrder>> GetBuildOrders(int computerId)
         {
@@ -61,8 +50,7 @@ namespace MarianaoWars.Repositories.Implementations
                 .Include(computer => computer.Resource)
                 .Include(computer => computer.Software)
                 .Include(computer => computer.Talent)
-                .Include(computer => computer.AttackScript)
-                .Include(computer => computer.DefenseScript)
+                .Include(computer => computer.Script)
                 .FirstOrDefaultAsync();
         }
 
@@ -74,8 +62,7 @@ namespace MarianaoWars.Repositories.Implementations
                 .Include(computer => computer.Resource)
                 .Include(computer => computer.Software)
                 .Include(computer => computer.Talent)
-                .Include(computer => computer.AttackScript)
-                .Include(computer => computer.DefenseScript)
+                .Include(computer => computer.Script)
                 .ToListAsync();
         }
 
@@ -91,17 +78,6 @@ namespace MarianaoWars.Repositories.Implementations
             dbContext.Update(computer);
             await dbContext.SaveChangesAsync();
             return computer;
-        }
-        #endregion
-
-
-
-        #region DEFENSESCRIPT
-        public async Task<DefenseScript> SaveDefenseScript(DefenseScript defenseScript)
-        {
-            await dbContext.DefenseScript.AddAsync(defenseScript);
-            await dbContext.SaveChangesAsync();
-            return defenseScript;
         }
         #endregion
 
@@ -226,6 +202,17 @@ namespace MarianaoWars.Repositories.Implementations
             dbContext.Update(resource);
             dbContext.SaveChanges();
             return resource;
+        }
+        #endregion
+
+
+
+        #region SCRIPT
+        public async Task<Script> SaveScript(Script script)
+        {
+            dbContext.Script.Add(script);
+            await dbContext.SaveChangesAsync();
+            return script;
         }
         #endregion
 
