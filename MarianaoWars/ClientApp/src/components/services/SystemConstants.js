@@ -48,3 +48,11 @@ export const BuildTypes = {
     4: [0, 2, 4],
     6: [6]
 }
+
+export const ScriptTypes = {
+    ATTACK: 1,
+    DEFENSE: 2,
+    TRANSPORT: 3,
+    COLONIZADOR: 4,
+    SPY: 5
+}

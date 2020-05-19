@@ -3,19 +3,6 @@ import { Button } from 'reactstrap';
 import { BuildIdName, NeedNames, SystemsType, BuildTypes } from '../services/SystemConstants'
 import { stringUtils } from '../services/Utils';
 
-import knowledgeicon from '../../images/icon/knowledgeicon.png';
-import ingenyousicon from '../../images/icon/ingenyous-icon.png';
-import coffeeicon from '../../images/icon/coffeeicon.png';
-import sleepicon from '../../images/icon/sleep-icon.png';
-
-import gediticon from '../../images/icon/gediticon.png';
-import mysqlicon from '../../images/icon/mysqlicon.png';
-import githubicon from '../../images/icon/githubicon.png';
-import stackoverflowicon from '../../images/icon/stackoverflowicon.png';
-import postmanicon from '../../images/icon/postmanicon.png';
-import virtualboxicon from '../../images/icon/virtualboxicon.png';
-
-
 export class SystemPanel extends Component {
 
     static displayName = SystemPanel.name;
@@ -120,6 +107,10 @@ export class SystemPanel extends Component {
         else if (this.state.typeSystem === SystemsType.TALENT) {
             return this.state.computerActive.Talent[`${BuildIdName[this.state.System.buildId]}Level`];
         }
+        //En este caso es cantidad
+        else if (this.state.typeSystem === SystemsType.SCRIPT) {
+            return this.state.computerActive.Script[`${BuildIdName[this.state.System.buildId]}`];
+        }
 
     }
     
@@ -175,13 +166,36 @@ export class SystemPanel extends Component {
             time = (this.state.System.time.split(",")[version] * 60 * 1000) / this.state.institute.RateTime;
         }
         
-
-        
         return {
             'needs': requeriments,
             'canBeUpdate': canBeUpdate,
-            'time': stringUtils.timeToString(time)
+            'time': stringUtils.timeToString(time),
         }
+    }
+
+    systemStadistics() {
+
+        let estadisticas = {
+            'Poder de Ataque': this.state.System.basePower,
+            'Poder de Defensa': this.state.System.baseDefense,
+            'Vida': this.state.System.baseIntegrity,
+            'Capacidad de Transporte': this.state.System.carry
+        }
+
+        return(
+            <div className="row">
+                <div className="col-5">
+                    Estadisticas:
+                        </div>
+                <div className="col-7">
+                    {Object.keys(estadisticas).map(function (key) {
+                        if (estadisticas[key] > 0) {
+                            return <div key={key}>{`${key}: ${estadisticas[key]}`}</div>
+                        }
+                    })}
+                </div>
+            </div>
+        );
     }
 
     render() {
@@ -194,10 +208,10 @@ export class SystemPanel extends Component {
 
         let containsRequeriment =
             (<div className="row">
-                <div className="col-6">
+                <div className="col-5">
                     Requisitos:
                         </div>
-                <div className="col-6">
+                <div className="col-7">
                     {Object.keys(requeriments.needs).map(function (key) {
                         if (requeriments.needs[key] > 0) {
                             return <div key={key}>{`${NeedNames[key]}: ${requeriments.needs[key]}`}</div>
@@ -207,24 +221,35 @@ export class SystemPanel extends Component {
             </div>);
 
         let updateButton = requeriments.canBeUpdate ? <Button color="primary" onClick={this.createOrderBuild}>Actualizar</Button> : <Button color="primary" disabled>Actualizar</Button>;
-        
+        let img = ''
+        try {
+            img = <img alt="img" src={require(`../../images/icon/${this.state.System.buildId}.png`)} />
+        }
+        catch (e) {
+            img = <img alt="img" src={require(`../../images/icon/1.png`)} />
+        }
+
         return (
             <div className="box" >
                 <h2>{this.state.System.name}</h2>
                 <hr />
                 <div className="icon-description">
-                    <img alt="img" src={require(`../../images/icon/${this.state.System.buildId}.png`)} />
+                    {img}                    
                     <p>{this.state.System.description}</p>
                 </div>
                 <hr />
                 <div className="container panel-body">
                     {(this.state.typeSystem === SystemsType.SCRIPT) ?
-                        <p className="panel-level"><span>Tiempo necesario para finalizar actualización:</span></p>
+                        <p className="panel-level">Cantidad acumulada: {this.systemLevel()}<span>Tiempo necesario para finalizar actualización:</span></p>
                         : <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización:</span></p>}
+                    <div className="clearfix"></div>
                     <p className="panel-needTime"><span>{requeriments.time}</span></p>
                 </div>
                 <div className="container panel-requeriments">
                     {containsRequeriment}
+                </div>
+                <div className="container panel-requeriments">
+                    {(this.state.typeSystem === SystemsType.SCRIPT) ? this.systemStadistics() : ''}
                 </div>
                 <div>
                     {updateButton}
@@ -236,25 +261,6 @@ export class SystemPanel extends Component {
     createOrderBuild() {
         fetch(`game/createbuildorder?instituteId=${this.state.instituteId}&computerId=${this.state.computerActive.Id}&buildId=${this.state.System.buildId}`)
             .then((response) => {});
-    }
-
-    selectIcon(id) {
-        switch (id) {
-            case 1: return <img alt="img" src={knowledgeicon} />
-            case 2: return <img alt="img" src={ingenyousicon} />
-            case 3: return <img alt="img" src={coffeeicon} />
-            case 4: return <img alt="img" src={sleepicon} />
-
-            case 21: return <img alt="img" src={gediticon} />
-            case 22: return <img alt="img" src={mysqlicon} />
-            case 23: return <img alt="img" src={githubicon} />
-            case 24: return <img alt="img" src={stackoverflowicon} />
-            case 25: return <img alt="img" src={postmanicon} />
-            case 26: return <img alt="img" src={virtualboxicon} />
-            default:
-                return <img alt="img" src={knowledgeicon} />
-                break;
-        }
     }
 
 }

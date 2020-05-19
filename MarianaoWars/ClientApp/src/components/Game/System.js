@@ -64,7 +64,13 @@ export class System extends Component {
 
         let img = '';
         if (this.props.buildId !== undefined) {
-            img = <img alt="system" src={require(`../../images/icon/${this.props.buildId}.png`)}></img>
+            try {
+                img = <img alt="system" src={require(`../../images/icon/${this.props.buildId}.png`)}></img>
+            }
+            catch (e) {
+                img = <img alt="system" src={require(`../../images/icon/1.png`)}></img>
+            }
+            
         }
 
         return (

@@ -2,7 +2,7 @@
 import { Row, Col, Container } from 'reactstrap';
 import { System } from './System';
 import { Link } from 'react-router-dom';
-import { SystemsType } from '../services/SystemConstants';
+import { SystemsType, ScriptTypes } from '../services/SystemConstants';
 
 import $ from "jquery";
 
@@ -22,7 +22,7 @@ export class NavSystems extends Component {
         };
     }
 
-    componentDidMount() {}
+    componentDidMount() { }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -31,7 +31,7 @@ export class NavSystems extends Component {
                 systems: this.props.systems
             })
         }
-        
+
         // Uso tipico (no olvides de comparar los props):
         if (this.state.systemActive !== prevState.systemActive) {
             if (this.state.systemActive !== -1) {
@@ -58,28 +58,65 @@ export class NavSystems extends Component {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    subMenuSystems() {
+        return (
+            <Col xs={6} className="navsystem sub-nav d-flex justify-content-between align-items-center flex-wrap">
+                {this.state.systems[this.state.systemActive].map((system, index) => {
+                    return (
+                        <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
+                            <System key={index} buildId={system.buildId} />
+                        </Link>
+                    );
+                })}
+            </Col>);
+    }
+
+    subMenuScript() {
+
+        const atackScript = this.state.systems[this.state.systemActive].filter(script => script.type === ScriptTypes.ATTACK);
+        const defenseScript = this.state.systems[this.state.systemActive].filter(script => script.type !== ScriptTypes.ATTACK);
+
+        return (
+            <Col xs={6} className="navsystem sub-nav d-flex justify-content-center align-items-center flex-wrap">
+                <Row className="w-100">
+                    <Col xs={5} className="atack-script d-flex justify-content-between align-items-center">
+                        {atackScript.map((system, index) => {
+                            return (
+                                <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
+                                    <System key={index} buildId={system.buildId} />
+                                </Link>
+                            );
+                        })}
+                    </Col>
+                    <Col xs={7} className="defense-script d-flex justify-content-between align-items-center">
+                        {defenseScript.map((system, index) => {
+                            return (
+                                <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
+                                    <System key={index} buildId={system.buildId} />
+                                </Link>
+                            );
+                        })}
+                    </Col>
+                </Row>
+            </Col>
+
+        );
+    }
+
 
     drawSubMenu() {
 
         return (
             <Row>
-                <Col xs={6} className="navsystem sub-nav d-flex justify-content-between align-items-center flex-wrap">
-                {this.state.systems[this.state.systemActive].map((system, index) => {
-                    return (
-                        <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
-                            <System key={index} buildId={system.buildId} />
-                            </Link>
-                    );
-                })}
-                </Col>
+                {this.state.systemActive === SystemsType.SCRIPT ? this.subMenuScript() : this.subMenuSystems()}
             </Row>
-         );
+        );
     }
 
 
     draw() {
         return (
-            
+
             <Row>
                 <Col xs={6} className="navsystem d-flex justify-content-between align-items-center flex-wrap">
                     <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, SystemsType.RESOURCE)} />
@@ -90,7 +127,7 @@ export class NavSystems extends Component {
                     <System onClick={this.sistemActive.bind(this, 10)} />
                 </Col>
             </Row>
-                
+
         );
     }
 
@@ -108,11 +145,11 @@ export class NavSystems extends Component {
             subnav = this.drawSubMenu();
         }
 
-        
+
         return (
             <>
-              {subnav}
-              {nav}
+                {subnav}
+                {nav}
             </>
         );
     }

@@ -504,6 +504,9 @@ namespace MarianaoWars.Migrations
                     b.Property<int>("BuildId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Carry")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
