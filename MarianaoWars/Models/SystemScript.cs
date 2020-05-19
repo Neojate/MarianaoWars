@@ -11,6 +11,7 @@ namespace MarianaoWars.Models
         public static int DEFENSE = 2;
         public static int TRANSPORT = 3;
         public static int COLONIZATOR = 4;
+        public static int SPY = 5;
 
         // Identificador del systemscript. Primary key autoincremental.
         public int Id { get; set; }
@@ -32,6 +33,9 @@ namespace MarianaoWars.Models
 
         // Vida
         public double  BaseIntegrity { get; set; }
+
+        // Capacidad de carga
+        public int Carry { get; set; }
 
         // Tiempo de construccion
         public int Time { get; set; }
