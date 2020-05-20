@@ -101,7 +101,7 @@ export class NavGame extends Component {
 
                         //incremento x minuto (mirar que si estamos en negativo, el incremento es la mitad)
                         let increments = systemResource.increment.split(",");
-                        let increment = increments[computer.Resource[`${resourceName}Level`]] * this.state.institute.RateUpdate;
+                        let increment = increments[computer.Resource[`${resourceName}Level`]] * this.state.institute.RateCost;
 
                         if (computer.Resource.Stress < 0) {
                             increment = increment / 2;

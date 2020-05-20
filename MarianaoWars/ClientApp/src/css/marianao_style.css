@@ -195,8 +195,30 @@ nav {
         float: right;
     }
 
-@media (min-width: 1400px) {
-    .container {
+.box-expeditions img{
+    max-width: 100%;
+}
+
+.box-expeditions .box-scripts{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+.box-expeditions .box-attack, .box-expeditions .box-deffense {
+    border: 1px solid #b3b7bc;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    .box-expeditions .box-attack .row, .box-expeditions .box-deffense .row{
+        margin-bottom: 5px;
+    }
+
+    @media (min-width: 1400px) {
+        .container {
         max-width: 1320px;
     }
 }
