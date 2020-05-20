@@ -123,7 +123,9 @@ export class NavSystems extends Component {
                     <System onClick={this.sistemActive.bind(this, SystemsType.SOFTWARE)} />
                     <System onClick={this.sistemActive.bind(this, SystemsType.TALENT)} />
                     <System onClick={this.sistemActive.bind(this, SystemsType.SCRIPT)} />
-                    <System onClick={this.sistemActive.bind(this, 8)} />
+                    <Link to={{ pathname: `/game/${this.state.instituteId}/expeditions` }}>
+                        <System />
+                    </Link>
                     <System onClick={this.sistemActive.bind(this, 10)} />
                 </Col>
             </Row>

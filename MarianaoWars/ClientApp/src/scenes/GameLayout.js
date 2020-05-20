@@ -5,6 +5,7 @@ import { Network } from '../components/game/Network';
 import { SystemPanel } from '../components/game/SystemPanel';
 import { Messages } from '../components/game/Messages';
 import { MessagePanel } from '../components/game/MessagePanel';
+import { ExpeditionPanel } from '../components/game/ExpeditionPanel';
 import authService from '../components/api-authorization/AuthorizeService';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';
@@ -161,6 +162,7 @@ export class GameLayout extends Component {
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
+                <Route path="/game/:instituteId/expeditions" component={ExpeditionPanel} />
 
             </Game>);
     return (
