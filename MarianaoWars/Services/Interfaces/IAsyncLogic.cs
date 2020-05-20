@@ -44,5 +44,7 @@ namespace MarianaoWars.Services.Interfaces
 
         BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId);
 
+        bool CheckIpHasComputer(int instituteId, string ip);
+
     }
 }

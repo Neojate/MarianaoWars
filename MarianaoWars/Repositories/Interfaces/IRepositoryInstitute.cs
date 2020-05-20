@@ -17,6 +17,9 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera un ordenador por su Id
         Task<Computer> GetComputer(int computerId);
 
+        // Método que devuelve un ordenador en función de su ip
+        Computer GetComputer(int instituteId, string ip);
+
         // Método que devuelve una matrícula en función del usuario y el instituto
         Task<Enrollment> GetEnrollment(string userId, int instituteId);
 
@@ -95,7 +98,17 @@ namespace MarianaoWars.Repositories.Interfaces
         //Método para ver si tenemos mensajes sin leer
         Task<List<Message>> IsNotReadMessages(int instituteId, string userId);
 
+        // Método que guarda un mensaje
         Task<Message> SaveMessage(Message message);
+
+        // Método que devuelve la lista de las órdenes de Hack en función del From
+        Task<List<HackOrder>> GetHackOrdersFrom(int fromId);
+
+        // Método que devuelve la lista de las órdenes de Hack en función del To
+        Task<List<HackOrder>> GetHackOrdersTo(int toId);
+
+        // Método que crea una Hack
+        Task<HackOrder> SaveHackOrder(HackOrder hackOrder);
 
     }
 }

@@ -271,6 +271,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.IsNotReadMessages(instituteId, userId).Result;
         }
 
+        public bool CheckIpHasComputer(int instituteId, string ip)
+        {
+            return repository.GetComputer(instituteId, ip) != null;
+        }
+
         private int calculateBuildLevel(Computer computer, int buildId)
         {
             switch (buildId)

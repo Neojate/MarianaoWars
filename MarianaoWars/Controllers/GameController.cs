@@ -61,5 +61,12 @@ namespace MarianaoWars.Controllers
 
             return output;
         }
+
+
+        [HttpGet("iphascomputer")]
+        public bool CheckIpHasComputer(int instituteId, string ip)
+        {
+            return context.CheckIpHasComputer(instituteId, ip);
+        }
     }
 }

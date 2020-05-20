@@ -54,6 +54,19 @@ namespace MarianaoWars.Repositories.Implementations
                 .FirstOrDefaultAsync();
         }
 
+        public Computer GetComputer(int instituteId, string ip)
+        {
+            List<Enrollment> enrollments = GetEnrollments(instituteId).Result;
+            foreach (Enrollment enrollment in enrollments)
+            {
+                List<Computer> computers = GetComputers(enrollment.Id).Result;
+                foreach (Computer computer in computers)               
+                    if (computer.IpDirection.Equals(ip))
+                        return computer;
+            }
+            return null;
+        }
+
         public async Task<List<Computer>> GetComputers(int enrollmentId)
         {
             return await dbContext.Computer
@@ -104,6 +117,31 @@ namespace MarianaoWars.Repositories.Implementations
             await dbContext.Enrollment.AddAsync(enrollment);
             await dbContext.SaveChangesAsync();
             return enrollment;
+        }
+        #endregion
+
+
+
+        #region HACKORDER
+        public async Task<List<HackOrder>> GetHackOrdersFrom(int fromId)
+        {
+            return await dbContext.HackOrder
+                .Where(hackOrder => hackOrder.From == fromId)
+                .ToListAsync();
+        }
+
+        public async Task<List<HackOrder>> GetHackOrdersTo(int toId)
+        {
+            return await dbContext.HackOrder
+                .Where(hackOrder => hackOrder.To == toId)
+                .ToListAsync();
+        }
+
+        public async Task<HackOrder> SaveHackOrder(HackOrder hackOrder)
+        {
+            await dbContext.HackOrder.AddAsync(hackOrder);
+            await dbContext.SaveChangesAsync();
+            return hackOrder;
         }
         #endregion
 
@@ -258,6 +296,7 @@ namespace MarianaoWars.Repositories.Implementations
         #endregion
 
 
+
         #region SYSTEMSCRIPT
         public async Task<List<SystemScript>> GetSystemScripts()
         {
@@ -265,6 +304,7 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
         #endregion
+
 
 
         #region TALENT
@@ -290,7 +330,7 @@ namespace MarianaoWars.Repositories.Implementations
             dbContext.Update(user);
             await dbContext.SaveChangesAsync();
             return user;
-        }        
+        }
         #endregion
 
 

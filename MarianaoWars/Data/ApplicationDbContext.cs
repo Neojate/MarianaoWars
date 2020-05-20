@@ -39,6 +39,8 @@ namespace MarianaoWars.Data
 
         public DbSet<BuildOrder> BuildOrder { get; set; }
 
+        public DbSet<HackOrder> HackOrder { get; set; }
+ 
         public DbSet<Message> Message { get; set; }
 
         
