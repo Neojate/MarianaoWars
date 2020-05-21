@@ -194,25 +194,25 @@ nav {
         float: right;
     }
 
-.box-expeditions img{
+.box-hacks img {
     max-width: 100%;
 }
 
-.box-expeditions .box-scripts{
+.box-hacks .box-scripts {
     padding-left: 10px;
     padding-right: 10px;
 }
 
 
 
-.box-expeditions .box-attack, .box-expeditions .box-deffense {
+.box-hacks .box-attack, .box-hacks .box-deffense {
     border: 1px solid #b3b7bc;
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-    .box-expeditions .box-attack .row, .box-expeditions .box-deffense .row {
+    .box-hacks .box-attack .row, .box-hacks .box-deffense .row {
         margin-bottom: 5px;
         margin-top: 5px;
     }
