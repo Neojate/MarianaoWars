@@ -276,6 +276,40 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetComputer(instituteId, ip) != null;
         }
 
+        public HackOrder CreateHackOrder(int instituteId, int computerId, string to, int type,
+            int variable, int conditional, int iterator, int json, int _class, int breakpoint,
+            int knowledge, int ingenyous, int coffee)
+        {
+            Computer computer = repository.GetComputer(computerId).Result;
+
+            //TOD: comprobaciones de naves
+            if (variable > computer.Script.Variable ||
+                conditional > computer.Script.Conditional ||
+                iterator > computer.Script.Iterator ||
+                json > computer.Script.Json ||
+                _class > computer.Script.Class ||
+                breakpoint > computer.Script.BreakPoint)
+                return null;
+
+            //TODO: comprobaciones de ip
+            if (!CheckIpHasComputer(instituteId, to))
+                return null;
+    
+            //TODO: comprobaciones de carga
+            
+            //TODO: cálculo distancia
+
+            //TODO: comprobaciones de café
+
+
+
+            Computer computerTo = repository.GetComputer(instituteId, to);
+
+
+
+            return null;
+        }
+
         private int calculateBuildLevel(Computer computer, int buildId)
         {
             switch (buildId)
@@ -301,7 +335,7 @@ namespace MarianaoWars.Services.Implementations
                 case 47: return computer.Talent.EcbLevel;
                 case 48: return computer.Talent.RsaLevel;
 
-                case 61: return computer.Script.Comparator;
+                case 61: return computer.Script.Variable;
                 case 62: return computer.Script.Conditional;
                 case 63: return computer.Script.Iterator;
                 case 64: return computer.Script.Json;

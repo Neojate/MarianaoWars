@@ -68,5 +68,13 @@ namespace MarianaoWars.Controllers
         {
             return context.CheckIpHasComputer(instituteId, ip);
         }
+
+        [HttpGet("createhackorder")]
+        public void CreateHackOrder(int instituteId, int computerId, string to, int type, 
+            int variable, int conditional, int iterator, int json, int _class, int breakpoint,
+            int knowledge, int ingenyous, int coffee)
+        {
+            
+        }
     }
 }

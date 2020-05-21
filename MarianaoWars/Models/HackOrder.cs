@@ -25,6 +25,18 @@ namespace MarianaoWars.Models
         // Fecha a la que se vuelve 
         public DateTime ReturnTime { get; set; }
 
+        public int Variable { get; set; }
+
+        public int Conditional { get; set; }
+
+        public int Iterator { get; set; }
+
+        public int Json { get; set; }
+
+        public int Class { get; set; }
+
+        public int Breakpoint { get; set; }
+
         // Tipo de Hack
         public int Type { get; set; }
 

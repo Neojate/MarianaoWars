@@ -11,7 +11,7 @@ namespace MarianaoWars.Models
         public int Id { get; set; }
 
         // Caza
-        public int Comparator { get; set; }
+        public int Variable { get; set; }
 
         // Destructor
         public int Conditional { get; set; }
@@ -36,7 +36,7 @@ namespace MarianaoWars.Models
 
         public Script()
         {
-            Comparator = 0;
+            Variable = 0;
             Conditional = 0;
             Iterator = 0;
             Json = 0;

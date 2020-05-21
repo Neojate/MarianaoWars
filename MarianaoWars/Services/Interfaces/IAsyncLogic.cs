@@ -44,6 +44,10 @@ namespace MarianaoWars.Services.Interfaces
 
         BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId);
 
+        HackOrder CreateHackOrder(int instituteId, int computerId, string to, int type,
+            int variable, int conditional, int iterator, int json, int _class, int breakpoint,
+            int knowledge, int ingenyous, int coffee);
+
         bool CheckIpHasComputer(int instituteId, string ip);
 
     }
