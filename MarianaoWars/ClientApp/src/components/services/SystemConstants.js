@@ -17,7 +17,7 @@ export const BuildIdName = {
     46: 'Sftp',
     47: 'Ecb',
     48: 'Rsa',
-    61: 'Comparator',
+    61: 'Variable',
     62: 'Conditional',
     63: 'Iterator',
     64: 'Json',

@@ -20,34 +20,35 @@ export class HackPanel extends Component {
 
     componentDidMount() { }
 
-    componentWillReceiveProps(next_props) {
-        if (this.state.computerActive !== next_props.computerActive) {
+    componentWillReceiveProps(nextProps) {
+        if (this.state.computerActive !== nextProps.computerActive) {
             this.setState({
-                computerActive: next_props.computerActive
+                computerActive: nextProps.computerActive
             })
         }
-        if (this.state.instituteId !== next_props.instituteId) {
+        if (this.state.instituteId !== nextProps.instituteId) {
             this.setState({
-                instituteId: next_props.instituteId
+                instituteId: nextProps.instituteId
+            })
+        }
+        if (this.state.systemScripts !== nextProps.systemScripts) {
+            this.setState({
+                systemScripts: nextProps.systemScripts
             })
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        /*
-        if (this.props.computerActive !== prevProps.computerActive) {
-            this.setState({
-                computerActive: this.props.computerActive
-            })
-        }
-        */
 
         if (this.props.systemScripts !== prevProps.systemScripts) {
             this.setState({
                 systemScripts: this.props.systemScripts
             })
         }
+        
+        
+        
     }
 
     scripts(scriptType) {
@@ -147,8 +148,8 @@ export class HackPanel extends Component {
     }
 
     render() {
-
-        if (this.state.computerActive === false) {
+        
+        if (this.state.computerActive === false || this.state.systemScripts == undefined || this.state.systemScripts.length === 0) {
             return '';
         }
 
@@ -237,10 +238,10 @@ export class HackPanel extends Component {
             data += `${value.toLowerCase()}=${this.state.scriptQuantity[value]}&&`;
         }
         //from
-        data += `from=${this.state.computerActive.IpDirection}&&`
+        data += `computerId=${this.state.computerActive.Id}&&`
 
         //to
-        data += `to=${this.inputTo}&&`
+        data += `to=${this.inputTo.value}&&`
 
         //type
         data += `type=${this.state.type}&&`
@@ -250,12 +251,17 @@ export class HackPanel extends Component {
 
         //resource
         if (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) {
-            data += `&&knowledge=${this.state.resources["Conocimiento"]}&&`;
-            data += `&&ingenyous=${this.state.resources["Imaginacion"]}&&`;
-            data += `&&coffe=${this.state.resources["cafe"]}`;
+
+            let conocimiento = (this.state.resources["Conocimiento"] !== undefined) ? this.state.resources["Conocimiento"] : 0;
+            let imaginacion = (this.state.resources["Imaginacion"] !== undefined) ? this.state.resources["Imaginacion"] : 0;
+            let cafe = (this.state.resources["Cafe"] !== undefined) ? this.state.resources["Cafe"] : 0;
+
+            data += `&&knowledge=${conocimiento}&&`;
+            data += `ingenyous=${imaginacion}&&`;
+            data += `coffe=${cafe}`;
         }
 
-        url = 'createhackorder';
+        let url = 'game/createhackorder';
 
         const response = await fetch(url + data);
         const responseJson = await response;
