@@ -35,7 +35,7 @@ namespace MarianaoWars.Models
 
         public int Class { get; set; }
 
-        public int Breakpoint { get; set; }
+        public int BreakPoint { get; set; }
 
         // Tipo de Hack
         public int Type { get; set; }
@@ -66,7 +66,7 @@ namespace MarianaoWars.Models
             Iterator = iterator;
             Json = json;
             Class = _class;
-            Breakpoint = breakpoint;
+            BreakPoint = breakpoint;
             Type = type;
             Knowledge = knowledge;
             Ingenyous = ingenyous;

@@ -387,7 +387,7 @@ namespace MarianaoWars.Services.Implementations
         private int parseIpToNumber(string ip)
         {
             string[] numbers = ip.Split('.');
-            return int.Parse(numbers[2]) + int.Parse(numbers[3]);
+            return int.Parse(numbers[2]) + int.Parse(numbers[3]) * 10;
         }
 
     }
