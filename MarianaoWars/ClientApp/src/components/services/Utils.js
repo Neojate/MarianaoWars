@@ -18,13 +18,13 @@ var stringUtils = {
 
         let stringTime = '';
 
-        if (dias != 0) {
+        if (dias !== 0) {
             stringTime += `${dias}d. `;
         }
-        if (dias != 0 || horas != 0) {
+        if (dias !== 0 || horas !== 0) {
             stringTime += `${String(horas).padStart(2, "0")}h. `;
         }
-        if (dias != 0 || horas != 0 || minutos != 0) {
+        if (dias !== 0 || horas !== 0 || minutos !== 0) {
             stringTime += `${String(minutos).padStart(2, "0")}m. `;
         }
 

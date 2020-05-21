@@ -5,12 +5,13 @@ import { Network } from '../components/game/Network';
 import { SystemPanel } from '../components/game/SystemPanel';
 import { Messages } from '../components/game/Messages';
 import { MessagePanel } from '../components/game/MessagePanel';
-import { ExpeditionPanel } from '../components/game/ExpeditionPanel';
+import { HackPanel } from '../components/game/ExpeditionPanel';
 import authService from '../components/api-authorization/AuthorizeService';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';
 
 import '../css/marianao_style.css';
+import { SystemsType } from '../components/services/SystemConstants';
 
 export class GameLayout extends Component {
     static displayName = GameLayout.name;
@@ -162,7 +163,7 @@ export class GameLayout extends Component {
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
-                <Route path="/game/:instituteId/expeditions" component={ExpeditionPanel} />
+                <Route path="/game/:instituteId/expeditions" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId}/>} />
 
             </Game>);
     return (

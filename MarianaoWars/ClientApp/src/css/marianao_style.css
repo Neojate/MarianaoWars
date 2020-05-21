@@ -132,7 +132,6 @@ nav {
 .system {
     height: 60px;
     width: 60px;
-    margin: auto;
     text-align: center;
     background-color: white;
 }
@@ -213,8 +212,9 @@ nav {
     margin-bottom: 10px;
 }
 
-    .box-expeditions .box-attack .row, .box-expeditions .box-deffense .row{
+    .box-expeditions .box-attack .row, .box-expeditions .box-deffense .row {
         margin-bottom: 5px;
+        margin-top: 5px;
     }
 
     @media (min-width: 1400px) {
