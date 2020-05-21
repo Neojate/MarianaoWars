@@ -74,7 +74,7 @@ namespace MarianaoWars.Controllers
             int variable, int conditional, int iterator, int json, int _class, int breakpoint,
             int knowledge, int ingenyous, int coffee)
         {
-            
+            context.CreateHackOrder(instituteId, computerId, to, type, variable, conditional, iterator, json, _class, breakpoint, knowledge, ingenyous, coffee);
         }
     }
 }

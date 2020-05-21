@@ -52,5 +52,25 @@ namespace MarianaoWars.Models
         // Si está volviendo ya o no
         public bool IsReturn { get; set; }
 
+        public HackOrder(int from, int to, int endTime, int variable, int conditional, int iterator, int json, int _class, int breakpoint, int type, int knowledge, int ingenyous, int coffe)
+        {
+            From = from;
+            To = to;
+            StartTime = DateTime.Now;
+            EndTime = StartTime.AddMinutes(endTime);
+            ReturnTime = EndTime.AddMinutes(endTime);
+            Variable = variable;
+            Conditional = conditional;
+            Iterator = iterator;
+            Json = json;
+            Class = _class;
+            Breakpoint = breakpoint;
+            Type = type;
+            Knowledge = knowledge;
+            Ingenyous = ingenyous;
+            Coffee = coffe;
+            IsReturn = false;
+        }
+
     }
 }

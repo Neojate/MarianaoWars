@@ -282,7 +282,7 @@ namespace MarianaoWars.Services.Implementations
         {
             Computer computer = repository.GetComputer(computerId).Result;
 
-            //TOD: comprobaciones de naves
+            //Comprobaciones de naves
             if (variable > computer.Script.Variable ||
                 conditional > computer.Script.Conditional ||
                 iterator > computer.Script.Iterator ||
@@ -291,23 +291,59 @@ namespace MarianaoWars.Services.Implementations
                 breakpoint > computer.Script.BreakPoint)
                 return null;
 
-            //TODO: comprobaciones de ip
+            //Comprobaciones de ip
             if (!CheckIpHasComputer(instituteId, to))
                 return null;
-    
-            //TODO: comprobaciones de carga
-            
-            //TODO: cálculo distancia
 
-            //TODO: comprobaciones de café
+            //Comprobaciones de carga
+            if (knowledge > computer.Resource.Knowledge ||
+                ingenyous > computer.Resource.Ingenyous ||
+                coffee > computer.Resource.Coffee)
+                return null;
 
+            //Cálculo distancia
+            int distance = Math.Abs(parseIpToNumber(computer.IpDirection) - parseIpToNumber(to));
 
+            //Comprobaciones de café
+            int totalScripts = variable + conditional + iterator + json + _class + breakpoint;
+            int needCoffe = totalScripts * distance * 10;
+
+            if (needCoffe > computer.Resource.Coffee)
+                return null;
+
+            // Los gastos de recursos y naves
+            computer.Resource.Knowledge -= knowledge;
+            computer.Resource.Ingenyous -= ingenyous;
+            computer.Resource.Coffee -= coffee - needCoffe;
+
+            computer.Script.Variable -= variable;
+            computer.Script.Conditional -= conditional;
+            computer.Script.Iterator -= iterator;
+            computer.Script.Json -= json;
+            computer.Script.Class -= _class;
+            computer.Script.BreakPoint -= breakpoint;
+
+            repository.UpdateComputer(computer);
 
             Computer computerTo = repository.GetComputer(instituteId, to);
 
+            HackOrder hackOrder = new HackOrder(
+                computerId,
+                computerTo.Id,
+                distance * 10,
+                variable,
+                conditional,
+                iterator,
+                json,
+                _class,
+                breakpoint,
+                type,
+                knowledge,
+                ingenyous,
+                coffee
+                );
 
-
-            return null;
+            return repository.SaveHackOrder(hackOrder).Result;
         }
 
         private int calculateBuildLevel(Computer computer, int buildId)
@@ -346,6 +382,12 @@ namespace MarianaoWars.Services.Implementations
 
                 default: return 0;
             }
+        }
+
+        private int parseIpToNumber(string ip)
+        {
+            string[] numbers = ip.Split('.');
+            return int.Parse(numbers[2]) + int.Parse(numbers[3]);
         }
 
     }
