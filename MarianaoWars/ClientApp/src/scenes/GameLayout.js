@@ -5,7 +5,7 @@ import { Network } from '../components/game/Network';
 import { SystemPanel } from '../components/game/SystemPanel';
 import { Messages } from '../components/game/Messages';
 import { MessagePanel } from '../components/game/MessagePanel';
-import { HackPanel } from '../components/game/ExpeditionPanel';
+import { HackPanel } from '../components/game/HackPanel';
 import authService from '../components/api-authorization/AuthorizeService';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';

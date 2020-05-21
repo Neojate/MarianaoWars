@@ -276,6 +276,47 @@ namespace MarianaoWars.Migrations
                     b.ToTable("Enrollment");
                 });
 
+            modelBuilder.Entity("MarianaoWars.Models.HackOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Coffee")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("From")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ingenyous")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsReturn")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("Knowledge")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("To")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HackOrder");
+                });
+
             modelBuilder.Entity("MarianaoWars.Models.Institute", b =>
                 {
                     b.Property<int>("Id")

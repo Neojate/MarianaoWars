@@ -11,14 +11,7 @@ export class HackPanel extends Component {
             computerActive: false,
             instituteId: false,
             systemScripts: [],
-            scriptQuantity: [
-                'Comparator' = 0,
-                'Conditional' = 0,
-                'Iterator' = 0,
-                'Json' = 0,
-                'Class' = 0,
-                'BreackPoint' = 0
-            ],
+            scriptQuantity: [],
             resources: [],
             type: false,
         };
