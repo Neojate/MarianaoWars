@@ -282,7 +282,16 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("Breakpoint")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Class")
+                        .HasColumnType("int");
+
                     b.Property<int>("Coffee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Conditional")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndTime")
@@ -297,6 +306,12 @@ namespace MarianaoWars.Migrations
                     b.Property<bool>("IsReturn")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int>("Iterator")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Json")
+                        .HasColumnType("int");
+
                     b.Property<int>("Knowledge")
                         .HasColumnType("int");
 
@@ -310,6 +325,9 @@ namespace MarianaoWars.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Variable")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -437,9 +455,6 @@ namespace MarianaoWars.Migrations
                     b.Property<int>("Class")
                         .HasColumnType("int");
 
-                    b.Property<int>("Comparator")
-                        .HasColumnType("int");
-
                     b.Property<int>("Conditional")
                         .HasColumnType("int");
 
@@ -453,6 +468,9 @@ namespace MarianaoWars.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TryCatch")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Variable")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

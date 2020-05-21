@@ -238,7 +238,7 @@ export class HackPanel extends Component {
             data += `${value.toLowerCase()}=${this.state.scriptQuantity[value]}&&`;
         }
         //from
-        data += `from=${this.state.computerActive.Id}&&`
+        data += `computerId=${this.state.computerActive.Id}&&`
 
         //to
         data += `to=${this.inputTo.value}&&`
@@ -261,7 +261,7 @@ export class HackPanel extends Component {
             data += `coffe=${cafe}`;
         }
 
-        let url = 'createhackorder';
+        let url = 'game/createhackorder';
 
         const response = await fetch(url + data);
         const responseJson = await response;
