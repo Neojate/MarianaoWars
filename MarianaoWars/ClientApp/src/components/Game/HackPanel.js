@@ -362,7 +362,7 @@ export class HackPanel extends Component {
 
             data += `&&knowledge=${conocimiento}&&`;
             data += `ingenyous=${imaginacion}&&`;
-            data += `coffe=${cafe}`;
+            data += `coffee=${cafe}`;
         }
 
         let url = 'game/createhackorder';
