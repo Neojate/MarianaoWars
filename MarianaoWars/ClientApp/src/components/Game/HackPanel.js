@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col, Input, Label, FormGroup, Form } from 'reactstrap';
+import { Row, Col, Input, Label, FormGroup, Form, FormFeedback } from 'reactstrap';
 import { SystemsType, ScriptTypes, BuildIdName } from '../services/SystemConstants'
 
 export class HackPanel extends Component {
@@ -14,6 +14,7 @@ export class HackPanel extends Component {
             scriptQuantity: [],
             resources: [],
             type: false,
+            ipIsValid: true
         };
         this.hackOrder = this.hackOrder.bind(this);
     }
@@ -101,7 +102,7 @@ export class HackPanel extends Component {
         );
     }
 
-    recursos(name) {
+    recursos(name, resource) {
 
         let disabled = (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) ? false : true;
 
@@ -113,8 +114,8 @@ export class HackPanel extends Component {
                 <Col xs={5}>
                     {disabled ?
                         <Input type="number" defaultValue={0} name="{name}" id="{name}" innerRef={value => this.inputName = value} readOnly />
-                        : <Input type="number" defaultValue={0} name="{name}" id="{name}" onChange={this.handleResourcesChange.bind(this, name)} innerRef={value => this.inputName = value} /> 
-                        }
+                        : <Input type="number" defaultValue={0} min={0} max={parseInt(this.state.computerActive.Resource[resource])} name="{name}" id="{name}" onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} /> 
+                    }
                 </Col>
             </Row>
             );
@@ -132,19 +133,85 @@ export class HackPanel extends Component {
         });
     }
 
-    handleActionChange(type, event) {
+    async handleActionChange(type, event) {
         this.setState({
             type: type
         });
+
+        if (this.inputTo !== undefined) {
+            let valid = await this.ipValid(this.state.instituteId, this.inputTo.value);
+            valid ? this.setState({ ipIsValid: true }) : this.setState({ ipIsValid: false });
+        }
+        
     }
 
-    handleResourcesChange(name, event) {
+    handleResourcesChange(name, resource, event) {
+
+        if (event.target.value < 0) {
+            event.target.value = 0;
+        }
+        
+        let systemJson = this.state.systemScripts.find(element => element.name === 'Json');
+        let systemClass = this.state.systemScripts.find(element => element.name === 'Class');
+
+        let maxCapacity = 0;
+        if (this.state.scriptQuantity['Json'] != undefined) {
+            maxCapacity += parseInt(this.state.scriptQuantity['Json'] * systemJson.carry);
+        }
+        if (this.state.scriptQuantity['Class'] != undefined) {
+            maxCapacity += parseInt(this.state.scriptQuantity['Class'] * systemClass.carry);
+        }
+
+        let actualResource = 0;
+        for (let index in this.state.resources) {
+            actualResource += parseInt(this.state.resources[index]);
+        }
+        console.log("actualResValue", actualResource);
+
+
+        console.log("actualRes", this.state.resources);
+
+        if (actualResource > maxCapacity) {
+            event.target.value = maxCapacity - actualResource;
+        }
+
+        if (event.target.value > this.state.computerActive.Resource[resource]) {
+            event.target.value = parseInt(this.state.computerActive.Resource[resource]);
+        }
+
         let array = this.state.resources.slice();
+        console.log("arary", this.state.resources.slice());
         array[name] = event.target.value;
+        
 
         this.setState({
             resources: array
         });
+        console.log("arary", this.state.resources.slice());
+    }
+
+    async handleIpToChange(ip, event) {
+
+        let valid = await this.ipValid(this.state.instituteId, ip.value);
+        valid ? this.setState({ ipIsValid: true }) : this.setState({ ipIsValid: false });
+
+    }
+
+    async ipValid(instituteId, ip) {
+
+        let result = await fetch('game/iphascomputer', { instituteId: instituteId, ip: ip });
+        let response = await result.text();
+
+        let condition1 = (this.state.type === ScriptTypes.ATTACK || this.state.type === ScriptTypes.SPY) && String(true).toLowerCase() === response.toLowerCase();
+        let condition2 = (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) && String(false).toLowerCase() === response.toLowerCase();
+
+        if (condition1 || condition2) {
+            return true;
+        }
+        else {
+            return false
+        }
+
     }
 
     render() {
@@ -174,7 +241,11 @@ export class HackPanel extends Component {
                                 </Col>
                                 <Col xs={6}>
                                     <Label for="exampleSelect"><b>Hasta</b></Label>
-                                    <Input type="text" name="to" id="to" innerRef={to => this.inputTo = to} placeholder="192.168.0.0"></Input>
+                                    {this.state.ipIsValid ? 
+                                        <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" />
+                                        : <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" invalid/>
+                                    }
+                                    <FormFeedback>La Ip no es valida para esta acción</FormFeedback>
                                 </Col>
                                 <Col xs={12} className="d-flex justify-content-around mt-3">
                                     {this.actions('Atacar', ScriptTypes.ATTACK)}
@@ -208,16 +279,20 @@ export class HackPanel extends Component {
                                             <Label>Recursos</Label>
                                         </Col>
                                     </Row>
-                                    {this.recursos('Conocimiento')}
-                                    {this.recursos('Imaginacion')}
-                                    {this.recursos('Cafe')}
+                                    {this.recursos('Conocimiento', BuildIdName[1])}
+                                    {this.recursos('Imaginacion', BuildIdName[2])}
+                                    {this.recursos('Cafe', BuildIdName[3])}
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
 
                     <Col xs={12}>
-                        <button type='submit' className='btn btn-primary'>Send</button>
+                        {this.state.ipIsValid ? 
+                            <button type='submit' className='btn btn-primary'>Send</button>
+                            : <button type='submit' className='btn btn-primary' disabled>Send</button>
+                        }
+                        
                     </Col>
 
 
