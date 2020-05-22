@@ -11,7 +11,7 @@ export class HackPanel extends Component {
             computerActive: false,
             instituteId: false,
             systemScripts: [],
-            scriptQuantity: [],
+            scriptQuantity: {},
             resources: {},
             type: false,
             ipIsValid: true
@@ -108,10 +108,10 @@ export class HackPanel extends Component {
 
         return (
             <Row>
-                <Col xs={7}>
+                <Col xs={6}>
                     <Label>{name}</Label>
                 </Col>
-                <Col xs={5}>
+                <Col xs={6}>
                     {disabled ?
                         <Input type="number" defaultValue={0} name="{name}" id="{name}" innerRef={value => this.inputName = value} readOnly />
                         : <Input type="number" defaultValue={0} min={0} max={parseInt(this.state.computerActive.Resource[resource])} name="{name}" id="{name}" onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} /> 
@@ -124,7 +124,7 @@ export class HackPanel extends Component {
 
     handleScriptChange(index, event) {
 
-        let array = this.state.scriptQuantity.slice();
+        let array = JSON.parse(JSON.stringify(this.state.scriptQuantity));
         let name = BuildIdName[index];
         array[name] = event.target.value;
 
@@ -267,7 +267,7 @@ export class HackPanel extends Component {
                     <Row className="box-scripts">
                         <Col className="box-attack" xs={12}>
                             <Row>
-                                <Col xs={6}>
+                                <Col xs={5}>
                                     <Row>
                                         <Col xs={10}>
                                             <Label>Tiempo necesario</Label>
@@ -280,7 +280,7 @@ export class HackPanel extends Component {
                                     </Row>
 
                                 </Col>
-                                <Col xs={6}>
+                                <Col xs={7}>
                                     <Row>
                                         <Col xs={12}>
                                             <Label>Recursos</Label>
