@@ -281,6 +281,7 @@ namespace MarianaoWars.Services.Implementations
             int knowledge, int ingenyous, int coffee)
         {
             Computer computer = repository.GetComputer(computerId).Result;
+            Institute institute = repository.GetInstitute(instituteId).Result;
 
             //Comprobaciones de naves
             if (variable > computer.Script.Variable ||
@@ -291,9 +292,9 @@ namespace MarianaoWars.Services.Implementations
                 breakpoint > computer.Script.BreakPoint)
                 return null;
 
-            //Comprobaciones de ip
+            /*//Comprobaciones de ip
             if (!CheckIpHasComputer(instituteId, to))
-                return null;
+                return null;*/
 
             //Comprobaciones de carga
             if (knowledge > computer.Resource.Knowledge ||
@@ -323,14 +324,15 @@ namespace MarianaoWars.Services.Implementations
             computer.Script.Class -= _class;
             computer.Script.BreakPoint -= breakpoint;
 
-            repository.UpdateComputer(computer);
+            //repository.NotAsyncUpdateResource(computer.Resource);
+            Computer c = repository.UpdateComputer(computer).Result;
 
             Computer computerTo = repository.GetComputer(instituteId, to);
 
             HackOrder hackOrder = new HackOrder(
                 computerId,
                 computerTo.Id,
-                distance * 10,
+                (int)(distance * 60 / institute.RateTime),
                 variable,
                 conditional,
                 iterator,
@@ -341,7 +343,7 @@ namespace MarianaoWars.Services.Implementations
                 knowledge,
                 ingenyous,
                 coffee
-                );
+            );
 
             return repository.SaveHackOrder(hackOrder).Result;
         }

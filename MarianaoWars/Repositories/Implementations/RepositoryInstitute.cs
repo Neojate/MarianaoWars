@@ -89,7 +89,7 @@ namespace MarianaoWars.Repositories.Implementations
         public async Task<Computer> UpdateComputer(Computer computer)
         {
             dbContext.Update(computer);
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();        
             return computer;
         }
         #endregion

@@ -59,8 +59,8 @@ namespace MarianaoWars.Models
             From = from;
             To = to;
             StartTime = DateTime.Now;
-            EndTime = StartTime.AddMinutes(endTime);
-            ReturnTime = EndTime.AddMinutes(endTime);
+            EndTime = StartTime.AddSeconds(endTime);
+            ReturnTime = EndTime.AddSeconds(endTime);
             Variable = variable;
             Conditional = conditional;
             Iterator = iterator;
