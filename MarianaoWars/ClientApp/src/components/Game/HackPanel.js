@@ -12,7 +12,7 @@ export class HackPanel extends Component {
             instituteId: false,
             systemScripts: [],
             scriptQuantity: [],
-            resources: [],
+            resources: {},
             type: false,
             ipIsValid: true
         };
@@ -147,6 +147,13 @@ export class HackPanel extends Component {
 
     handleResourcesChange(name, resource, event) {
 
+        //se clona el array de los inputs rellenados
+        let array = JSON.parse(JSON.stringify(this.state.resources));
+        
+        //se añade el valor del input actual
+        array[name] = event.target.value;
+
+
         //si se intena añadir un numero por debajo de cero, se establece el 0
         if (event.target.value < 0) {
             event.target.value = 0;
@@ -167,35 +174,27 @@ export class HackPanel extends Component {
 
         //se obtienen los recursos añadidos para enviar anteriormente, si es el primer que enviamos este sera 0
         let actualResource = 0;
-        for (let index in this.state.resources) {
-            actualResource += parseInt(this.state.resources[index]);
+        for (let index in array) {
+            actualResource += parseInt(array[index]);
         }
-        console.log("actualResValue", actualResource);
-        console.log("actualRes", this.state.resources);
-
+        
         //Si la suma de inputs es mayor a la capacidad máxima, se establece el input en el máximo disponible
         if (actualResource > maxCapacity) {
-            event.target.value = maxCapacity - actualResource;
+            event.target.value = maxCapacity - (actualResource - event.target.value);
         }
 
         //Si el valor es o sigue siendo superior a los recursos que tenemos, se establece el máximo disponible como recursos del ordenador
         if (event.target.value > this.state.computerActive.Resource[resource]) {
             event.target.value = parseInt(this.state.computerActive.Resource[resource]);
         }
-
-        //se clona el array de los inputs rellenados
-        let array = this.state.resources.slice();
         
-        console.log("arary", this.state.resources.slice());
-        
-        //se añade el valor del input actual
+        //se añade el valor del input actual definitivo
         array[name] = event.target.value;
         
         //se guarda en el estado el array modificado
         this.setState({
             resources: array
         });
-        console.log("arary", this.state.resources.slice());
     }
 
     async handleIpToChange(ip, event) {
