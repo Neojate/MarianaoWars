@@ -202,6 +202,10 @@ nav {
     padding-right: 10px;
 }
 
+.box-hacks h5 {
+    border-bottom: 1px solid gainsboro;
+}
+
 
 
 .box-hacks .box-attack, .box-hacks .box-deffense {

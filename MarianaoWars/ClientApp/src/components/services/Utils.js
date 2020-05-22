@@ -32,7 +32,14 @@ var stringUtils = {
         
         return stringTime;
 
-    }
+    },
+
+    ipToNumber: function(ip) {
+
+        let numbers = ip.split('.');
+        return parseInt(numbers[2]) + parseInt(numbers[3]) * 30;
+
+    },
 }
 
 export { stringUtils };

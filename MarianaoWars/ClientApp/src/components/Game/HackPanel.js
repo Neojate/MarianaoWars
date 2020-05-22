@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Col, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
 import { BuildIdName, ScriptTypes } from '../services/SystemConstants';
+import { stringUtils } from '../services/Utils';
 
 export class HackPanel extends Component {
 
@@ -14,12 +15,13 @@ export class HackPanel extends Component {
             scriptQuantity: {},
             resources: {},
             type: false,
-            ipIsValid: true
+            ipIsValid: false,
+            timeDistance: 0
         };
         this.hackOrder = this.hackOrder.bind(this);
     }
 
-    componentDidMount() { }
+    
 
     componentWillReceiveProps(nextProps) {
         if (this.state.computerActive !== nextProps.computerActive) {
@@ -108,10 +110,10 @@ export class HackPanel extends Component {
 
         return (
             <Row>
-                <Col xs={6}>
+                <Col xs={5}>
                     <Label>{name}</Label>
                 </Col>
-                <Col xs={6}>
+                <Col xs={7}>
                     {disabled ?
                         <Input type="number" defaultValue={0} name="{name}" id="{name}" innerRef={value => this.inputName = value} readOnly />
                         : <Input type="number" defaultValue={0} min={0} max={parseInt(this.state.computerActive.Resource[resource])} name="{name}" id="{name}" onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} /> 
@@ -200,7 +202,25 @@ export class HackPanel extends Component {
     async handleIpToChange(ip, event) {
 
         let valid = await this.ipValid(this.state.instituteId, ip.value);
-        valid ? this.setState({ ipIsValid: true }) : this.setState({ ipIsValid: false });
+
+        if (valid) {
+
+            let ip1 = stringUtils.ipToNumber(ip.value);
+            let ip2 = stringUtils.ipToNumber(this.state.computerActive.IpDirection);
+            let distance = Math.abs(ip1 - ip2);
+
+            let time = stringUtils.timeToString(distance);
+            this.setState({
+                ipIsValid: true,
+                timeDistance: time
+            })
+        }
+        else {
+            this.setState({
+                ipIsValid: false,
+                timeDistance: 0
+            });
+        }
 
     }
 
@@ -209,8 +229,8 @@ export class HackPanel extends Component {
         let result = await fetch('game/iphascomputer', { instituteId: instituteId, ip: ip });
         let response = await result.text();
 
-        let condition1 = (this.state.type === ScriptTypes.ATTACK || this.state.type === ScriptTypes.SPY) && String(true).toLowerCase() === response.toLowerCase();
-        let condition2 = (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) && String(false).toLowerCase() === response.toLowerCase();
+        let condition1 = (this.state.type === ScriptTypes.ATTACK || this.state.type === ScriptTypes.SPY || this.state.type === ScriptTypes.TRANSPORT) && String(true).toLowerCase() === response.toLowerCase();
+        let condition2 = (this.state.type === ScriptTypes.COLONIZADOR) && String(false).toLowerCase() === response.toLowerCase();
 
         if (condition1 || condition2) {
             return true;
@@ -267,10 +287,12 @@ export class HackPanel extends Component {
                     <Row className="box-scripts">
                         <Col className="box-attack" xs={12}>
                             <Row>
-                                <Col xs={5}>
+                                <Col xs={6}>
                                     <Row>
                                         <Col xs={10}>
-                                            <Label>Tiempo necesario</Label>
+                                            <h5>Recursos necesarios</h5>
+                                            <h6>Tiempo necesario</h6>
+                                            {this.state.timeDistance !== 0 ? <p>{this.state.timeDistance}</p> : <p></p>}
                                         </Col>
                                     </Row>
                                     <Row>
@@ -280,10 +302,10 @@ export class HackPanel extends Component {
                                     </Row>
 
                                 </Col>
-                                <Col xs={7}>
+                                <Col xs={6}>
                                     <Row>
                                         <Col xs={12}>
-                                            <Label>Recursos</Label>
+                                            <h5>Recursos a enviar</h5>
                                         </Col>
                                     </Row>
                                     {this.recursos('Conocimiento', BuildIdName[1])}
