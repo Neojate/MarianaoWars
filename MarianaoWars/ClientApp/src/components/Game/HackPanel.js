@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col, Input, Label, FormGroup, Form, FormFeedback } from 'reactstrap';
-import { SystemsType, ScriptTypes, BuildIdName } from '../services/SystemConstants'
+import { Col, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
+import { BuildIdName, ScriptTypes } from '../services/SystemConstants';
 
 export class HackPanel extends Component {
 
@@ -147,13 +147,16 @@ export class HackPanel extends Component {
 
     handleResourcesChange(name, resource, event) {
 
+        //si se intena añadir un numero por debajo de cero, se establece el 0
         if (event.target.value < 0) {
             event.target.value = 0;
         }
         
+        //obtenemos los systems json y class
         let systemJson = this.state.systemScripts.find(element => element.name === 'Json');
         let systemClass = this.state.systemScripts.find(element => element.name === 'Class');
 
+        //calculamos la capacidad máxima que podemos enviar
         let maxCapacity = 0;
         if (this.state.scriptQuantity['Json'] != undefined) {
             maxCapacity += parseInt(this.state.scriptQuantity['Json'] * systemJson.carry);
@@ -162,28 +165,33 @@ export class HackPanel extends Component {
             maxCapacity += parseInt(this.state.scriptQuantity['Class'] * systemClass.carry);
         }
 
+        //se obtienen los recursos añadidos para enviar anteriormente, si es el primer que enviamos este sera 0
         let actualResource = 0;
         for (let index in this.state.resources) {
             actualResource += parseInt(this.state.resources[index]);
         }
         console.log("actualResValue", actualResource);
-
-
         console.log("actualRes", this.state.resources);
 
+        //Si la suma de inputs es mayor a la capacidad máxima, se establece el input en el máximo disponible
         if (actualResource > maxCapacity) {
             event.target.value = maxCapacity - actualResource;
         }
 
+        //Si el valor es o sigue siendo superior a los recursos que tenemos, se establece el máximo disponible como recursos del ordenador
         if (event.target.value > this.state.computerActive.Resource[resource]) {
             event.target.value = parseInt(this.state.computerActive.Resource[resource]);
         }
 
+        //se clona el array de los inputs rellenados
         let array = this.state.resources.slice();
+        
         console.log("arary", this.state.resources.slice());
+        
+        //se añade el valor del input actual
         array[name] = event.target.value;
         
-
+        //se guarda en el estado el array modificado
         this.setState({
             resources: array
         });
