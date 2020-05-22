@@ -226,7 +226,7 @@ export class HackPanel extends Component {
 
     async ipValid(instituteId, ip) {
 
-        let result = await fetch('game/iphascomputer', { instituteId: instituteId, ip: ip });
+        let result = await fetch(`game/iphascomputer?instituteId${instituteId}&&ip=${ip}`);
         let response = await result.text();
 
         let condition1 = (this.state.type === ScriptTypes.ATTACK || this.state.type === ScriptTypes.SPY || this.state.type === ScriptTypes.TRANSPORT) && String(true).toLowerCase() === response.toLowerCase();
