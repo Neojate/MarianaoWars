@@ -7,6 +7,7 @@ export class Network extends Component {
         super(props);
         this.state = {
             broadcast: 40,
+            computerActive: false,
             data: [],
             loading: true,
             instituteId: props.match.params.instituteId
@@ -16,8 +17,30 @@ export class Network extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+
+        if (this.state.computerActive.IpDirection !== nextProps.computerActive.IpDirection) {
+
+            let broadcast = nextProps.computerActive.IpDirection.split('.')[3];
+
+            this.setState({
+                computerActive: nextProps.computerActive,
+                broadcast: broadcast
+            })
+        }
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (this.state.broadcast !== prevState.broadcast) {
+            this.sourceData(this.state.broadcast);
+        }
+        
+    }
+
     componentDidMount() {
-        this.sourceData(this.state.broadcast);
+        //this.sourceData(this.state.broadcast);
     }
 
     render() {
@@ -77,23 +100,20 @@ export class Network extends Component {
     }
 
     async sourceData(broadcast) {
-        //TODO: hacer que el instituteId se recoja por variable
-        fetch('intranet/computers?instituteId=' + this.state.instituteId + '&broadcast=' + broadcast)
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                this.setState({
-                    data: json,
-                    loading: false
-                });
-            });
+        
+        let response = await fetch('intranet/computers?instituteId=' + this.state.instituteId + '&broadcast=' + broadcast);
+        let result = await response.json();
+
+        this.setState({
+            data: result,
+            loading: false
+        });
     }
 
     moveBroadcast(goingFoward) {
 
         let value = goingFoward ? 1 : -1;
-        this.setState({broadcast: this.state.broadcast + value });
+        this.setState({broadcast: parseInt(this.state.broadcast) + value });
         
         if (this.state.broadcast < 0) {
             this.setState({ broadcast: 49 });

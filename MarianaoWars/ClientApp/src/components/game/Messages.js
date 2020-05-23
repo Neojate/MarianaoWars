@@ -30,8 +30,6 @@ export class Messages extends Component {
 
     async deleteAllMessages() {
 
-        console.log("hola");
-
         if (window.confirm('¿Deseas borrar todos los mensajes?')) {
             const response = await fetch(`/message/deleteallmessage?instituteId=${this.state.instituteId}&userId=${this.state.userId}`);
             await response;
