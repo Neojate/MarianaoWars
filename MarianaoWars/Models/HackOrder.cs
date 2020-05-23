@@ -52,9 +52,12 @@ namespace MarianaoWars.Models
         // Si está volviendo ya o no
         public bool IsReturn { get; set; }
 
+        // Ip en donde creamos el ordenador
+        public string NewIp { get; set; }
+
         public HackOrder() { }
 
-        public HackOrder(int from, int to, int endTime, int variable, int conditional, int iterator, int json, int _class, int breakpoint, int type, int knowledge, int ingenyous, int coffe)
+        public HackOrder(int from, int to, int endTime, int variable, int conditional, int iterator, int json, int _class, int breakpoint, int type, int knowledge, int ingenyous, int coffe, string newIp)
         {
             From = from;
             To = to;
@@ -72,6 +75,7 @@ namespace MarianaoWars.Models
             Ingenyous = ingenyous;
             Coffee = coffe;
             IsReturn = false;
+            NewIp = newIp;
         }
 
     }
