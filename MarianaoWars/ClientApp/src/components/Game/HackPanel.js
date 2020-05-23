@@ -415,7 +415,8 @@ export class HackPanel extends Component {
 
         for (let key in this.state.scriptQuantity) {
             if (key == 'Class') {
-                key = '_class';
+                data += `_${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
+                continue;
             }
             data += `${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
         }
