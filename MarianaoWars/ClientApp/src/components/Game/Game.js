@@ -2,7 +2,7 @@
 import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label } from 'reactstrap';
-import { SystemsType, ScriptTypes } from '../services/SystemConstants';
+import { SystemsType, ScriptTypes, ScriptNames } from '../services/SystemConstants';
 import { stringUtils } from '../services/Utils';
 import '../../css/marianao_style.css';
 
@@ -65,7 +65,7 @@ export class Game extends Component {
                 computers[i] = result;
             }
         }
-        
+
         this.setState({
             modal: !this.state.modal,
             computers: computers
@@ -140,7 +140,7 @@ export class Game extends Component {
                         <div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
-                                    <div className={computer.IsDesk == 1 ? "principal-pc":"portatil-pc" }></div>
+                                    <div className={computer.IsDesk == 1 ? "principal-pc" : "portatil-pc"}></div>
                                     <p className={"text-center"}>Ip {computer.IpDirection} </p>
                                 </Col>
                             </Row>
@@ -160,10 +160,10 @@ export class Game extends Component {
                         <Button onClick={this.changeComputerName} id="submit" color="primary">Cambiar</Button>{' '}
                         <Button color="secondary" id="cancel" onClick={this.toggle}>Cancelar</Button>
                     </ModalFooter>
-                    
+
                 </Modal>
             </>
-            )
+        )
     }
 
     timeLeft(endTime) {
@@ -178,39 +178,69 @@ export class Game extends Component {
         let time = fecha1.getTime() - fecha2.getTime();
 
         return stringUtils.timeToString(time);
+    }
+
+    hackOrders() {
+
+        return (
+            <>
+                {this.state.hackOrders.map((hackOrder, index) => {
+
+                    let time = this.timeLeft(hackOrder.EndTime);
+                    let position = (this.state.computerActive.Id === hackOrder.From) ? 'Enviando' : 'Recibiendo';
+
+                    //Si recibo el escript no se muestra el viaje de vuelta || o recibo un script espia
+                    if (position === 'Recibiendo' && time === 'Finalizado' || position === 'Recibiendo' && hackOrder.Type === ScriptTypes.SPY) {
+                        return '';
+                    }
+                    //por el contrario, muestro el tiempo de vuelta
+                    else if (position === 'Enviando' && time === 'Finalizado') {
+                        position = 'Retornando';
+                        time = this.timeLeft(hackOrder.ReturnTime);
+                    }
+
+                    let name = ScriptNames[hackOrder.Type];
+
+                    return (
+                        <div key={index} className="buildOrders-container">
+                            <Row>
+                                <Col xs={12}>
+                                    <p>{position}</p>
+                                    <p>{name}</p>
+                                    <p>Tiempo restante</p>
+                                    <p className={"m-0"}>{time}</p>
+                                </Col>
+                            </Row>
+                        </div>
+                    );
+                })
+                }
+            </>
+
+        )
 
     }
 
     builds() {
 
-        let orders = this.state.buildOrders.concat(this.state.hackOrders);
-
         return (
             <>
-                {orders.map((build, index) => {
+                {this.state.buildOrders.map((build, index) => {
 
                     let time = this.timeLeft(build.EndTime);
 
-                    let name = '';
+                    //convierte el valor en string de dos caracteres
+                    let buildId = String(build.BuildId).padStart(2, "0");
 
-                    if ('BuildId' in build) {
-                        //convierte el valor en string de dos caracteres
-                        let buildId = String(build.BuildId).padStart(2, "0");
+                    //primer valor marca la posición en el array de systems
+                    let indiceBuild = buildId.substring(0, 1);
+                    if (indiceBuild % 2 === "1") indiceBuild--;
 
-                        //primer valor marca la posición en el array de systems
-                        let indiceBuild = buildId.substring(0, 1);
-                        if (indiceBuild % 2 === "1") indiceBuild--;
-
-                        //segundo valor marca la posición en el array del tipo de systems
-                        let indiceBuildId = buildId.substring(1, 2);
-                        //console.log("buildId", indiceBuildId);
-                        //console.log("system", this.state.systems);
-                        name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
-                    } else {
-
-                        name = build.Type;
-
-                    }
+                    //segundo valor marca la posición en el array del tipo de systems
+                    let indiceBuildId = buildId.substring(1, 2);
+                    //console.log("buildId", indiceBuildId);
+                    //console.log("system", this.state.systems);
+                    let name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
                     return (
                         <div key={index} className="buildOrders-container">
@@ -260,6 +290,7 @@ export class Game extends Component {
                                 </Col>
                                 <Col xs={{ size: 2, order: 3, offset: 1 }}>
                                     {this.builds()}
+                                    {this.hackOrders()}
                                 </Col>
                             </Row>
                         </Container>
@@ -293,7 +324,7 @@ export class Game extends Component {
             }
         })
         const result = await response.json();
-        
+
         for (const computer of result) {
             if (computer.IsDesk) {
                 this.setState({

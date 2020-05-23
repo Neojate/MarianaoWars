@@ -56,3 +56,11 @@ export const ScriptTypes = {
     COLONIZADOR: 4,
     SPY: 5
 }
+
+export const ScriptNames = {
+    1: 'Ataque Ransomware',
+    2: 'Anti-Malware',
+    3: 'Transporte',
+    4: 'Persistencia',
+    5: 'Debug'
+}
