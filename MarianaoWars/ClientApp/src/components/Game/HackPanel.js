@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
-import { Col, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
-import { BuildIdName, ScriptTypes } from '../services/SystemConstants';
+import { Col, Form, FormFeedback, FormGroup, Input, Label, Row, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { BuildIdName, ScriptTypes, ScriptDespcription } from '../services/SystemConstants';
 import { stringUtils } from '../services/Utils';
 
 export class HackPanel extends Component {
@@ -9,6 +9,7 @@ export class HackPanel extends Component {
         super(props);
 
         this.state = {
+            popoverOpen: false,
             computerActive: false,
             instituteId: false,
             institute: false,
@@ -18,9 +19,11 @@ export class HackPanel extends Component {
             type: false,
             ipIsValid: false,
             timeDistance: 0,
-            needCoffee: 0
+            needCoffee: 0,
+            namep: 0
         };
         this.hackOrder = this.hackOrder.bind(this);
+        this.toogle = this.toogle.bind(this);
     }
 
     
@@ -56,6 +59,15 @@ export class HackPanel extends Component {
             })
         }
         
+    }
+
+    toogle(name) {
+
+        this.setState({
+            namep: name,
+            popoverOpen: !this.state.popoverOpen
+        });
+
     }
 
     scripts(scriptType) {
@@ -98,12 +110,19 @@ export class HackPanel extends Component {
 
 
     actions(name, type) {
+
         return (
-            <FormGroup check>
+            <FormGroup id={`${name}`} check>
                 <Label check>
                     <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} />{' '}
-                    {name}
+                    {name}{' '}
+                    <img onClick={this.toogle.bind(this, name)} src={require(`../../images/info.svg`)} alt="info" />
                 </Label>
+                <Popover trigger="focus" placement="bottom" isOpen={this.state.popoverOpen && this.state.namep === name} target={`${name}`}>
+                    <PopoverBody>
+                        {ScriptDespcription[this.state.type]}
+                    </PopoverBody>
+                </Popover>
             </FormGroup>
         );
     }
@@ -140,7 +159,7 @@ export class HackPanel extends Component {
 
         console.log(scriptsValue);
 
-        return scriptsValue * distance * 10;
+        return scriptsValue * distance;
 
     }
 
@@ -330,9 +349,9 @@ export class HackPanel extends Component {
                                     <FormFeedback>La Ip no es valida para esta acción</FormFeedback>
                                 </Col>
                                 <Col xs={12} className="d-flex justify-content-around mt-3">
-                                    {this.actions('Atacar', ScriptTypes.ATTACK)}
-                                    {this.actions('Colonizar', ScriptTypes.COLONIZADOR)}
-                                    {this.actions('Espiar', ScriptTypes.SPY)}
+                                    {this.actions('Hacking', ScriptTypes.ATTACK)}
+                                    {this.actions('Persistence', ScriptTypes.COLONIZADOR)}
+                                    {this.actions('Debug', ScriptTypes.SPY)}
                                     {this.actions('Transportar', ScriptTypes.TRANSPORT)}
                                 </Col>
                             </Row>
@@ -395,6 +414,9 @@ export class HackPanel extends Component {
         let data = '?';
 
         for (let key in this.state.scriptQuantity) {
+            if (key == 'Class') {
+                key = '_class';
+            }
             data += `${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
         }
         //from

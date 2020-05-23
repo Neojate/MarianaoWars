@@ -64,3 +64,12 @@ export const ScriptNames = {
     4: 'Persistencia',
     5: 'Debug'
 }
+
+export const ScriptDespcription = {
+    1: 'Te has quedado sin recursos o eres un avaricioso que ansia tener todo lo que puede, envía un malware para minar recursos de otro ordenador.',
+    2: 'Anti-Malware',
+    3: 'Con transporte podremos enviar nuestros recursos de un ordenador a otro, ya sea porque nos desplazarnos a él o porque queramos compartir café con un buen compañero',
+    4: 'Si tu ordenador o red te es insuficiente, necesitas apropiarte de otros, enchufa tu portátil y hazte con esa Ip que te interesa.',
+    5: 'Envía breakpoints al código ajeno para enterarte de todo lo que contiene, pero ojo… te pueden pillar.'
+}
+

@@ -37,7 +37,7 @@ var stringUtils = {
     ipToNumber: function(ip) {
 
         let numbers = ip.split('.');
-        return parseInt(numbers[2]) + parseInt(numbers[3]) * 30;
+        return parseInt(numbers[2]) + parseInt(numbers[3]) * 10;
 
     },
 }
