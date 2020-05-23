@@ -265,7 +265,7 @@ export class Game extends Component {
 
     render() {
 
-        let content = (this.state.systems !== undefined)
+        let content = (this.state.systems !== undefined && this.state.computers.length !== 0)
             ? (
                 <div className="background">
                     <div className="navgame">

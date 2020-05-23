@@ -35,15 +35,27 @@ export class GameLayout extends Component {
 
         this.getInstitute = this.getInstitute.bind(this);
         this.load = this.load.bind(this);
-        this.load(); 
+        
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (this.state.hubConnection !== prevState.hubConnection) {
+            console.log("conectando");
+            this.load();
+        }
+
+    }
+
+
+
 
     async load() {
 
         const user = await authService.getUser();
         this.setState({userId: user.sub})
 
-        await this.userComputers();
+        //await this.userComputers();
         await this.getSystems();
         await this.getInstitute(this.props.match.params.instituteId);
 
@@ -55,7 +67,6 @@ export class GameLayout extends Component {
     componentDidMount() {
 
         const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
         const nick = this.state.userId;
 
         this.setState({ hubConnection, nick }, () => {
@@ -92,6 +103,23 @@ export class GameLayout extends Component {
                     });
             });
 
+            this.state.hubConnection.on('computers', (receivedMessage) => {
+                var computers = JSON.parse(receivedMessage);
+
+                for (const computer of computers) {
+                    if (computer.IsDesk) {
+                        this.setState({
+                            computerActive: computer,
+                        });
+                    }
+                }
+
+                this.setState({
+                    computers: computers,
+                });
+
+            });
+
         });
     }
 
@@ -113,6 +141,7 @@ export class GameLayout extends Component {
             .catch(err => console.error(err));
     }
 
+
     async getSystems() {
         const systems = await systemServices.getSystems();
         this.setState({systems: systems})
@@ -125,6 +154,8 @@ export class GameLayout extends Component {
 
 
     async userComputers() {
+
+        console.log("ordenadores");
 
         if (this.state.userId === undefined) {
             return;
@@ -157,6 +188,7 @@ export class GameLayout extends Component {
 
     render() {
 
+        console.log("loading", this.state.loading);
         var content = (this.loading) ?
             <p>Loading...</p>
             : (<Game userId={this.state.userId}

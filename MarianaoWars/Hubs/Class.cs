@@ -75,18 +75,34 @@ namespace SignalRChat.Hubs
 
         }
 
+        
         public async Task NotReadMessages(int instituteId, string user)
         {
 
+            //mensajes
             List<Message> messages = postGame.IsNotReadMesages(instituteId, user);
 
-            string output = JsonConvert.SerializeObject(messages, new JsonSerializerSettings()
+            string messagesNotRead = JsonConvert.SerializeObject(messages, new JsonSerializerSettings()
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 Formatting = Formatting.Indented
             });
 
-            await Clients.Caller.SendAsync("notReadMessagesResponse", output);
+            await Clients.Caller.SendAsync("notReadMessagesResponse", messagesNotRead);
+
+
+            //computers
+            List<Computer> computers = game.GetComputers(game.GetEnrollment(user, instituteId).Id);
+
+            string computersString = JsonConvert.SerializeObject(computers, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            await Clients.Caller.SendAsync("computers", computersString);
+
+
 
         }
 
