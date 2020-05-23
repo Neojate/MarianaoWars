@@ -36,12 +36,12 @@ export class GameLayout extends Component {
         this.getInstitute = this.getInstitute.bind(this);
         this.load = this.load.bind(this);
         
+        
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (this.state.hubConnection !== prevState.hubConnection) {
-            console.log("conectando");
             this.load();
         }
 
@@ -188,7 +188,6 @@ export class GameLayout extends Component {
 
     render() {
 
-        console.log("loading", this.state.loading);
         var content = (this.loading) ?
             <p>Loading...</p>
             : (<Game userId={this.state.userId}

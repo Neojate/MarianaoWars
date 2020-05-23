@@ -27,6 +27,21 @@ export class NavGame extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        
+        if (this.state.systems !== nextProps.systems) {
+            this.setState({
+                systems: nextProps.systems
+            })
+        }
+        if (this.state.computer !== nextProps.computer) {
+            this.setState({
+                computers: nextProps.computer
+            })
+        }
+        
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (this.props.computer !== prevProps.computer) {
@@ -81,6 +96,7 @@ export class NavGame extends Component {
 
     renderResources(systems, computer) {
 
+        console.log("systems", systems);
         if (systems.length === 0) {
             return "";
         }
@@ -165,6 +181,7 @@ export class NavGame extends Component {
 
     render() {
 
+        console.log("systemsinnav", this.state.systems);
         let contents = this.renderResources(this.state.systems, this.props.computer);
         
         return (

@@ -90,6 +90,22 @@ export class Game extends Component {
         //this.userComputers();
     }
 
+    componentWillReceiveProps(nextProps) {
+        /*
+        if (this.state.computerActive !== nextProps.computerActive) {
+            this.setState({
+                computerActive: nextProps.computerActive
+            })
+        }
+        if (this.state.computers !== nextProps.computers) {
+            this.setState({
+                computers: nextProps.computers
+            })
+        }
+        */
+        
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (this.props.computerActive !== prevProps.computerActive) {
@@ -265,6 +281,7 @@ export class Game extends Component {
 
     render() {
 
+        console.log("condition", this.state.systems !== undefined && this.state.computers.length !== 0);
         let content = (this.state.systems !== undefined && this.state.computers.length !== 0)
             ? (
                 <div className="background">

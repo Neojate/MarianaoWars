@@ -24,6 +24,21 @@ export class NavSystems extends Component {
 
     componentDidMount() { }
 
+    componentWillReceiveProps(nextProps) {
+
+        if (this.state.systems !== nextProps.systems) {
+            this.setState({
+                systems: nextProps.systems
+            })
+        }
+        if (this.state.instituteId !== nextProps.instituteId) {
+            this.setState({
+                instituteId: nextProps.instituteId
+            })
+        }
+
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (this.props.systems !== prevProps.systems) {
