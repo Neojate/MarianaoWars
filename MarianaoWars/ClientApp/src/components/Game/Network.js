@@ -113,14 +113,16 @@ export class Network extends Component {
     moveBroadcast(goingFoward) {
 
         let value = goingFoward ? 1 : -1;
-        this.setState({broadcast: parseInt(this.state.broadcast) + value });
-        
-        if (this.state.broadcast < 0) {
-            this.setState({ broadcast: 49 });
+        let broadcast = parseInt(this.state.broadcast) + value;
+
+        if (broadcast < 0) {
+            broadcast =  49;
         }
-        else if (this.state.broadcast > 49) {
-            this.setState({ broadcast: 0 });
+        else if (broadcast > 49) {
+            broadcast = 0;
         }
+
+        this.setState({ broadcast: broadcast });
     }
 
 }
