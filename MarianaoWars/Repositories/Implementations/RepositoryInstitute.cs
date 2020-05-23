@@ -137,6 +137,13 @@ namespace MarianaoWars.Repositories.Implementations
                 .ToListAsync();
         }
 
+        public async Task<List<HackOrder>> GetHackOrders(int fromId)
+        {
+            return await dbContext.HackOrder
+                .Where(hackOrder => hackOrder.From == fromId || hackOrder.To == fromId)
+                .ToListAsync();
+        }
+
         public async Task<HackOrder> SaveHackOrder(HackOrder hackOrder)
         {
             await dbContext.HackOrder.AddAsync(hackOrder);

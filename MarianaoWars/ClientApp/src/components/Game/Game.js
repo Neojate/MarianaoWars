@@ -2,7 +2,7 @@
 import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label } from 'reactstrap';
-import { SystemsType } from '../services/SystemConstants';
+import { SystemsType, ScriptTypes } from '../services/SystemConstants';
 import { stringUtils } from '../services/Utils';
 import '../../css/marianao_style.css';
 
@@ -20,6 +20,7 @@ export class Game extends Component {
             computers: [],
             computerActive: this.props.computerActive,
             buildOrders: [],
+            hackOrders: [],
             capacityResource: 0,
             valor: 1,
             modal: false,
@@ -111,6 +112,11 @@ export class Game extends Component {
                 buildOrders: this.props.buildOrders
             })
         }
+        if (this.props.hackOrders !== prevProps.hackOrders) {
+            this.setState({
+                hackOrders: this.props.hackOrders
+            })
+        }
         if (this.props.computers !== prevProps.computers) {
             this.setState({
                 computers: this.props.computers
@@ -177,31 +183,40 @@ export class Game extends Component {
 
     builds() {
 
+        let orders = this.state.buildOrders.concat(this.state.hackOrders);
 
         return (
             <>
-                {this.state.buildOrders.map((build, index) => {
+                {orders.map((build, index) => {
 
                     let time = this.timeLeft(build.EndTime);
 
-                    //convierte el valor en string de dos caracteres
-                    let buildId = String(build.BuildId).padStart(2, "0");
+                    let name = '';
 
-                    //primer valor marca la posición en el array de systems
-                    let indiceBuild = buildId.substring(0, 1);
-                    if (indiceBuild % 2 === "1") indiceBuild--;
-                    
-                    //segundo valor marca la posición en el array del tipo de systems
-                    let indiceBuildId = buildId.substring(1, 2);
-                    console.log("buildId", indiceBuildId);
-                    console.log("system", this.state.systems);
-                    let buildName = this.state.systems[indiceBuild][indiceBuildId - 1].name;
+                    if ('BuildId' in build) {
+                        //convierte el valor en string de dos caracteres
+                        let buildId = String(build.BuildId).padStart(2, "0");
+
+                        //primer valor marca la posición en el array de systems
+                        let indiceBuild = buildId.substring(0, 1);
+                        if (indiceBuild % 2 === "1") indiceBuild--;
+
+                        //segundo valor marca la posición en el array del tipo de systems
+                        let indiceBuildId = buildId.substring(1, 2);
+                        console.log("buildId", indiceBuildId);
+                        console.log("system", this.state.systems);
+                        name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
+                    } else {
+
+                        name = build.Type;
+
+                    }
 
                     return (
                         <div key={index} className="buildOrders-container">
                             <Row>
                                 <Col xs={12}>
-                                    <p>Actulaización de {buildName}</p>
+                                    <p>Actulaización de {name}</p>
                                     <p>Tiempo restante</p>
                                     <p className={"m-0"}>{time}</p>
                                 </Col>

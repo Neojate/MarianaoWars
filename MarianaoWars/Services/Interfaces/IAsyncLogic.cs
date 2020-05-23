@@ -11,6 +11,8 @@ namespace MarianaoWars.Services.Interfaces
 
         List<BuildOrder> GetBuildOrders(int computerId);
 
+        List<HackOrder> GetHackOrders(int computerId);
+
         List<SystemResource> GetSystemResources();
 
         List<SystemSoftware> GetSystemSoftwares();

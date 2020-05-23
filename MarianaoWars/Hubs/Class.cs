@@ -47,6 +47,18 @@ namespace SignalRChat.Hubs
 
             await Clients.Caller.SendAsync("buildOrders", output);
 
+            //hacksOrders
+            List<HackOrder> hackOrders = postGame.GetHackOrders(computerId);
+
+            output = JsonConvert.SerializeObject(buildOrders, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            await Clients.Caller.SendAsync("hackOrders", output);
+
+
         }
 
         public async Task BuildOrdersList(string user, int computerId)

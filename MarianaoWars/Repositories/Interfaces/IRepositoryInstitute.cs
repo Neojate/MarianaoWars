@@ -11,6 +11,9 @@ namespace MarianaoWars.Repositories.Interfaces
         // Método que recupera todas las ordenes en funcion de un ordenador.
         Task<List<BuildOrder>> GetBuildOrders(int computerId);
 
+        // Método que recupera todas las hacks en funcion de un ordenador.
+        Task<List<HackOrder>> GetHackOrders(int computerId);
+
         // Método que recupera todos los ordenadores
         Task<List<Computer>> GetComputers(int enrollmentId);
 

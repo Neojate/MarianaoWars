@@ -11,12 +11,14 @@ export class HackPanel extends Component {
         this.state = {
             computerActive: false,
             instituteId: false,
+            institute: false,
             systemScripts: [],
             scriptQuantity: {},
             resources: {},
             type: false,
             ipIsValid: false,
-            timeDistance: 0
+            timeDistance: 0,
+            needCoffee: 0
         };
         this.hackOrder = this.hackOrder.bind(this);
     }
@@ -39,18 +41,20 @@ export class HackPanel extends Component {
                 systemScripts: nextProps.systemScripts
             })
         }
+        if (this.state.institute !== nextProps.institute) {
+            this.setState({
+                institute: nextProps.institute
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-
 
         if (this.props.systemScripts !== prevProps.systemScripts) {
             this.setState({
                 systemScripts: this.props.systemScripts
             })
         }
-        
-        
         
     }
 
@@ -121,29 +125,52 @@ export class HackPanel extends Component {
                 </Col>
             </Row>
             );
+    }
+
+    scriptsQuantityValue(scriptsObject) {
+
+        let scripts = 0;
+        for (const key in scriptsObject) {
+            scripts += parseInt(scriptsObject[key]);
+        }
+        return scripts;
+    }
+
+    coffeToDistance(scriptsValue, distance) {
+
+        console.log(scriptsValue);
+
+        return scriptsValue * distance * 10;
 
     }
 
+
+
     handleScriptChange(index, event) {
 
-        let array = JSON.parse(JSON.stringify(this.state.scriptQuantity));
+        let scriptQuantityTemp = JSON.parse(JSON.stringify(this.state.scriptQuantity));
         let name = BuildIdName[index];
-        array[name] = event.target.value;
+        scriptQuantityTemp[name] = event.target.value;
+
+        let needCoffee = 0;
+        if (this.inputTo.value.trim() !== '') {
+            let distance = this.distanceToIp();
+            needCoffee = this.coffeToDistance(this.scriptsQuantityValue(scriptQuantityTemp), distance);
+        }
 
         this.setState({
-            scriptQuantity: array
+            scriptQuantity: scriptQuantityTemp,
+            needCoffee: needCoffee
         });
     }
 
     async handleActionChange(type, event) {
+        
         this.setState({
             type: type
         });
 
-        if (this.inputTo !== undefined) {
-            let valid = await this.ipValid(this.state.instituteId, this.inputTo.value);
-            valid ? this.setState({ ipIsValid: true }) : this.setState({ ipIsValid: false });
-        }
+        this.timeToIp();
         
     }
 
@@ -200,28 +227,56 @@ export class HackPanel extends Component {
     }
 
     async handleIpToChange(ip, event) {
+        this.timeToIp();
+    }
 
-        let valid = await this.ipValid(this.state.instituteId, ip.value);
+    distanceToIp() {
 
+        if (this.inputTo.value.trim() === '') {
+            return 0;
+        }
+
+        let ip1 = stringUtils.ipToNumber(this.inputTo.value);
+        let ip2 = stringUtils.ipToNumber(this.state.computerActive.IpDirection);
+        let distance = Math.abs(ip1 - ip2);
+        return distance;
+
+    }
+
+    /**
+     * Verifica que la ip es correcta y añade el tiempo necesarios para el desplazamiento
+     * */
+    async timeToIp() {
+
+        if (this.inputTo.value.trim() === '') {
+            this.setState({
+                ipIsValid: false,
+                timeDistance: 0,
+                needCoffee: 0
+            });
+            return;
+        }
+
+        let valid = await this.ipValid(this.state.instituteId, this.inputTo.value);
         if (valid) {
 
-            let ip1 = stringUtils.ipToNumber(ip.value);
-            let ip2 = stringUtils.ipToNumber(this.state.computerActive.IpDirection);
-            let distance = Math.abs(ip1 - ip2);
+            let time = this.distanceToIp() * 60 * 1000 / this.state.institute.RateCost;
+            let stringTime = stringUtils.timeToString(time);
+            let needCoffee = this.coffeToDistance(this.scriptsQuantityValue(this.state.scriptQuantity), this.distanceToIp());
 
-            let time = stringUtils.timeToString(distance);
             this.setState({
                 ipIsValid: true,
-                timeDistance: time
+                timeDistance: stringTime,
+                needCoffee: needCoffee
             })
         }
         else {
             this.setState({
                 ipIsValid: false,
-                timeDistance: 0
+                timeDistance: 0,
+                needCoffee: 0
             });
         }
-
     }
 
     async ipValid(instituteId, ip) {
@@ -297,7 +352,8 @@ export class HackPanel extends Component {
                                     </Row>
                                     <Row>
                                         <Col xs={10}>
-                                            <Label>Gasto de café</Label>
+                                            <h6>Gasto de café</h6>
+                                            {this.state.needCoffee !== 0 ? <p>{this.state.needCoffee}</p> : <p></p>}
                                         </Col>
                                     </Row>
 
@@ -338,8 +394,8 @@ export class HackPanel extends Component {
 
         let data = '?';
 
-        for (let value in this.state.scriptQuantity) {
-            data += `${value.toLowerCase()}=${this.state.scriptQuantity[value]}&&`;
+        for (let key in this.state.scriptQuantity) {
+            data += `${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
         }
         //from
         data += `computerId=${this.state.computerActive.Id}&&`

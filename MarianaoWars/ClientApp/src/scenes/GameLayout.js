@@ -24,6 +24,7 @@ export class GameLayout extends Component {
             instituteId: this.props.match.params.instituteId,
             hubConnection: null,
             buildOrders: [],
+            hackOrders: [],
             computers: false,
             computerActive: false,
             institute: false,
@@ -77,6 +78,11 @@ export class GameLayout extends Component {
             this.state.hubConnection.on('buildOrders', (receivedMessage) => {
                 var buildOrders = JSON.parse(receivedMessage);
                 this.setState({ buildOrders: buildOrders });
+            });
+
+            this.state.hubConnection.on('hackOrders', (receivedMessage) => {
+                var hackOrders = JSON.parse(receivedMessage);
+                this.setState({ hackOrders: hackOrders });
             });
 
             this.state.hubConnection.on('notReadMessagesResponse', (receivedMessage) => {
@@ -157,13 +163,13 @@ export class GameLayout extends Component {
                 instituteId={this.state.instituteId} systems={this.state.systems}
                 computers={this.state.computers} computerActive={this.state.computerActive}
                 buildOrders={this.state.buildOrders} messagesNotRead={this.state.messagesNotRead}
-                institute={this.state.institute}>
+                hackOrders={this.state.hackOrders} institute={this.state.institute}>
 
                 <Route exact path="/game/:instituteId" component={Network} />
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
-                <Route path="/game/:instituteId/expeditions" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId}/>} />
+                <Route path="/game/:instituteId/expeditions" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId} institute={this.state.institute} />} />
 
             </Game>);
     return (

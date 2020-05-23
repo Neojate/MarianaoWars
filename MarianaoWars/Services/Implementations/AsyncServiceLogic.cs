@@ -22,6 +22,11 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetBuildOrders(computerId).Result;
         }
 
+        public List<HackOrder> GetHackOrders(int computerId)
+        {
+            return repository.GetHackOrders(computerId).Result;
+        }
+
         public List<Computer> GetComputersBySector(int instituteId, int broadcast)
         {
             List<Computer> computers = new List<Computer>();
