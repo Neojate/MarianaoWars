@@ -272,6 +272,11 @@ namespace MarianaoWars.Services.Implementations
             repository.DeleteMessage(messageId);
         }
 
+        public void DeleteAllMessage(int instituteId, string userId)
+        {
+            repository.DeleteAllMessage(instituteId, userId);
+        }
+
         public List<Message> IsNotReadMesages(int instituteId, string userId) {
             return repository.IsNotReadMessages(instituteId, userId).Result;
         }

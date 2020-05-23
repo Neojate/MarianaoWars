@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService';
+import { Row, Col, Button } from 'reactstrap';
 
 export class Messages extends Component {
 
@@ -25,6 +26,18 @@ export class Messages extends Component {
             }
         };
         this.props.history.push(location);
+    }
+
+    async deleteAllMessages() {
+
+        console.log("hola");
+
+        if (window.confirm('¿Deseas borrar todos los mensajes?')) {
+            const response = await fetch(`/message/deleteallmessage?instituteId=${this.state.instituteId}&userId=${this.state.userId}`);
+            await response;
+            await this.sourceData(0);
+        }
+
     }
 
     async deleteMessage(message) {
@@ -75,8 +88,19 @@ export class Messages extends Component {
                         )}
                     </tbody>
                 </table>
-                <button onClick={() => this.sourceData(-1)}>Atrás</button>
-                <button onClick={() => this.sourceData(1)}>Siguiente</button>
+                <Row>
+                    <Col xs={3}>
+                        <button onClick={() => this.sourceData(-1)}>Atrás</button>
+                    </Col>
+                    <Col xs={3}>
+                        <button onClick={() => this.sourceData(1)}>Siguiente</button>
+                    </Col>
+                    <Col xs={6} className="text-right">
+                        <Button onClick={() => this.deleteAllMessages()}>Borrar todos</Button>
+                    </Col>
+                </Row>
+                
+                
             </div>
         );
     }

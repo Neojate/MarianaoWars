@@ -51,5 +51,12 @@ namespace MarianaoWars.Controllers
             return new OkResult();
         }
 
+        [HttpGet("deleteallmessage")]
+        public IActionResult DeleteAllMessage(int instituteId, string userId)
+        {
+            context.DeleteAllMessage(instituteId, userId);
+            return new OkResult();
+        }
+
     }
 }

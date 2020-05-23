@@ -30,6 +30,8 @@ namespace MarianaoWars.Services.Interfaces
 
         void DeleteMessage(int messageId);
 
+        void DeleteAllMessage(int instituteId, string userId);
+
         List<Computer> GetComputersBySector(int instituteId, int broadcast);
 
         void SaveComputer(Computer computer);

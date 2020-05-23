@@ -218,6 +218,17 @@ namespace MarianaoWars.Repositories.Implementations
             dbContext.Message.Remove(message);
             dbContext.SaveChanges();
         }
+
+        public void DeleteAllMessage(int instituteId, string userId)
+        {
+
+            //dbContext.Message.RemoveRange(dbContext.Message.Where(message => message.InstituteId == instituteId && message.UserId.Equals(userId)));
+            //dbContext.SaveChanges();
+            dbContext.Message.Where(message => message.InstituteId == instituteId && message.UserId.Equals(userId))
+               .ToList().ForEach(message => dbContext.Message.Remove(message));
+            dbContext.SaveChanges();
+
+        }
         #endregion
 
 
