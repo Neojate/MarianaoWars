@@ -341,7 +341,7 @@ namespace MarianaoWars.Services.Implementations
 
             HackOrder hackOrder = new HackOrder(
                 computerId,
-                computerTo.Id,
+                type == 4 ? -1 : computerTo.Id,
                 (int)(distance * 60 / institute.RateTime),
                 variable,
                 conditional,
@@ -352,7 +352,8 @@ namespace MarianaoWars.Services.Implementations
                 type,
                 knowledge,
                 ingenyous,
-                coffee
+                coffee,
+                to
             );
 
             return repository.SaveHackOrder(hackOrder).Result;
