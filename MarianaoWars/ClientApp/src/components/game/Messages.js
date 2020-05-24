@@ -9,7 +9,7 @@ export class Messages extends Component {
         this.state = {
             data: [],
             instituteId: this.props.match.params.instituteId,
-            userId: this.props.userId,
+            computerId: this.props.computerActive.Id,
             pageIndex: 1,
             loading: true,
         };
@@ -31,7 +31,7 @@ export class Messages extends Component {
     async deleteAllMessages() {
 
         if (window.confirm('¿Deseas borrar todos los mensajes?')) {
-            const response = await fetch(`/message/deleteallmessage?instituteId=${this.state.instituteId}&userId=${this.state.userId}`);
+            const response = await fetch(`/message/deleteallmessage?computerId=${this.state.computerId}`);
             await response;
             await this.sourceData(0);
         }
@@ -48,7 +48,6 @@ export class Messages extends Component {
     }
 
     async componentDidMount() {
-        await this.getUser();
         await this.sourceData(0);
     }
 
@@ -113,25 +112,17 @@ export class Messages extends Component {
             index = 1
         }
 
-        fetch(`message/messages?instituteId=${this.state.instituteId}&userId=${this.state.userId}&pageIndex=${index}`)
+        fetch(`message/messages?computerId=${this.state.computerId}&pageIndex=${index}`)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
-                console.log(json);
                 this.setState({
                     data: json,
                     pageIndex: index,
                     loading: false
                 });
             });
-    }
-
-    async getUser() {
-        const user = await authService.getUser();
-        this.setState({
-            'userId': user.sub
-        });
     }
 
 }
