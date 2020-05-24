@@ -58,27 +58,6 @@ namespace SignalRChat.Hubs
 
             await Clients.Caller.SendAsync("hackOrders", hacks);
 
-        }
-
-        public async Task BuildOrdersList(string user, int computerId)
-        {
-
-            List<BuildOrder> buildOrders = postGame.GetBuildOrders(computerId);
-
-            string output = JsonConvert.SerializeObject(buildOrders, new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
-
-            await Clients.Caller.SendAsync("buildOrders", output);
-
-        }
-
-        
-        public async Task NotReadMessages(int instituteId, string user, int computerId)
-        {
-
             //mensajes
             List<Message> messages = postGame.IsNotReadMesages(computerId);
 
@@ -90,6 +69,12 @@ namespace SignalRChat.Hubs
 
             await Clients.Caller.SendAsync("notReadMessagesResponse", messagesNotRead);
 
+
+        }
+
+        
+        public async Task NotReadMessages(int instituteId, string user)
+        {
 
             //computers
             List<Computer> computers = game.GetComputers(game.GetEnrollment(user, instituteId).Id);

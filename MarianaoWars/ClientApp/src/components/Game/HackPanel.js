@@ -26,7 +26,12 @@ export class HackPanel extends Component {
         this.toogle = this.toogle.bind(this);
     }
 
-    
+
+    /*******************
+     * CICLO COMPONENTE
+     ******************/
+
+
 
     componentWillReceiveProps(nextProps) {
         if (this.state.computerActive !== nextProps.computerActive) {
@@ -58,17 +63,23 @@ export class HackPanel extends Component {
                 systemScripts: this.props.systemScripts
             })
         }
-        
+
+        if (this.state.needCoffee !== prevState.needCoffee) {
+
+            let capacityCoffe = parseInt(this.state.computerActive.Resource[BuildIdName[3]]) - this.state.needCoffee;
+
+            if ("Cafe" in this.state.resources && this.state.resources.Cafe > capacityCoffe) {
+                this.state.resources.Cafe = capacityCoffe;
+            }
+        }
+
     }
 
-    toogle(name) {
+    /*******************
+    * SECCIONES COMPONENTE
+    ******************/
 
-        this.setState({
-            namep: name,
-            popoverOpen: !this.state.popoverOpen
-        });
 
-    }
 
     scripts(scriptType) {
 
@@ -130,6 +141,17 @@ export class HackPanel extends Component {
     recursos(name, resource) {
 
         let disabled = (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) ? false : true;
+        let max = parseInt(this.state.computerActive.Resource[resource]);
+        let input = <Input type="number" defaultValue={0} min={0} max={max} name={name} id={name} onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} />;
+        
+
+        if (disabled) {
+            input = <Input type="number" defaultValue={0} name={name} id={name} innerRef={value => this.inputName = value} readOnly />;
+        }
+        else if (!disabled && name === "Cafe") {
+            max -= this.state.needCoffee;
+            input = <Input type="number" defaultValue={0} min={0} max={max} name={name} id={name} onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} />;
+        }
 
         return (
             <Row>
@@ -137,13 +159,24 @@ export class HackPanel extends Component {
                     <Label>{name}</Label>
                 </Col>
                 <Col xs={7}>
-                    {disabled ?
-                        <Input type="number" defaultValue={0} name="{name}" id="{name}" innerRef={value => this.inputName = value} readOnly />
-                        : <Input type="number" defaultValue={0} min={0} max={parseInt(this.state.computerActive.Resource[resource])} name="{name}" id="{name}" onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} /> 
-                    }
+                    {input}
                 </Col>
             </Row>
-            );
+        );
+    }
+
+
+    /*******************
+    * METODOS
+    ******************/
+
+    toogle(name) {
+
+        this.setState({
+            namep: name,
+            popoverOpen: !this.state.popoverOpen
+        });
+
     }
 
     scriptsQuantityValue(scriptsObject) {
@@ -156,11 +189,7 @@ export class HackPanel extends Component {
     }
 
     coffeToDistance(scriptsValue, distance) {
-
-        console.log(scriptsValue);
-
         return scriptsValue * distance;
-
     }
 
 
@@ -184,20 +213,20 @@ export class HackPanel extends Component {
     }
 
     async handleActionChange(type, event) {
-        
+
         this.setState({
             type: type
         });
 
         this.timeToIp();
-        
+
     }
 
     handleResourcesChange(name, resource, event) {
 
         //se clona el array de los inputs rellenados
         let array = JSON.parse(JSON.stringify(this.state.resources));
-        
+
         //se añade el valor del input actual
         array[name] = event.target.value;
 
@@ -206,7 +235,7 @@ export class HackPanel extends Component {
         if (event.target.value < 0) {
             event.target.value = 0;
         }
-        
+
         //obtenemos los systems json y class
         let systemJson = this.state.systemScripts.find(element => element.name === 'Json');
         let systemClass = this.state.systemScripts.find(element => element.name === 'Class');
@@ -225,7 +254,7 @@ export class HackPanel extends Component {
         for (let index in array) {
             actualResource += parseInt(array[index]);
         }
-        
+
         //Si la suma de inputs es mayor a la capacidad máxima, se establece el input en el máximo disponible
         if (actualResource > maxCapacity) {
             event.target.value = maxCapacity - (actualResource - event.target.value);
@@ -235,10 +264,10 @@ export class HackPanel extends Component {
         if (event.target.value > this.state.computerActive.Resource[resource]) {
             event.target.value = parseInt(this.state.computerActive.Resource[resource]);
         }
-        
+
         //se añade el valor del input actual definitivo
         array[name] = event.target.value;
-        
+
         //se guarda en el estado el array modificado
         this.setState({
             resources: array
@@ -315,8 +344,66 @@ export class HackPanel extends Component {
 
     }
 
+
+    async hackOrder(event) {
+
+        event.preventDefault();
+        console.log('event', event);
+        console.log('this', this);
+
+        let data = '?';
+
+        for (let key in this.state.scriptQuantity) {
+            if (key == 'Class') {
+                data += `_${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
+                continue;
+            }
+            data += `${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
+        }
+        //from
+        data += `computerId=${this.state.computerActive.Id}&&`
+
+        //to
+        data += `to=${this.inputTo.value}&&`
+
+        //type
+        data += `type=${this.state.type}&&`
+
+        //instituteid
+        data += `instituteId=${this.state.instituteId}`
+
+        //resource
+        if (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) {
+
+            let conocimiento = (this.state.resources["Conocimiento"] !== undefined) ? this.state.resources["Conocimiento"] : 0;
+            let imaginacion = (this.state.resources["Imaginacion"] !== undefined) ? this.state.resources["Imaginacion"] : 0;
+            let cafe = (this.state.resources["Cafe"] !== undefined) ? this.state.resources["Cafe"] : 0;
+
+            data += `&&knowledge=${conocimiento}&&`;
+            data += `ingenyous=${imaginacion}&&`;
+            data += `coffee=${cafe}`;
+        }
+
+        let url = 'game/createhackorder';
+
+        const response = await fetch(url + data);
+        const responseJson = await response;
+
+        console.log(responseJson);
+
+    }
+
+
+
+
+
+    /*******************
+    * RENDER
+    ******************/
+
+
     render() {
-        
+
         if (this.state.computerActive === false || this.state.systemScripts == undefined || this.state.systemScripts.length === 0) {
             return '';
         }
@@ -342,9 +429,9 @@ export class HackPanel extends Component {
                                 </Col>
                                 <Col xs={6}>
                                     <Label for="exampleSelect"><b>Hasta</b></Label>
-                                    {this.state.ipIsValid ? 
+                                    {this.state.ipIsValid ?
                                         <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" />
-                                        : <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" invalid/>
+                                        : <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" invalid />
                                     }
                                     <FormFeedback>La Ip no es valida para esta acción</FormFeedback>
                                 </Col>
@@ -392,11 +479,11 @@ export class HackPanel extends Component {
                     </Row>
 
                     <Col xs={12}>
-                        {this.state.ipIsValid ? 
+                        {this.state.ipIsValid ?
                             <button type='submit' className='btn btn-primary'>Send</button>
                             : <button type='submit' className='btn btn-primary' disabled>Send</button>
                         }
-                        
+
                     </Col>
 
 
@@ -405,52 +492,6 @@ export class HackPanel extends Component {
         );
     }
 
-    async hackOrder(event) {
 
-        event.preventDefault();
-        console.log('event', event);
-        console.log('this', this);
-
-        let data = '?';
-
-        for (let key in this.state.scriptQuantity) {
-            if (key == 'Class') {
-                data += `_${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
-                continue;
-            }
-            data += `${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
-        }
-        //from
-        data += `computerId=${this.state.computerActive.Id}&&`
-
-        //to
-        data += `to=${this.inputTo.value}&&`
-
-        //type
-        data += `type=${this.state.type}&&`
-
-        //instituteid
-        data += `instituteId=${this.state.instituteId}`
-
-        //resource
-        if (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) {
-
-            let conocimiento = (this.state.resources["Conocimiento"] !== undefined) ? this.state.resources["Conocimiento"] : 0;
-            let imaginacion = (this.state.resources["Imaginacion"] !== undefined) ? this.state.resources["Imaginacion"] : 0;
-            let cafe = (this.state.resources["Cafe"] !== undefined) ? this.state.resources["Cafe"] : 0;
-
-            data += `&&knowledge=${conocimiento}&&`;
-            data += `ingenyous=${imaginacion}&&`;
-            data += `coffee=${cafe}`;
-        }
-
-        let url = 'game/createhackorder';
-
-        const response = await fetch(url + data);
-        const responseJson = await response;
-
-        console.log(responseJson);
-       
-    }
 
 }
