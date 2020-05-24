@@ -36,7 +36,7 @@ namespace MarianaoWars.Repositories.Interfaces
         Task<Message> GetMessage(int messageId);
 
         // Método que recupera la lista de todos los mensajes de una matrícula
-        Task<List<Message>> GetMessages(int instituteId, string userId, int pageIndex);
+        Task<List<Message>> GetMessages(int computerId, int pageIndex);
 
         // Método que recupera todos los institutos abiertos
         Task<List<Institute>> GetOpenInstitutes();
@@ -99,10 +99,10 @@ namespace MarianaoWars.Repositories.Interfaces
         void DeleteMessage(int messageId);
 
         // Método que borra todos los mensaje de un usuario en un servidor
-        void DeleteAllMessage(int instituteId, string userId);
+        void DeleteAllMessage(int computerId);
 
         //Método para ver si tenemos mensajes sin leer
-        Task<List<Message>> IsNotReadMessages(int instituteId, string userId);
+        Task<List<Message>> IsNotReadMessages(int computerId);
 
         // Método que guarda un mensaje
         Task<Message> SaveMessage(Message message);

@@ -10,9 +10,8 @@ namespace MarianaoWars.Models
         // Id del mensaje. Primary Key Autoincremental.
         public int Id { get; set; }
 
-        public int InstituteId { get; set; }
-
-        public string UserId { get; set; }
+        // Campo que se relaciona con el Computer
+        public int ComputerId { get; set; }
 
         // Fecha en la que fue generado el mensaje
         public DateTime Date { get; set; }
@@ -34,10 +33,9 @@ namespace MarianaoWars.Models
 
         public Message() { }
 
-        public Message(int instituteId, string userId, string sendTo, string sendFrom, string title, string body)
+        public Message(int computerId, string sendTo, string sendFrom, string title, string body)
         {
-            InstituteId = instituteId;
-            UserId = userId;
+            ComputerId = computerId;
             Date = DateTime.Now;
             SendTo = sendTo;
             SendFrom = sendFrom;

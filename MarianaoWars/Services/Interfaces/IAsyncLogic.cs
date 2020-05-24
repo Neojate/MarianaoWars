@@ -26,11 +26,11 @@ namespace MarianaoWars.Services.Interfaces
 
         Message GetMessage(int messageId);
 
-        List<Message> GetMessages(int instituteId, string userId, int pageIndex);
+        List<Message> GetMessages(int computerId, int pageIndex);
 
         void DeleteMessage(int messageId);
 
-        void DeleteAllMessage(int instituteId, string userId);
+        void DeleteAllMessage(int computerId);
 
         List<Computer> GetComputersBySector(int instituteId, int broadcast);
 
@@ -44,7 +44,7 @@ namespace MarianaoWars.Services.Interfaces
 
         Message ReadMessage(int messageId);
 
-        List<Message> IsNotReadMesages(int instituteId, string userId);
+        List<Message> IsNotReadMesages(int computerId);
 
         BuildOrder CreateBuildOrder(int instituteId, int computerId, int buildId);
 

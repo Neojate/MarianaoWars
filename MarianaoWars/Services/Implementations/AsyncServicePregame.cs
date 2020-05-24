@@ -52,7 +52,7 @@ namespace MarianaoWars.Services.Implementations
                 enrollment);
             computer = repository.SaveComputer(computer).Result;
 
-            CreateWelcomeMessage(institute, userId, computer);
+            CreateWelcomeMessage(institute, computer);
 
             return enrollment;
         }
@@ -92,11 +92,10 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetResource(resourceId).Result;
         }
 
-        private Message CreateWelcomeMessage(Institute institute, string userId, Computer computer)
+        private Message CreateWelcomeMessage(Institute institute, Computer computer)
         {
             Message message = new Message(
-                   institute.Id,
-                   userId,
+                   computer.Id,
                    computer.Name,
                    "Sistema",
                    "Bienvenido!",

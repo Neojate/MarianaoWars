@@ -22,9 +22,9 @@ namespace MarianaoWars.Controllers
         }
 
         [HttpGet("messages")]
-        public IEnumerable<Message> GetMessages(int instituteId, string userId, int pageIndex)
+        public IEnumerable<Message> GetMessages(int computerId, int pageIndex)
         {
-            return context.GetMessages(instituteId, userId, pageIndex);
+            return context.GetMessages(computerId, pageIndex);
         }
 
         [HttpGet("message")]
@@ -52,9 +52,9 @@ namespace MarianaoWars.Controllers
         }
 
         [HttpGet("deleteallmessage")]
-        public IActionResult DeleteAllMessage(int instituteId, string userId)
+        public IActionResult DeleteAllMessage(int computerId)
         {
-            context.DeleteAllMessage(instituteId, userId);
+            context.DeleteAllMessage(computerId);
             return new OkResult();
         }
 

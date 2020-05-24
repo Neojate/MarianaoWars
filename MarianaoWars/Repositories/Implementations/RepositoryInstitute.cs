@@ -178,22 +178,21 @@ namespace MarianaoWars.Repositories.Implementations
                 .FindAsync(messageId);
         }
 
-        public async Task<List<Message>> GetMessages(int instituteId, string userId, int pageIndex)
+        public async Task<List<Message>> GetMessages(int computerId, int pageIndex)
         {
             return await dbContext.Message
-                .Where(message => message.InstituteId == instituteId && message.UserId.Equals(userId))
+                .Where(message => message.ComputerId == computerId)
                 .OrderByDescending(message => message.Date)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
         }
 
-        public async Task<List<Message>> IsNotReadMessages(int instituteId, string userId)
+        public async Task<List<Message>> IsNotReadMessages(int computerId)
         {
             return await dbContext.Message
                 .Where(message => 
-                    message.InstituteId == instituteId && 
-                    message.UserId.Equals(userId) &&
+                    message.ComputerId == computerId &&
                     !message.IsRead)
                 .ToListAsync();
         }
@@ -219,13 +218,11 @@ namespace MarianaoWars.Repositories.Implementations
             dbContext.SaveChanges();
         }
 
-        public void DeleteAllMessage(int instituteId, string userId)
+        public void DeleteAllMessage(int computerId)
         {
-
-            //dbContext.Message.RemoveRange(dbContext.Message.Where(message => message.InstituteId == instituteId && message.UserId.Equals(userId)));
-            //dbContext.SaveChanges();
-            dbContext.Message.Where(message => message.InstituteId == instituteId && message.UserId.Equals(userId))
-               .ToList().ForEach(message => dbContext.Message.Remove(message));
+            dbContext.Message.Where(message => message.ComputerId == computerId)
+               .ToList()
+               .ForEach(message => dbContext.Message.Remove(message));
             dbContext.SaveChanges();
 
         }

@@ -255,9 +255,9 @@ namespace MarianaoWars.Services.Implementations
             return repository.GetMessage(messageId).Result;
         }
 
-        public List<Message> GetMessages(int instituteId, string userId, int pageIndex)
+        public List<Message> GetMessages(int computerId, int pageIndex)
         {
-            return repository.GetMessages(instituteId, userId, pageIndex).Result;
+            return repository.GetMessages(computerId, pageIndex).Result;
         }
 
         public Message ReadMessage(int messageId)
@@ -272,13 +272,13 @@ namespace MarianaoWars.Services.Implementations
             repository.DeleteMessage(messageId);
         }
 
-        public void DeleteAllMessage(int instituteId, string userId)
+        public void DeleteAllMessage(int computerId)
         {
-            repository.DeleteAllMessage(instituteId, userId);
+            repository.DeleteAllMessage(computerId);
         }
 
-        public List<Message> IsNotReadMesages(int instituteId, string userId) {
-            return repository.IsNotReadMessages(instituteId, userId).Result;
+        public List<Message> IsNotReadMesages(int computerId) {
+            return repository.IsNotReadMessages(computerId).Result;
         }
 
         public bool CheckIpHasComputer(int instituteId, string ip)

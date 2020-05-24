@@ -76,11 +76,11 @@ namespace SignalRChat.Hubs
         }
 
         
-        public async Task NotReadMessages(int instituteId, string user)
+        public async Task NotReadMessages(int instituteId, string user, int computerId)
         {
 
             //mensajes
-            List<Message> messages = postGame.IsNotReadMesages(instituteId, user);
+            List<Message> messages = postGame.IsNotReadMesages(computerId);
 
             string messagesNotRead = JsonConvert.SerializeObject(messages, new JsonSerializerSettings()
             {
