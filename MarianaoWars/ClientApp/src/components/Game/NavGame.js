@@ -96,7 +96,6 @@ export class NavGame extends Component {
 
     renderResources(systems, computer) {
 
-        console.log("systems", systems);
         if (systems.length === 0) {
             return "";
         }
@@ -181,7 +180,6 @@ export class NavGame extends Component {
 
     render() {
 
-        console.log("systemsinnav", this.state.systems);
         let contents = this.renderResources(this.state.systems, this.props.computer);
         
         return (

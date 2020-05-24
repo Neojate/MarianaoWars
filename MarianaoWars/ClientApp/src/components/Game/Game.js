@@ -146,6 +146,13 @@ export class Game extends Component {
 
     }
 
+    computerActive(pos) {
+        console.log("posChild", pos);
+        
+        this.props.changeComputerActive(pos);
+    }
+
+
     computers() {
 
         return (
@@ -153,7 +160,8 @@ export class Game extends Component {
                 {this.state.computers.map((computer, index) => {
 
                     return (
-                        <div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>
+                        /*<div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>*/
+                        <div key={index} onClick={() => this.computerActive(index)} className={`computers-container ${computer.Id == this.state.computerActive.Id ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
                                     <div className={computer.IsDesk == 1 ? "principal-pc" : "portatil-pc"}></div>
@@ -281,7 +289,6 @@ export class Game extends Component {
 
     render() {
 
-        console.log("condition", this.state.systems !== undefined && this.state.computers.length !== 0);
         let content = (this.state.systems !== undefined && this.state.computers.length !== 0)
             ? (
                 <div className="background">

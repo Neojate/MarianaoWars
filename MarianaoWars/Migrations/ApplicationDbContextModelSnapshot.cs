@@ -282,7 +282,7 @@ namespace MarianaoWars.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Breakpoint")
+                    b.Property<int>("BreakPoint")
                         .HasColumnType("int");
 
                     b.Property<int>("Class")
@@ -314,6 +314,9 @@ namespace MarianaoWars.Migrations
 
                     b.Property<int>("Knowledge")
                         .HasColumnType("int");
+
+                    b.Property<string>("NewIp")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("ReturnTime")
                         .HasColumnType("datetime(6)");

@@ -27,6 +27,7 @@ export class GameLayout extends Component {
             hackOrders: [],
             computers: false,
             computerActive: false,
+            posComputerActive: 0,
             institute: false,
             systems: [],
             loading: true,
@@ -35,6 +36,7 @@ export class GameLayout extends Component {
 
         this.getInstitute = this.getInstitute.bind(this);
         this.load = this.load.bind(this);
+        this.changeComputerActive = this.changeComputerActive.bind(this);
         
         
     }
@@ -47,13 +49,16 @@ export class GameLayout extends Component {
 
     }
 
+    changeComputerActive(pos) {
 
+        this.setState({
+            posComputerActive: pos
+        });
+
+    }
 
 
     async load() {
-
-        const user = await authService.getUser();
-        this.setState({userId: user.sub})
 
         //await this.userComputers();
         await this.getSystems();
@@ -64,10 +69,13 @@ export class GameLayout extends Component {
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        const user = await authService.getUser();
+        this.setState({ userId: user.sub })
 
         const hubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-        const nick = this.state.userId;
+        const nick = user.sub;
 
         this.setState({ hubConnection, nick }, () => {
             this.state.hubConnection
@@ -106,16 +114,9 @@ export class GameLayout extends Component {
             this.state.hubConnection.on('computers', (receivedMessage) => {
                 var computers = JSON.parse(receivedMessage);
 
-                for (const computer of computers) {
-                    if (computer.IsDesk) {
-                        this.setState({
-                            computerActive: computer,
-                        });
-                    }
-                }
-
                 this.setState({
                     computers: computers,
+                    computerActive: computers[this.state.posComputerActive]
                 });
 
             });
@@ -194,7 +195,8 @@ export class GameLayout extends Component {
                 instituteId={this.state.instituteId} systems={this.state.systems}
                 computers={this.state.computers} computerActive={this.state.computerActive}
                 buildOrders={this.state.buildOrders} messagesNotRead={this.state.messagesNotRead}
-                hackOrders={this.state.hackOrders} institute={this.state.institute}>
+                hackOrders={this.state.hackOrders} institute={this.state.institute}
+                changeComputerActive={this.changeComputerActive} >
 
                  <Route exact path="/game/:instituteId" render={(props) => <Network {...props} computerActive={this.state.computerActive} />} />
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
