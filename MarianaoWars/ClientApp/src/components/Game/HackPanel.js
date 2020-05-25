@@ -17,7 +17,7 @@ export class HackPanel extends Component {
             systemScripts: [],
             scriptQuantity: {},
             resources: {},
-            type: this.props.location.state !== undefined ? this.props.location.type.ip : 0,
+            type: this.props.location.state !== undefined ? this.props.location.state.type : 0,
             ipIsValid: false,
             timeDistance: 0,
             needCoffee: 0,
@@ -74,6 +74,11 @@ export class HackPanel extends Component {
                 this.state.resources.Cafe = capacityCoffe;
             }
         }
+
+        if ("value" in this.inputTo && this.state.instituteId != prevState.instituteId) {
+            this.timeToIp();
+        }
+        
 
     }
 
