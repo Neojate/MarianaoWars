@@ -134,14 +134,14 @@ export class NavSystems extends Component {
 
             <Row>
                 <Col xs={6} className="navsystem d-flex justify-content-between align-items-center flex-wrap">
-                    <System name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, SystemsType.RESOURCE)} />
-                    <System onClick={this.sistemActive.bind(this, SystemsType.SOFTWARE)} />
-                    <System onClick={this.sistemActive.bind(this, SystemsType.TALENT)} />
-                    <System onClick={this.sistemActive.bind(this, SystemsType.SCRIPT)} />
+                    <System buildId={"p1icon"} name={"resource"} system={this.state.systemResources} onClick={this.sistemActive.bind(this, SystemsType.RESOURCE)} />
+                    <System buildId={"p2icon"} onClick={this.sistemActive.bind(this, SystemsType.SOFTWARE)} />
+                    <System buildId={"p3icon"} onClick={this.sistemActive.bind(this, SystemsType.TALENT)} />
+                    <System buildId={"p4icon"} onClick={this.sistemActive.bind(this, SystemsType.SCRIPT)} />
                     <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder` }}>
-                        <System />
+                        <System buildId={"p5icon"} />
                     </Link>
-                    <System onClick={this.sistemActive.bind(this, 10)} />
+                    <System buildId={"p6icon"} onClick={this.sistemActive.bind(this, 10)} />
                 </Col>
             </Row>
 
