@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import { Col } from 'reactstrap';
 
 export class System extends Component {
 
@@ -74,20 +73,9 @@ export class System extends Component {
         }
 
         return (
-
-                //añadir aqui sub nav segun click.
             <div style={this.systemStyle()} className={"system"} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.props.onClick} >
                 {img}
             </div>
-            /*
-            <Col xs={2} onClick={this.props.onClick} >
-                <div style={this.systemStyle()} className={"system"} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.active} >
-                    {img}
-                 </div>
-            </Col>
-            */
-
-
         );
     }
 

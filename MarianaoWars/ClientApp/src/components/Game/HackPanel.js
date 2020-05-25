@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Col, Form, FormFeedback, FormGroup, Input, Label, Row, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Col, Form, FormFeedback, FormGroup, Input, Label, Row, Popover, PopoverBody } from 'reactstrap';
 import { BuildIdName, ScriptTypes, ScriptDespcription } from '../services/SystemConstants';
 import { stringUtils } from '../services/Utils';
 
@@ -71,11 +71,14 @@ export class HackPanel extends Component {
             let capacityCoffe = parseInt(this.state.computerActive.Resource[BuildIdName[3]]) - this.state.needCoffee;
 
             if ("Cafe" in this.state.resources && this.state.resources.Cafe > capacityCoffe) {
-                this.state.resources.Cafe = capacityCoffe;
+
+                let resources = JSON.parse(JSON.stringify(this.state.resources));
+                resources.Cafe = capacityCoffe;
+                this.setState({ resources: resources });
             }
         }
 
-        if ("value" in this.inputTo && this.state.instituteId != prevState.instituteId) {
+        if ("value" in this.inputTo && this.state.instituteId !== prevState.instituteId) {
             this.timeToIp();
         }
         
@@ -132,7 +135,7 @@ export class HackPanel extends Component {
         return (
             <FormGroup id={`${name}`} check>
                 <Label check>
-                    {this.state.type == type ?
+                    {this.state.type === type ?
                         <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} defaultChecked /> 
                     : <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} /> 
                         }
@@ -252,10 +255,10 @@ export class HackPanel extends Component {
 
         //calculamos la capacidad máxima que podemos enviar
         let maxCapacity = 0;
-        if (this.state.scriptQuantity['Json'] != undefined) {
+        if (this.state.scriptQuantity['Json'] !== undefined) {
             maxCapacity += parseInt(this.state.scriptQuantity['Json'] * systemJson.carry);
         }
-        if (this.state.scriptQuantity['Class'] != undefined) {
+        if (this.state.scriptQuantity['Class'] !== undefined) {
             maxCapacity += parseInt(this.state.scriptQuantity['Class'] * systemClass.carry);
         }
 
@@ -364,7 +367,7 @@ export class HackPanel extends Component {
         let data = '?';
 
         for (let key in this.state.scriptQuantity) {
-            if (key == 'Class') {
+            if (key === 'Class') {
                 data += `_${key.toLowerCase()}=${this.state.scriptQuantity[key]}&&`;
                 continue;
             }
@@ -414,13 +417,13 @@ export class HackPanel extends Component {
 
     render() {
 
-        if (this.state.computerActive === false || this.state.systemScripts == undefined || this.state.systemScripts.length === 0) {
+        if (this.state.computerActive === false || this.state.systemScripts === undefined || this.state.systemScripts.length === 0) {
             return '';
         }
 
         let inputTo = '';
 
-        if (this.state.toIp != undefined) {
+        if (this.state.toIp !== undefined) {
             inputTo = <Input type="text" name="to" id="to" defaultValue={this.state.toIp} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" readOnly />
         }
         else if (this.state.ipIsValid) {

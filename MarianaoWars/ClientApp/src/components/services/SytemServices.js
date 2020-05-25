@@ -22,7 +22,7 @@ export class SystemServices{
             return this.systemSoftware;
         }
 
-        return this.systemResource;
+        return this.systemSoftware;
     }
 
     async systemTalentData() {
@@ -48,7 +48,6 @@ export class SystemServices{
 
     async getSystems() {
         let systems = [];
-        //[systems[SystemsType.RESOURCE], systems[SystemsType.SOFTWARE], systems[SystemsType.TALENT]] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData(), systemServices.systemTalentData()]);
         [systems[SystemsType.RESOURCE], systems[SystemsType.SOFTWARE], systems[SystemsType.TALENT], systems[SystemsType.SCRIPT]] = await Promise.all([systemServices.systemResourceData(), systemServices.systemSoftwareData(), systemServices.systemTalentData(), systemServices.systemScriptData()]);
         return systems;
     }

@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import authService from '../api-authorization/AuthorizeService';
 import { Row, Col, Button } from 'reactstrap';
 
 export class Messages extends Component {
@@ -80,7 +79,7 @@ export class Messages extends Component {
                                 <td onClick={() => this.handleClick(message)}>{message.date}</td>
                                 <td onClick={() => this.handleClick(message)}>{message.sendFrom}</td>
                                 <td onClick={() => this.handleClick(message)}>{message.title}</td>
-                                <td><span onClick={() => this.deleteMessage(message)}><img src={require('../../images/icon/deleteicon.png')} className="link" /></span></td>
+                                <td><span onClick={() => this.deleteMessage(message)}><img src={require('../../images/icon/deleteicon.png')} alt="borrar" className="link" /></span></td>
                             </tr>  
                         )}
                     </tbody>

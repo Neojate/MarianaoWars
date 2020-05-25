@@ -192,6 +192,7 @@ export class SystemPanel extends Component {
                         if (estadisticas[key] > 0) {
                             return <div key={key}>{`${key}: ${estadisticas[key]}`}</div>
                         }
+                        return ''
                     })}
                 </div>
             </div>
@@ -200,7 +201,7 @@ export class SystemPanel extends Component {
 
     render() {
 
-        if (this.state.computerActive.length === 0 || this.state.institute == false) {
+        if (this.state.computerActive.length === 0 || this.state.institute === false) {
             return "";
         }
 
@@ -216,6 +217,7 @@ export class SystemPanel extends Component {
                         if (requeriments.needs[key] > 0) {
                             return <div key={key}>{`${NeedNames[key]}: ${requeriments.needs[key]}`}</div>
                         }
+                        return '';
                     })}
                 </div>
             </div>);

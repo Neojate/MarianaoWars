@@ -65,31 +65,51 @@ export class Network extends Component {
         );
     }
 
-    actions(ip) {
+    async ipValid(ip) {
 
+        let result = await fetch(`game/iphascomputer?instituteId=${this.props.match.params.instituteId}&&ip=${ip}`);
+        let response = await result.text();
+
+        let condition = (this.state.type === ScriptTypes.ATTACK || this.state.type === ScriptTypes.SPY || this.state.type === ScriptTypes.TRANSPORT) && String(true).toLowerCase() === response.toLowerCase();
+        
+        if (condition) {
+            return true;
+        }
+        else {
+            return false
+        }
+    }
+
+    actions(ip, validIp) {
+
+        
         return (
 
             <Row>
-                <Col xs={3}>
-                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.ATTACK, ip: ip } }} >
-                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/rocket.svg')} alt={"Hack"} />
-                    </Link>
-                </Col>
-                <Col xs={3}>
-                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.SPY, ip: ip } }}>
-                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/bug.svg')} alt={"Debug"} />
-                    </Link>
-                </Col>
-                <Col xs={3}>
-                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.COLONIZADOR, ip: ip } }}>
-                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/desktop-download.svg')} alt={"Persistence"} />
-                    </Link>
-                </Col>
-                <Col xs={3}>
-                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.TRANSPORT, ip: ip } }}>
-                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/dependent.svg')} alt={"Transport"} />
-                    </Link>
-                </Col>
+                {validIp ?
+                    (<>
+                        <Col xs={3}>
+                            <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.ATTACK, ip: ip } }} >
+                                <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/rocket.svg')} alt={"Hack"} />
+                            </Link>
+                        </Col>
+                        <Col xs={3}>
+                            <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.SPY, ip: ip } }}>
+                                <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/bug.svg')} alt={"Debug"} />
+                            </Link>
+                        </Col>
+                        <Col xs={3}>
+                            <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.TRANSPORT, ip: ip } }}>
+                                <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/dependent.svg')} alt={"Transport"} />
+                            </Link>
+                        </Col>
+                    </>)
+                    : (<Col xs={3}>
+                        <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.COLONIZADOR, ip: ip } }}>
+                            <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/desktop-download.svg')} alt={"Persistence"} />
+                        </Link>
+                    </Col>)
+                }
             </Row>
 
         );
@@ -102,9 +122,13 @@ export class Network extends Component {
         for (var i = 0; i < 10; i++) {
             let ip = '192.168.' + i + '.' + this.state.broadcast;
             let computerName = '';
+            let validIp = false;
             for (var computer of this.state.data) {
-                if (computer.IpDirection === ip)
+                if (computer.IpDirection === ip) {
                     computerName = computer.Name;
+                    validIp = true;
+                }
+                    
             }
 
             items.push(
@@ -113,7 +137,7 @@ export class Network extends Component {
                     <td>{ computerName }</td>
                     <td></td>
                     <td>
-                        {this.actions(ip)}
+                        {this.actions(ip, validIp)}
                     </td>
                 </tr>
             );
@@ -137,7 +161,7 @@ export class Network extends Component {
     }
 
     async sourceData(broadcast) {
-        
+
         let response = await fetch('intranet/computers?instituteId=' + this.state.instituteId + '&broadcast=' + broadcast);
         let result = await response.json();
 

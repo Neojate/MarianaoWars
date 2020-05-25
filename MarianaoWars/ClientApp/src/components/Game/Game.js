@@ -61,7 +61,7 @@ export class Game extends Component {
 
         let computers = this.state.computers.slice();
         for (let i = 0; i < computers.length; i++) {
-            if (computers[i].Id == result.Id) {
+            if (computers[i].Id === result.Id) {
                 computers[i] = result;
             }
         }
@@ -161,10 +161,10 @@ export class Game extends Component {
 
                     return (
                         /*<div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>*/
-                        <div key={index} onClick={() => this.computerActive(index)} className={`computers-container ${computer.Id == this.state.computerActive.Id ? 'desk' : ''}`}>
+                        <div key={index} onClick={() => this.computerActive(index)} className={`computers-container ${computer.Id === this.state.computerActive.Id ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
-                                    <div className={computer.IsDesk == 1 ? "principal-pc" : "portatil-pc"}></div>
+                                    <div className={computer.IsDesk === 1 ? "principal-pc" : "portatil-pc"}></div>
                                     <p className={"text-center"}>Ip {computer.IpDirection} </p>
                                 </Col>
                             </Row>
@@ -214,7 +214,7 @@ export class Game extends Component {
                     let position = (this.state.computerActive.Id === hackOrder.From) ? 'Enviando' : 'Recibiendo';
 
                     //Si recibo el escript no se muestra el viaje de vuelta || o recibo un script espia
-                    if (position === 'Recibiendo' && time === 'Finalizado' || position === 'Recibiendo' && hackOrder.Type === ScriptTypes.SPY) {
+                    if ( (position === 'Recibiendo' && time === 'Finalizado') || (position === 'Recibiendo' && hackOrder.Type === ScriptTypes.SPY) ) {
                         return '';
                     }
                     //por el contrario, muestro el tiempo de vuelta

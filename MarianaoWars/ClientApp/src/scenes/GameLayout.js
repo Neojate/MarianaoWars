@@ -41,9 +41,10 @@ export class GameLayout extends Component {
         
     }
 
+    
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if (this.state.hubConnection !== prevState.hubConnection) {
+        if (this.state.loading !== prevState.loading) {
             this.load();
         }
 
@@ -67,6 +68,11 @@ export class GameLayout extends Component {
 
     }
 
+    componentWillUnmount(){
+        clearInterval(this.state.timer1);
+        clearInterval(this.state.timer2);
+    }
+
 
     async componentDidMount() {
 
@@ -81,9 +87,14 @@ export class GameLayout extends Component {
                 .start()
                 .then(() => {
 
-                    setInterval(this.InitUpdate, 1000);
-                    //setInterval(this.BuildOrdersList, 1000);
-                    setInterval(this.MessagesNotReading, 1000);
+                    let timer1 = setInterval(this.MessagesNotReading, 1000);
+                    let timer2 = setInterval(this.InitUpdate, 1000);
+                    
+                    this.setState({
+                        timer1: timer1,
+                        timer2: timer2
+                    });
+                    
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
@@ -110,9 +121,11 @@ export class GameLayout extends Component {
 
                 this.setState({
                     computers: computers,
-                    computerActive: computers[this.state.posComputerActive]
+                    computerActive: computers[this.state.posComputerActive],
+                    loading: false
                 });
 
+                
             });
 
         });
