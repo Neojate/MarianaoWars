@@ -155,7 +155,7 @@ export class GameLayout extends Component {
 
                  <Route exact path="/game/:instituteId" render={(props) => <Network {...props} computerActive={this.state.computerActive} />} />
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
-                <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
+                <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} computerActive={this.state.computerActive} />} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
                 <Route path="/game/:instituteId/hackorder" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId} institute={this.state.institute} />} />
 

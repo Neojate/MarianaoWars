@@ -317,7 +317,7 @@ namespace MarianaoWars.Services.Implementations
 
             //Comprobaciones de café
             int totalScripts = variable + conditional + iterator + json + _class + breakpoint;
-            int needCoffe = totalScripts * distance * 10;
+            int needCoffe = totalScripts * distance;
 
             if (needCoffe > computer.Resource.Coffee)
                 return null;
@@ -325,7 +325,7 @@ namespace MarianaoWars.Services.Implementations
             // Los gastos de recursos y naves
             computer.Resource.Knowledge -= knowledge;
             computer.Resource.Ingenyous -= ingenyous;
-            computer.Resource.Coffee -= coffee - needCoffe;
+            computer.Resource.Coffee -= coffee + needCoffe;
 
             computer.Script.Variable -= variable;
             computer.Script.Conditional -= conditional;
