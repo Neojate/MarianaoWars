@@ -1,4 +1,7 @@
 ﻿import React, { Component } from 'react';
+import { Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { ScriptTypes } from '../services/SystemConstants';
 
 export class Network extends Component {
 
@@ -62,6 +65,37 @@ export class Network extends Component {
         );
     }
 
+    actions(ip) {
+
+        return (
+
+            <Row>
+                <Col xs={3}>
+                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.ATTACK, ip: ip } }} >
+                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/rocket.svg')} alt={"Hack"} />
+                    </Link>
+                </Col>
+                <Col xs={3}>
+                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.SPY, ip: ip } }}>
+                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/bug.svg')} alt={"Debug"} />
+                    </Link>
+                </Col>
+                <Col xs={3}>
+                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.COLONIZADOR, ip: ip } }}>
+                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/desktop-download.svg')} alt={"Persistence"} />
+                    </Link>
+                </Col>
+                <Col xs={3}>
+                    <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.TRANSPORT, ip: ip } }}>
+                        <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/dependent.svg')} alt={"Transport"} />
+                    </Link>
+                </Col>
+            </Row>
+
+        );
+
+    }
+
     drawComputerTable() {
         const items = [];
 
@@ -72,12 +106,15 @@ export class Network extends Component {
                 if (computer.IpDirection === ip)
                     computerName = computer.Name;
             }
+
             items.push(
                 <tr key={i}>
                     <td>{ ip }</td>
                     <td>{ computerName }</td>
                     <td></td>
-                    <td>Acciones</td>
+                    <td>
+                        {this.actions(ip)}
+                    </td>
                 </tr>
             );
         }

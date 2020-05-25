@@ -9,6 +9,7 @@ export class HackPanel extends Component {
         super(props);
 
         this.state = {
+            toIp: this.props.location.state !== undefined ? this.props.location.state.ip : undefined,
             popoverOpen: false,
             computerActive: false,
             instituteId: false,
@@ -16,7 +17,7 @@ export class HackPanel extends Component {
             systemScripts: [],
             scriptQuantity: {},
             resources: {},
-            type: false,
+            type: this.props.location.state !== undefined ? this.props.location.type.ip : 0,
             ipIsValid: false,
             timeDistance: 0,
             needCoffee: 0,
@@ -24,6 +25,7 @@ export class HackPanel extends Component {
         };
         this.hackOrder = this.hackOrder.bind(this);
         this.toogle = this.toogle.bind(this);
+
     }
 
 
@@ -125,10 +127,13 @@ export class HackPanel extends Component {
         return (
             <FormGroup id={`${name}`} check>
                 <Label check>
-                    <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} />{' '}
-                    {name}{' '}
-                    <img onClick={this.toogle.bind(this, name)} src={require(`../../images/info.svg`)} alt="info" />
+                    {this.state.type == type ?
+                        <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} defaultChecked /> 
+                    : <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} /> 
+                        }
+                    {name}
                 </Label>
+                {' '}<img onClick={this.toogle.bind(this, name)} src={require(`../../images/info.svg`)} alt="info" />
                 <Popover trigger="focus" placement="bottom" isOpen={this.state.popoverOpen && this.state.namep === name} target={`${name}`}>
                     <PopoverBody>
                         {ScriptDespcription[this.state.type]}
@@ -408,6 +413,18 @@ export class HackPanel extends Component {
             return '';
         }
 
+        let inputTo = '';
+
+        if (this.state.toIp != undefined) {
+            inputTo = <Input type="text" name="to" id="to" defaultValue={this.state.toIp} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" readOnly />
+        }
+        else if (this.state.ipIsValid) {
+            inputTo = <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" />
+        }
+        else {
+            inputTo = <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" invalid />
+        }
+
         return (
             <Form onSubmit={this.hackOrder} ref='hackForm'>
                 <div className="box box-hacks">
@@ -429,10 +446,7 @@ export class HackPanel extends Component {
                                 </Col>
                                 <Col xs={6}>
                                     <Label for="exampleSelect"><b>Hasta</b></Label>
-                                    {this.state.ipIsValid ?
-                                        <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" />
-                                        : <Input type="text" name="to" id="to" onBlur={this.handleIpToChange.bind(this, this.inputTo)} innerRef={to => this.inputTo = to} placeholder="192.168.0.0" invalid />
-                                    }
+                                    {inputTo}
                                     <FormFeedback>La Ip no es valida para esta acción</FormFeedback>
                                 </Col>
                                 <Col xs={12} className="d-flex justify-content-around mt-3">

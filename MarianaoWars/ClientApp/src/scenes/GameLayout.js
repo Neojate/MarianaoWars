@@ -60,7 +60,6 @@ export class GameLayout extends Component {
 
     async load() {
 
-        //await this.userComputers();
         await this.getSystems();
         await this.getInstitute(this.props.match.params.instituteId);
 
@@ -88,11 +87,6 @@ export class GameLayout extends Component {
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
-
-            this.state.hubConnection.on('updateResources', (receivedMessage) => {
-                var computer = JSON.parse(receivedMessage);
-                this.setState({ computerActive: computer });
-            });
 
             this.state.hubConnection.on('buildOrders', (receivedMessage) => {
                 var buildOrders = JSON.parse(receivedMessage);
@@ -130,12 +124,6 @@ export class GameLayout extends Component {
             .catch(err => console.error(err));
     }
 
-    BuildOrdersList = () => {
-        this.state.hubConnection
-            .invoke('BuildOrdersList', this.state.userId, this.state.computerActive.Id)
-            .catch(err => console.error(err));
-    }
-
     MessagesNotReading = () => {
         this.state.hubConnection
             .invoke('NotReadMessages', parseInt(this.state.instituteId), this.state.userId)
@@ -154,39 +142,6 @@ export class GameLayout extends Component {
     }
 
 
-    async userComputers() {
-
-        console.log("ordenadores");
-
-        if (this.state.userId === undefined) {
-            return;
-        }
-        const data = { userId: this.state.userId, instituteId: this.state.instituteId };
-        var url = 'institutes/enrollmentcomputer';
-
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const computers = await response.json();
-
-        for (const computer of computers) {
-            if (computer.IsDesk) {
-                this.setState({
-                    computerActive: computer,
-                });
-            }
-        }
-
-        this.setState({
-            computers: computers,
-        });
-    }
-
-
     render() {
 
         var content = (this.loading) ?
@@ -202,7 +157,7 @@ export class GameLayout extends Component {
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} userId={this.state.userId}/>} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
-                <Route path="/game/:instituteId/expeditions" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId} institute={this.state.institute} />} />
+                <Route path="/game/:instituteId/hackorder" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId} institute={this.state.institute} />} />
 
             </Game>);
     return (

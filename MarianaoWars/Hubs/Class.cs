@@ -24,18 +24,7 @@ namespace SignalRChat.Hubs
         public async Task InitUpdate(string user, int computerId)
         {
 
-            //computers
-            Computer computer = game.GetComputer(computerId);
-
-            string output = JsonConvert.SerializeObject(computer, new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
-
-            await Clients.Caller.SendAsync("updateResources", output);
-
-
+            
             //builds
             List<BuildOrder> buildOrders = postGame.GetBuildOrders(computerId);
 
