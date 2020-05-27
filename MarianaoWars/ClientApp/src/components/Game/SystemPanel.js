@@ -243,7 +243,7 @@ export class SystemPanel extends Component {
                 </div>
             </>);
 
-        let updateButton = requeriments.canBeUpdate ? <Button className="btn-custom" onClick={this.createOrderBuild}>Actualizar</Button> : <Button className="btn-custom" disabled>Actualizar</Button>;
+        let updateButton = requeriments.canBeUpdate ? <Button className="btn-custom btn-custom-large" onClick={this.createOrderBuild}>Actualizar</Button> : <Button className="btn-custom btn-custom-large" disabled>Actualizar</Button>;
         let img = ''
         try {
             img = <img alt="img" src={require(`../../images/icon/${this.state.System.buildId}.png`)} />

@@ -20,18 +20,34 @@ html, body, #root {
     border-bottom: 1px solid gainsboro;
 }
 
+.table th, .table td {
+    padding: 0.6rem;
+    border-top: 1px solid #b3b7bc;
+}
+
 .btn-custom {
-    width: 300px;
     font-size: 20px;
     font-weight: 500;
     background-color: #404040;
+    /*transition: all 500ms;*/
+    transition: all .08s linear;
 }
 
     .btn-custom:hover {
-        background-color: #404040d4;
-        border-color: #404040d4;
-        box-shadow: 0 4px 5px 1px #777;
+        background-color: #555;
+        border-color: #555;
+        box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
     }
+
+    .btn-custom.disabled:hover {
+        box-shadow: initial;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+.btn-custom-large {
+    width: 300px;
+}
 
 
     .background {

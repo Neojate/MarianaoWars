@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ScriptTypes } from '../services/SystemConstants';
 
@@ -52,16 +52,33 @@ export class Network extends Component {
             this.drawComputerTable();
 
         return (
-            <div>
-                <h2>192.168.0.{ this.state.broadcast }</h2>
-                <div id="table">
-                    {content}
+            <>
+                <div className="box" >
+                    <h3 className="box-title">
+                        <img alt="img" src={require(`../../images/mac_red.png`)} />
+                        <img alt="img" src={require(`../../images/mac_green.png`)} />
+                        <img alt="img" src={require(`../../images/mac_yellow.png`)} />
+                        <span>Network</span>
+                    </h3>
+
+                    <div>
+                        <h3>192.168.0.{this.state.broadcast}</h3>
+                    </div>
+                    <div id="table">
+                        {content}
+                    </div>
+                    <div>
+                        <Row>
+                            <Col xs={12} className="d-flex justify-content-between">
+                                <Button className="btn btn-custom" onClick={() => this.moveBroadcast(false)}>Anterior</Button>
+                                <Button className="btn btn-custom" onClick={() => this.moveBroadcast(true)}>Siguiente</Button>    
+                            </Col>
+                        </Row>
+                        
+                    </div>
                 </div>
-                <div>
-                    <button onClick={ () => this.moveBroadcast(false) }>Izquierda</button>
-                    <button onClick={ () => this.moveBroadcast(true) }>Derecha</button>
-                </div>
-            </div>
+            
+                </>
         );
     }
 

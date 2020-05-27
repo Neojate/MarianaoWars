@@ -63,41 +63,49 @@ export class Messages extends Component {
 
     drawMessagesTable(messages) {
         return (
-            <div>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Desde</th>
-                            <th>Titulo</th>
-                            <th>Borrar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {messages.map((message, index) => 
-                            <tr key={index} className={message.isRead ? '' : 'notreaded'}>
-                                <td onClick={() => this.handleClick(message)}>{message.date}</td>
-                                <td onClick={() => this.handleClick(message)}>{message.sendFrom}</td>
-                                <td onClick={() => this.handleClick(message)}>{message.title}</td>
-                                <td><span onClick={() => this.deleteMessage(message)}><img src={require('../../images/icon/deleteicon.png')} alt="borrar" className="link" /></span></td>
-                            </tr>  
-                        )}
-                    </tbody>
-                </table>
-                <Row>
-                    <Col xs={3}>
-                        <button onClick={() => this.sourceData(-1)}>Atrás</button>
-                    </Col>
-                    <Col xs={3}>
-                        <button onClick={() => this.sourceData(1)}>Siguiente</button>
-                    </Col>
-                    <Col xs={6} className="text-right">
-                        <Button onClick={() => this.deleteAllMessages()}>Borrar todos</Button>
-                    </Col>
-                </Row>
-                
-                
-            </div>
+            <>
+                <div className="box" >
+                    <h3 className="box-title">
+                        <img alt="img" src={require(`../../images/mac_red.png`)} />
+                        <img alt="img" src={require(`../../images/mac_green.png`)} />
+                        <img alt="img" src={require(`../../images/mac_yellow.png`)} />
+                        <span>Mensajes</span>
+                    </h3>
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Desde</th>
+                                <th>Titulo</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {messages.map((message, index) => {
+
+                                let data = new Date(message.date);
+                                let dataString = data.toLocaleString();
+
+                                return (<tr key={index} className={message.isRead ? '' : 'notreaded'}>
+                                    <td onClick={() => this.handleClick(message)}>{dataString}</td>
+                                    <td onClick={() => this.handleClick(message)}>{message.sendFrom}</td>
+                                    <td onClick={() => this.handleClick(message)}>{message.title}</td>
+                                    <td><span onClick={() => this.deleteMessage(message)}><img src={require('../../images/icon/deleteicon.png')} alt="borrar" className="link" /></span></td>
+                                </tr>)
+                            })}
+                        </tbody>
+                    </table>
+                    <Row>
+                        <Col xs={6} className="d-flex justify-content-between">
+                            <Button className="btn-custom" onClick={() => this.sourceData(-1)}>Atrás</Button>
+                            <Button className="btn-custom" onClick={() => this.sourceData(1)}>Siguiente</Button>
+                        </Col>
+                        <Col xs={6} className="text-right">
+                            <Button className="btn-custom" onClick={() => this.deleteAllMessages()}>Borrar todos</Button>
+                        </Col>
+                    </Row>
+                </div>
+            </>
         );
     }
 
