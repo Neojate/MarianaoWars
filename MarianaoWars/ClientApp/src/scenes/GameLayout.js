@@ -37,11 +37,11 @@ export class GameLayout extends Component {
         this.getInstitute = this.getInstitute.bind(this);
         this.load = this.load.bind(this);
         this.changeComputerActive = this.changeComputerActive.bind(this);
-        
-        
+
+
     }
 
-    
+
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (this.state.loading !== prevState.loading) {
@@ -68,7 +68,7 @@ export class GameLayout extends Component {
 
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.state.timer1);
         clearInterval(this.state.timer2);
     }
@@ -89,12 +89,12 @@ export class GameLayout extends Component {
 
                     let timer1 = setInterval(this.MessagesNotReading, 1000);
                     let timer2 = setInterval(this.InitUpdate, 1000);
-                    
+
                     this.setState({
                         timer1: timer1,
                         timer2: timer2
                     });
-                    
+
 
                 })
                 .catch(err => console.log('Error while establishing connection :('));
@@ -111,9 +111,9 @@ export class GameLayout extends Component {
 
             this.state.hubConnection.on('notReadMessagesResponse', (receivedMessage) => {
                 var messages = JSON.parse(receivedMessage);
-                    this.setState({
-                        messagesNotRead: messages
-                    });
+                this.setState({
+                    messagesNotRead: messages
+                });
             });
 
             this.state.hubConnection.on('computers', (receivedMessage) => {
@@ -125,7 +125,7 @@ export class GameLayout extends Component {
                     loading: false
                 });
 
-                
+
             });
 
         });
@@ -146,7 +146,7 @@ export class GameLayout extends Component {
 
     async getSystems() {
         const systems = await systemServices.getSystems();
-        this.setState({systems: systems})
+        this.setState({ systems: systems })
     }
 
     async getInstitute(id) {
@@ -166,17 +166,19 @@ export class GameLayout extends Component {
                 hackOrders={this.state.hackOrders} institute={this.state.institute}
                 changeComputerActive={this.changeComputerActive} >
 
-                 <Route exact path="/game/:instituteId" render={(props) => <Network {...props} computerActive={this.state.computerActive} />} />
+
+                <Route exact path="/game/:instituteId" render={(props) => <Network {...props} computerActive={this.state.computerActive} />} />
                 <Route path="/game/:instituteId/system" render={(props) => <SystemPanel {...props} computerActive={this.state.computerActive} buildOrders={this.state.buildOrders} institute={this.state.institute} />} />
                 <Route path="/game/:instituteId/messages" render={(props) => <Messages {...props} computerActive={this.state.computerActive} />} />
                 <Route path="/game/:instituteId/message" component={MessagePanel} />
                 <Route path="/game/:instituteId/hackorder" render={(props) => <HackPanel {...props} systemScripts={this.state.systems[SystemsType.SCRIPT]} computerActive={this.state.computerActive} instituteId={this.state.instituteId} institute={this.state.institute} />} />
 
+
             </Game>);
-    return (
-        <>
-            {content}
-        </>
-    );
-  }
+        return (
+            <>
+                {content}
+            </>
+        );
+    }
 }

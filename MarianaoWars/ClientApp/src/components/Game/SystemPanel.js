@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import { BuildIdName, NeedNames, SystemsType, BuildTypes } from '../services/SystemConstants'
 import { stringUtils } from '../services/Utils';
 
@@ -173,6 +173,31 @@ export class SystemPanel extends Component {
         }
     }
 
+    systemUps() {
+
+        let version = this.systemLevel();
+        let update = '';
+        if (this.state.typeSystem === SystemsType.RESOURCE) {
+            update = this.state.System.increment.split(",")[version] * this.state.institute.RateCost;
+            update += ' por minuto';
+
+        }
+        else if (this.state.typeSystem === SystemsType.SOFTWARE || this.state.typeSystem === SystemsType.TALENT) {
+            update = this.state.System.action1.split(",")[version];
+        }
+
+        
+        return (
+            <>
+                <h5 className="b-button">Mejora:</h5>
+                <div>
+                    <p>Incremento: <span>{update}</span></p>
+                </div>
+            </>
+        );
+
+    }
+
     systemStadistics() {
 
         let estadisticas = {
@@ -183,19 +208,17 @@ export class SystemPanel extends Component {
         }
 
         return(
-            <div className="row">
-                <div className="col-5">
-                    Estadisticas:
-                        </div>
-                <div className="col-7">
+            <>
+                <h5 className="b-button">Estadisticas:</h5>
+                <div>
                     {Object.keys(estadisticas).map(function (key) {
                         if (estadisticas[key] > 0) {
-                            return <div key={key}>{`${key}: ${estadisticas[key]}`}</div>
+                            return <p key={key}>{key}: <span>{estadisticas[key]}</span></p>
                         }
                         return ''
                     })}
                 </div>
-            </div>
+            </>
         );
     }
 
@@ -208,21 +231,19 @@ export class SystemPanel extends Component {
         let requeriments = this.neededToUpdate();
 
         let containsRequeriment =
-            (<div className="row">
-                <div className="col-5">
-                    Requisitos:
-                        </div>
-                <div className="col-7">
+            (<>
+                <h5 className="b-button">Para siguiente nivel</h5>
+                <div>
                     {Object.keys(requeriments.needs).map(function (key) {
                         if (requeriments.needs[key] > 0) {
-                            return <div key={key}>{`${NeedNames[key]}: ${requeriments.needs[key]}`}</div>
+                            return <p key={key}>{NeedNames[key]}: <span>{requeriments.needs[key]}</span></p>
                         }
                         return '';
                     })}
                 </div>
-            </div>);
+            </>);
 
-        let updateButton = requeriments.canBeUpdate ? <Button color="primary" onClick={this.createOrderBuild}>Actualizar</Button> : <Button color="primary" disabled>Actualizar</Button>;
+        let updateButton = requeriments.canBeUpdate ? <Button className="btn-custom" onClick={this.createOrderBuild}>Actualizar</Button> : <Button className="btn-custom" disabled>Actualizar</Button>;
         let img = ''
         try {
             img = <img alt="img" src={require(`../../images/icon/${this.state.System.buildId}.png`)} />
@@ -233,27 +254,38 @@ export class SystemPanel extends Component {
 
         return (
             <div className="box" >
-                <h2>{this.state.System.name}</h2>
-                <hr />
-                <div className="icon-description">
-                    {img}                    
+                <h3 className="box-title">
+                    <img alt="img" src={require(`../../images/mac_red.png`)} />
+                    <img alt="img" src={require(`../../images/mac_green.png`)} />
+                    <img alt="img" src={require(`../../images/mac_yellow.png`)} />
+                    <span>{this.state.System.name}</span>
+                </h3>
+                <div className="icon-description box-container-border">
+                    <div>
+                        {img}
+                        {(this.state.typeSystem === SystemsType.SCRIPT) ?
+                            <p className="panel-level">Cantidad: {this.systemLevel()}</p>
+                            : <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}</p>}
+                    </div>                    
                     <p>{this.state.System.description}</p>
                 </div>
-                <hr />
-                <div className="container panel-body">
+                <hr className="mt-1 mb-1" />
+                <div className="box-container-border container-time">
                     {(this.state.typeSystem === SystemsType.SCRIPT) ?
-                        <p className="panel-level">Cantidad acumulada: {this.systemLevel()}<span>Tiempo necesario para finalizar actualización:</span></p>
-                        : <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}<span>Tiempo necesario para finalizar actualización:</span></p>}
-                    <div className="clearfix"></div>
-                    <p className="panel-needTime"><span>{requeriments.time}</span></p>
+                        <h5>Tiempo de fabricación:<span>{requeriments.time}</span></h5>
+                        : <h5>Tiempo de actualización:<span>{requeriments.time}</span></h5>}
                 </div>
-                <div className="container panel-requeriments">
-                    {containsRequeriment}
+                <div className="box-container-border box-requeriments">
+                    <Row>
+                        <Col xs={5}>
+                            {containsRequeriment}
+                        </Col>
+                        <Col xs={{ size: 6, offset: 1 }}>
+                            {(this.state.typeSystem === SystemsType.SCRIPT) ? this.systemStadistics() : this.systemUps()}
+                        </Col>
+                    </Row>    
                 </div>
-                <div className="container panel-requeriments">
-                    {(this.state.typeSystem === SystemsType.SCRIPT) ? this.systemStadistics() : ''}
-                </div>
-                <div>
+                <div className="text-center">
                     {updateButton}
                 </div>
             </div>

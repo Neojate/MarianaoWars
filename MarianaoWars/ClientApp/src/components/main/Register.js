@@ -82,7 +82,7 @@ export class Register extends Component {
                           </div>
                           <div className='form-group'>
                               <label htmlFor='password'>Password</label>
-                              <input type='text' className='form-control' id='password'
+                              <input type='password' className='form-control' id='password'
                                   placeholder='Password' ref={password => this.inputPassword = password}
                               />
                           </div>

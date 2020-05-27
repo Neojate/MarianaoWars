@@ -8,22 +8,39 @@ html, body, #root {
     grid-template-rows: 30px auto;
 }
 
-p-0 {
+.p-0 {
     padding: 0px;
 }
 
-m-0 {
+.m-0 {
     margin: 0px;
 }
 
-
-.background {
-    height: 100%;
-    background-image: url("../images/background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    /*background-image: url("../images/background.jpg");*/
+.b-button {
+    border-bottom: 1px solid gainsboro;
 }
+
+.btn-custom {
+    width: 300px;
+    font-size: 20px;
+    font-weight: 500;
+    background-color: #404040;
+}
+
+    .btn-custom:hover {
+        background-color: #404040d4;
+        border-color: #404040d4;
+        box-shadow: 0 4px 5px 1px #777;
+    }
+
+
+    .background {
+        height: 100%;
+        background-image: url("../images/background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        /*background-image: url("../images/background.jpg");*/
+    }
 
 .card {
     margin: 20px;
@@ -39,6 +56,11 @@ m-0 {
     width: auto;
 }
 
+
+/*******************/
+/* PANEL BUILDS    */
+/*******************/
+
 .box {
     background-color: rgba(255, 255, 255, .40);
     border: 1px solid #ddd;
@@ -47,40 +69,98 @@ m-0 {
     padding: 15px;
 }
 
-.box p span{
-    float: right;
+    .box .box-title {
+        margin: -16px -16px 0.5rem -17px;
+        background-color: #404040;
+        height: 40px;
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 0.5rem;
+        padding: 0px 10px;
+        color: #ffffffc9;
+    }
+
+        .box .box-title span{
+            float: right;
+        }
+
+    .box .box-container-border {
+        border: 1px solid #b3b7bc;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+    }
+
+    .box .icon-description {
+        display: grid;
+        grid-template-columns: 120px auto;
+    }
+
+        .box .icon-description .panel-level {
+            margin: 5px 0px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .box .icon-description img {
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            display: inline-block;
+            width: 100%;
+            height: auto;
+            /*max-height: 100px;
+        width: auto;*/
+        }
+        .box .icon-description > p {
+            height: 170px;
+            overflow: auto;
+            margin-bottom: 0;
+            font-size: 17px;
+        }
+
+            .box .icon-description > p::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            .box .icon-description > p::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 56px whitesmoke;
+            }
+
+            .box .icon-description > p::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background-color: #404040;
+                outline: 1px solid slategrey;
+            }
+
+    .box .container-time h5{
+        margin: 0.25rem 0;
+    }
+
+    .box .container-time h5 > span {
+        float: right;
+    }
+
+    .box .box-requeriments {
+        min-height: 155px;
+    }
+
+        .box .box-requeriments p {
+            margin: 0.25rem 0;
+            text-transform: capitalize;
+        }
+
+        .box .box-requeriments p span{
+            float: right;
+        }
+
+
+
+
+.icon-description > p {
+    padding: 0 15px;
+    text-align: justify;
 }
-
-    .box .panel-body {
-        min-height: 95px;
-    }
-
-    .box .panel-needTime{
-        font-weight: 500;
-    }
-
-    .box .panel-requeriments {
-        min-height: 120px;
-    }
-
-.icon-description {
-    display: grid;
-    grid-template-columns: 100px auto;
-}
-
-    .icon-description > img {
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 5px;
-        display: inline-block;
-        max-height: 100px;
-        width: auto;
-    }
-
-    .icon-description > p {
-        padding: 0 15px;
-        text-align: justify;
-    }
 
 nav {
     max-height: 30px;
@@ -113,13 +193,52 @@ nav {
 }
 
 .sub-nav {
-    display: none;
-    bottom: 80px;
+    opacity: 0;
+    bottom: 0px;
     height: 90px;
     right: 25%;
     left: 25%;
     border-bottom: 0;
+    transition: all 500ms;
 }
+
+@keyframes open-submenu {
+    0% {
+        bottom: 0px;
+        opacity: 0;
+    }
+
+    100% {
+        bottom: 80px;
+        opacity: 1;
+    }
+}
+
+@keyframes close-submenu {
+    0% {
+        bottom: 80px;
+        opacity: 1;
+    }
+    100% {
+        bottom: 0px;
+        opacity: 0;
+    }
+}
+
+
+.sub-nav.show {
+    animation-name: open-submenu;
+    animation-duration: 500ms;
+    opacity: 1;
+    bottom: 80px;
+}
+
+.sub-nav.closed {
+    animation-name: close-submenu;
+    animation-duration: 1000ms;
+}
+
+
     .sub-nav a {
         height: 60px;
         width: 60px;
@@ -192,6 +311,8 @@ nav {
     .bs-popover-bottom p span {
         float: right;
     }
+
+
 
 .box-hacks img {
     max-width: 100%;

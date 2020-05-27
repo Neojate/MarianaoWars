@@ -50,18 +50,23 @@ export class NavSystems extends Component {
         // Uso tipico (no olvides de comparar los props):
         if (this.state.systemActive !== prevState.systemActive) {
             if (this.state.systemActive !== -1) {
-                $('.sub-nav').show(500);
+                //$('.sub-nav').show(500);
+                $('.sub-nav').addClass('show');
             }
+
         }
     }
 
     async sistemActive(id) {
 
-        $('.sub-nav').hide(500);
+        //$('.sub-nav').hide(500);
+        $('.sub-nav').removeClass('show');
+        await this.sleep(700);
+
 
         if (this.state.systemActive === id) {
             id = -1;
-            await this.sleep(400);
+            //await this.sleep(400);
         }
         this.setState({
             systemActive: id

@@ -28,11 +28,11 @@ export const BuildIdName = {
 };
 
 export const NeedNames = {
-    'needKnowledge': 'CONOCIMIENTO',
-    'needIngenyous': 'INGENIO',
-    'needCoffee': 'CAFE',
-    'needSleep': 'DESCANSO',
-    'needBuild': 'STACKOVETFLOW'
+    'needKnowledge': 'Conocimiento',
+    'needIngenyous': 'Ingenio',
+    'needCoffee': 'Caf\u00E9',
+    'needSleep': 'Descanso',
+    'needBuild': 'Stackoverflow'
 }
 
 export const SystemsType = {
