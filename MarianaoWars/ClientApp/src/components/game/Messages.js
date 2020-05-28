@@ -96,11 +96,11 @@ export class Messages extends Component {
                         </tbody>
                     </table>
                     <Row>
-                        <Col xs={6} className="d-flex justify-content-between">
+                        <Col xs={8} className="d-flex justify-content-between">
                             <Button className="btn-custom" onClick={() => this.sourceData(-1)}>Atrás</Button>
                             <Button className="btn-custom" onClick={() => this.sourceData(1)}>Siguiente</Button>
                         </Col>
-                        <Col xs={6} className="text-right">
+                        <Col xs={4} className="text-right">
                             <Button className="btn-custom" onClick={() => this.deleteAllMessages()}>Borrar todos</Button>
                         </Col>
                     </Row>

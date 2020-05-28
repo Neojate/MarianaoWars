@@ -24,7 +24,7 @@ export class Game extends Component {
             capacityResource: 0,
             valor: 1,
             modal: false,
-            messagesNotRead: [],
+            messagesNotRead: []
         };
 
         this.changeComputerName = this.changeComputerName.bind(this);
@@ -147,8 +147,6 @@ export class Game extends Component {
     }
 
     computerActive(pos) {
-        console.log("posChild", pos);
-        
         this.props.changeComputerActive(pos);
     }
 
@@ -161,7 +159,7 @@ export class Game extends Component {
 
                     return (
                         /*<div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>*/
-                        <div key={index} onClick={() => this.computerActive(index)} className={`computers-container ${computer.Id === this.state.computerActive.Id ? 'desk' : ''}`}>
+                        <div key={index} onClick={() => this.computerActive(index)} className={`computers-container animation-fadein_${index} ${computer.Id === this.state.computerActive.Id ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
                                     <div className={computer.IsDesk === 1 ? "principal-pc" : "portatil-pc"}></div>
@@ -226,7 +224,7 @@ export class Game extends Component {
                     let name = ScriptNames[hackOrder.Type];
 
                     return (
-                        <div key={index} className="buildOrders-container">
+                        <div key={index} className={`buildOrders-container animation-fadein_${this.state.buildOrders.length + index}`}>
                             <Row>
                                 <Col xs={12}>
                                     <p>{position}</p>
@@ -267,7 +265,7 @@ export class Game extends Component {
                     let name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
                     return (
-                        <div key={index} className="buildOrders-container">
+                        <div key={index} className={`buildOrders-container animation-fadein_${index}`}>
                             <Row>
                                 <Col xs={12}>
                                     <p>Actulaización de {name}</p>

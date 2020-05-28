@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Col, Form, FormFeedback, FormGroup, Input, Label, Row, Popover, PopoverBody } from 'reactstrap';
+import { Col, Form, FormFeedback, FormGroup, Input, Label, Row, Popover, PopoverBody, Button } from 'reactstrap';
 import { BuildIdName, ScriptTypes, ScriptDespcription } from '../services/SystemConstants';
 import { stringUtils } from '../services/Utils';
 
@@ -451,6 +451,7 @@ export class HackPanel extends Component {
                                 <Col xs={6}>
                                     <Label for="fromHack"><b>Desde</b></Label>
                                     <Input type="text" defaultValue={this.state.computerActive.IpDirection} name="from" id="fromHack" readOnly />
+                                    <div class="invalid-feedback-block"><span>bloque de espacio</span></div>
                                 </Col>
                                 <Col xs={6}>
                                     <Label for="exampleSelect"><b>Hasta</b></Label>
@@ -500,10 +501,10 @@ export class HackPanel extends Component {
                         </Col>
                     </Row>
 
-                    <Col xs={12}>
+                    <Col xs={12} className="text-center">
                         {this.state.ipIsValid ?
-                            <button type='submit' className='btn btn-primary'>Send</button>
-                            : <button type='submit' className='btn btn-primary' disabled>Send</button>
+                            <Button type='submit' className='btn-custom btn-custom-large'>Enviar</Button>
+                            : <Button type='submit' className='btn-custom btn-custom-large' disabled>Enviar</Button>
                         }
 
                     </Col>

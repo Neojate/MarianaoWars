@@ -1,4 +1,38 @@
-﻿
+﻿@keyframes open-submenu {
+    0% {
+        bottom: 0px;
+        opacity: 0;
+    }
+
+    100% {
+        bottom: 80px;
+        opacity: 1;
+    }
+}
+
+@keyframes close-submenu {
+    0% {
+        bottom: 80px;
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 0px;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        margin-top: 100px;
+    }
+    100% {
+        opacity: 1;
+        margin-top: 10px;
+    }
+}
+
 html, body, #root {
     height: 100%;
 }
@@ -20,7 +54,12 @@ html, body, #root {
     border-bottom: 1px solid gainsboro;
 }
 
-.table th, .table td {
+.box .table thead th {
+    vertical-align: bottom;
+    border-bottom: 3px solid #abadb1;
+}
+
+.box .table th, .box .table td {
     padding: 0.6rem;
     border-top: 1px solid #b3b7bc;
 }
@@ -218,28 +257,6 @@ nav {
     transition: all 500ms;
 }
 
-@keyframes open-submenu {
-    0% {
-        bottom: 0px;
-        opacity: 0;
-    }
-
-    100% {
-        bottom: 80px;
-        opacity: 1;
-    }
-}
-
-@keyframes close-submenu {
-    0% {
-        bottom: 80px;
-        opacity: 1;
-    }
-    100% {
-        bottom: 0px;
-        opacity: 0;
-    }
-}
 
 
 .sub-nav.show {
@@ -283,6 +300,28 @@ nav {
     text-align: center;
     transition: all 0.5s;
 }
+
+.animation-fadein_0 {
+    animation-name: fadeIn;
+    animation-duration: 600ms;
+}
+.animation-fadein_1 {
+    animation-name: fadeIn;
+    animation-duration: 900ms;
+}
+.animation-fadein_2 {
+    animation-name: fadeIn;
+    animation-duration: 1200ms;
+}
+.animation-fadein_3 {
+    animation-name: fadeIn;
+    animation-duration: 1500ms;
+}
+.animation-fadein_4 {
+    animation-name: fadeIn;
+    animation-duration: 1800ms;
+}
+
 
     .computers-container.desk {
         border: 2px solid #d7d7d7;
@@ -343,8 +382,6 @@ nav {
     border-bottom: 1px solid gainsboro;
 }
 
-
-
 .box-hacks .box-attack, .box-hacks .box-deffense {
     border: 1px solid #b3b7bc;
     border-radius: 10px;
@@ -355,6 +392,18 @@ nav {
     .box-hacks .box-attack .row, .box-hacks .box-deffense .row {
         margin-bottom: 5px;
         margin-top: 5px;
+    }
+
+.invalid-feedback-block {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+    .invalid-feedback-block span{
+        visibility: hidden;
     }
 
     @media (min-width: 1400px) {
