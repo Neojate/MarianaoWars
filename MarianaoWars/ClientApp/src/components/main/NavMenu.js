@@ -54,7 +54,7 @@ export class NavMenu extends Component {
                     <Link className="text-dark nav-link" to="">{this.state.user.name}</Link>
                 </NavItem >
                 <NavItem>
-                    <NavLink onClick={this.logout} className="text-dark nav-link" to="">Logout</NavLink>
+                    <Link onClick={this.logout} className="text-dark nav-link" to="">Logout</Link>
                 </NavItem>
             </>
             )
@@ -77,9 +77,6 @@ export class NavMenu extends Component {
                         <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
                             <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/instituts">Institutos</NavLink>
-                                </NavItem>
                                 {navUser}
                             </ul>
                         </Collapse>

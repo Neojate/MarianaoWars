@@ -73,7 +73,7 @@ export class System extends Component {
         }
 
         return (
-            <div style={this.systemStyle()} className={"system"} onMouseEnter={this.hover} onMouseOut={this.hover} onClick={this.props.onClick} >
+            <div style={this.systemStyle()} className={"system pointer"} onClick={this.props.onClick} >
                 {img}
             </div>
         );

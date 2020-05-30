@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Resource } from './Resource';
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Col, Container, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { BuildIdName, SystemsType } from '../services/SystemConstants'
 
@@ -22,8 +22,11 @@ export class NavGame extends Component {
             notRead: false,
             institute: this.props.institute,
             systems: [],
-            messagesNotRead: []
+            messagesNotRead: [],
+            modal: false,
         };
+        this.changeComputerName = this.changeComputerName.bind(this);
+        this.toggle = this.toggle.bind(this);
 
     }
 
@@ -71,9 +74,45 @@ export class NavGame extends Component {
         }
     }
 
-    componentDidMount() {
-        
+    componentDidMount() {}
+
+    async changeComputerName(event) {
+
+        event.preventDefault();
+
+        const data = {
+            computerName: this.inputNameComputer.value,
+            computerId: this.state.computer.Id
+        };
+
+        var url = 'game/updatecomputername';
+
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        this.setState({
+            modal: !this.state.modal,
+        });
+
     }
+
+    toogleOpen(computerId, nameComputer) {
+        this.setState({
+            modal: !this.state.modal,
+            computerId: computerId,
+            nameComputer: nameComputer
+        });
+    }
+
+    toggle() {
+        this.setState({ modal: !this.state.modal });
+    }
+
 
     colorProgress(value, maxValue) {
 
@@ -154,24 +193,35 @@ export class NavGame extends Component {
                
 
                 <Col className="text-center" xs="4">
-                    <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/internet.png')} /></Link>
-                        <Link to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
+                        <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/explorer.png')} /></Link>
+                        <Link className="link-message" to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
                             <img alt="mail" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} />
                             {this.state.messagesNotRead.length !== 0 ? <span className="badge badge-pill badge-danger">{this.state.messagesNotRead.length}</span> : ''}
                         </Link>
                 </Col>
 
-                <Col xs="2">
-                    <p>{computer.Name}</p>
-                </Col>
-                <Col xs="1">
-                    <p>{computer.IpDirection}</p>
-                </Col>
-                    <Col xs="1 text-right">
-                    <p>{computer.MemmoryUsed + '/' + computer.Memmory}</p>
+                    <Col xs="4" className="d-flex justify-content-between">
+                        <p className="pointer" onClick={() => this.toogleOpen(computer.Id, computer.Name)} >{computer.Name}</p>
+                        <p>{computer.IpDirection}</p>
+                        <p onClick={this.props.back}>{computer.MemmoryUsed + '/' + computer.Memmory}</p>
+                        <img className="pointer" onClick={this.props.back} alt="cambiar fondo" src={require(`../../images/settings.svg`)}></img>
                 </Col>
 
                 </Row>
+                <Modal isOpen={this.state.modal} toggle={this.toogle} className="">
+                    <Form>
+                        <ModalHeader toggle={this.toogle}>{this.state.nameComputer}</ModalHeader>
+                        <ModalBody>
+                            <Label for="computerName">Puedes cambiar el nombre de tu ordenador si lo desas</Label>
+                            <Input type="text" name="name" id="computerName" innerRef={name => this.inputNameComputer = name} placeholder={this.state.nameComputer} />
+                        </ModalBody>
+                    </Form>
+                    <ModalFooter>
+                        <Button onClick={this.changeComputerName} id="submit" color="primary">Cambiar</Button>{' '}
+                        <Button color="secondary" id="cancel" onClick={this.toggle}>Cancelar</Button>
+                    </ModalFooter>
+
+                </Modal>
             </Container>
         );
 

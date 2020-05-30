@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react'
 import { NavGame } from './NavGame';
 import { NavSystems } from './NavSystems';
-import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { SystemsType, ScriptTypes, ScriptNames } from '../services/SystemConstants';
 import { stringUtils } from '../services/Utils';
 import '../../css/marianao_style.css';
@@ -10,6 +10,17 @@ export class Game extends Component {
 
     constructor(props) {
         super(props);
+
+        this.backgrounds = [
+            require(`../../images/backgrounds/background.jpg`),
+            require(`../../images/backgrounds/back2.jpg`),
+            require(`../../images/backgrounds/win10_2.jpeg`),
+            require(`../../images/backgrounds/winxp.jpg`),
+            require(`../../images/backgrounds/nic.jpg`),
+            require(`../../images/backgrounds/marianao_1.jpg`),
+            require(`../../images/backgrounds/marianao_2.jpg`),
+            require(`../../images/backgrounds/marianao_3.jpg`),
+        ]
 
         this.state = {
             userId: this.props.userId,
@@ -23,68 +34,18 @@ export class Game extends Component {
             capacityResource: 0,
             valor: 1,
             modal: false,
-            messagesNotRead: []
+            messagesNotRead: [],
+            backgroundActive: 0
         };
-
-        this.changeComputerName = this.changeComputerName.bind(this);
-        this.toggle = this.toggle.bind(this);
+        this.changeBack = this.changeBack.bind(this);
 
     }
 
-    async changeComputerName(event) {
-
-        event.preventDefault();
-
-        const data = {
-            computerName: this.inputName.value,
-            computerId: this.state.computerId
-        };
-
-        var url = 'game/updatecomputername';
-
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-        let result = '';
-        try {
-            result = await response.json();
-        }
-        catch (e) {
-            console.log(e);
-        }
-
-        let computers = this.state.computers.slice();
-        for (let i = 0; i < computers.length; i++) {
-            if (computers[i].Id === result.Id) {
-                computers[i] = result;
-            }
-        }
-
-        this.setState({
-            modal: !this.state.modal,
-            computers: computers
-        });
-
-    }
-
-    toogleOpen(computerId, nameComputer) {
-        this.setState({
-            modal: !this.state.modal,
-            computerId: computerId,
-            nameComputer: nameComputer
-        });
-    }
-
-    toggle() {
-        this.setState({ modal: !this.state.modal });
-    }
 
 
+
+
+    
     componentDidMount() {
         //this.userComputers();
     }
@@ -143,7 +104,7 @@ export class Game extends Component {
             })
         }
 
-    }
+    }   
 
     computerActive(pos) {
         this.props.changeComputerActive(pos);
@@ -157,7 +118,6 @@ export class Game extends Component {
                 {this.state.computers.map((computer, index) => {
 
                     return (
-                        /*<div key={index} onClick={() => this.toogleOpen(computer.Id, computer.Name)} className={`computers-container ${computer.IsDesk == 1 ? 'desk' : ''}`}>*/
                         <div key={index} onClick={() => this.computerActive(index)} className={`computers-container animation-fadein_${index} ${computer.Id === this.state.computerActive.Id ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
@@ -169,20 +129,6 @@ export class Game extends Component {
                     );
                 })
                 }
-                <Modal isOpen={this.state.modal} toggle={this.toogle} className="">
-                    <Form>
-                        <ModalHeader toggle={this.toogle}>{this.state.nameComputer}</ModalHeader>
-                        <ModalBody>
-                            <Label for="computerName">Puedes cambiar el nombre de tu ordenador si lo desas</Label>
-                            <Input type="text" name="name" id="computerName" innerRef={name => this.inputName = name} placeholder={this.state.nameComputer} />
-                        </ModalBody>
-                    </Form>
-                    <ModalFooter>
-                        <Button onClick={this.changeComputerName} id="submit" color="primary">Cambiar</Button>{' '}
-                        <Button color="secondary" id="cancel" onClick={this.toggle}>Cancelar</Button>
-                    </ModalFooter>
-
-                </Modal>
             </>
         )
     }
@@ -259,8 +205,8 @@ export class Game extends Component {
 
                     //segundo valor marca la posición en el array del tipo de systems
                     let indiceBuildId = buildId.substring(1, 2);
-                    //console.log("buildId", indiceBuildId);
-                    //console.log("system", this.state.systems);
+                    console.log("buildId", indiceBuildId);
+                    console.log("system", this.state.systems);
                     let name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
                     /**
@@ -286,15 +232,25 @@ export class Game extends Component {
 
         )
 
+    }
 
+    changeBack() {
+        let back = this.state.backgroundActive;
+        back = (back < 7) ? back + 1 : 0;
+
+        this.setState({ backgroundActive: back });
     }
 
 
     render() {
 
+        let back = {
+            backgroundImage: `url("${this.backgrounds[this.state.backgroundActive]}")`
+        }
+
         let content = (this.state.systems !== undefined && this.state.computers.length !== 0)
             ? (
-                <div className="background">
+                <div className="background" style={back}>
                     <div className="navgame">
                         <NavGame
                             userId={this.state.userId}
@@ -304,6 +260,7 @@ export class Game extends Component {
                             computer={this.state.computerActive}
                             messagesNotRead={this.state.messagesNotRead}
                             institute={this.state.institute}
+                            back={this.changeBack}
                         />
                     </div>
                     <div>

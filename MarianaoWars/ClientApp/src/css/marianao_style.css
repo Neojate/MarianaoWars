@@ -126,6 +126,17 @@ html, body, #root {
     border-bottom: 1px solid gainsboro;
 }
 
+.pointer:hover{
+    cursor: pointer;
+}
+
+.themed-container {
+    /*
+    background-image: url("https://fondosmil.com/fondo/9728.jpg");
+    background-size:cover;
+    */
+}
+
 .box .table thead th {
     vertical-align: bottom;
     border-bottom: 3px solid #abadb1;
@@ -160,18 +171,27 @@ html, body, #root {
     width: 300px;
 }
 
+.btn-custom-home {
+    width: 100%;
+    height: 100px;
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
 
-    .background {
-        height: 100%;
-        background-image: url("../images/background.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        /*background-image: url("../images/background.jpg");*/
-    }
+
+.background {
+    height: 100%;
+    /*background-image: url("../images/background.jpg");*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    /*background-image: url("../images/background.jpg");*/
+}
 
 .card {
-    margin: 20px;
-    min-height: 570px;
+    margin: 20px 0;
+    height: 600px;
 }
 
 .bigicon {
@@ -183,11 +203,18 @@ html, body, #root {
     width: auto;
 }
 
+.link-message{
+    position: relative;
+}
 
+.link-message span{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
 /*******************/
 /* PANEL BUILDS    */
 /*******************/
-
 .box {
     background-color: rgba(255, 255, 255, .40);
     border: 1px solid #ddd;
