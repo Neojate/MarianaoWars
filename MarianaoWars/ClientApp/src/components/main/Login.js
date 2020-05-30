@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService'
-import { Alert, Row, Col } from 'reactstrap';
+import { Alert, Row, Col, Button } from 'reactstrap';
 
 export class Login extends Component {
   static displayName = Login.name;
@@ -44,30 +44,33 @@ export class Login extends Component {
 
         const errors = (this.state.errors.length > 0)
             ? this.showErrors()
-            : '';
+            : <img alt="img" src={require('../../images/backgrounds/marianao_4.jpeg')} />;
   
         return (
             <div className='container' style={{ padding: `40px 0px` }}>
-                <h2>Login</h2>
-                <div className='row'>
-                  <div className='col-sm-4'>
+                
+                <div className='row box-account'>
+                    <div className='col-sm-4 account-form'>
+                      <h2>Login</h2>
                       <form onSubmit={this.account} ref='contactForm' >
                           <div className='form-group'>
                                 <label htmlFor='email'>Email</label>
                               <input type='email' className='form-control' id='email'
-                                  placeholder='Email' ref={email => this.inputEmail = email}
+                                    placeholder='Email' ref={email => this.inputEmail = email}
+                                    required
                               />
                           </div>
                           <div className='form-group'>
                               <label htmlFor='password'>Password</label>
                               <input type='password' className='form-control' id='password'
-                                  placeholder='Password' ref={password => this.inputPassword = password}
+                                    placeholder='Password' ref={password => this.inputPassword = password}
+                                    required
                               />
-                          </div>
-                          <button type='submit' className='btn btn-primary'>Send</button>
+                            </div>
+                            <Button onClick={this.account} type='submit' className='btn btn-custom'>Enviar</Button>
                       </form>
                     </div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-8 account-image">
                         { errors }
                     </div>
               </div>

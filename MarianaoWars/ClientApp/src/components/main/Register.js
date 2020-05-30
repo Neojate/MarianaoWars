@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Row, Col } from 'reactstrap';
+import { Alert, Row, Col, Button } from 'reactstrap';
 import accountService from '../services/AccountServices';
 
 export class Register extends Component {
@@ -48,49 +48,54 @@ export class Register extends Component {
 
         const errors = (this.state.errors.length > 0)
             ? this.showErrors()
-            : '';
+            : <img alt="img" src={require('../../images/backgrounds/marianao_6.jpeg')} />;
   
         return (
             <div className='container' style={{ padding: `40px 0px` }}>
-                <h2>Registro</h2>
-                <div className='row'>
-                  <div className='col-sm-4'>
+                <div className='row box-account'>
+                    <div className='col-sm-4 account-form'>
+                        <h2>Registro</h2>
                       <form onSubmit={this.account} ref='contactForm' >
                           <div className='form-group'>
                               <label htmlFor='userName'>User Name</label>
                               <input type='text' className='form-control' id='userName'
-                                  placeholder='User Name' ref={userName => this.inputUserName = userName}
+                                    placeholder='User Name' ref={userName => this.inputUserName = userName}
+                                    required
                               />
                           </div>
                           <div className='form-group'>
                               <label htmlFor='name'>Name</label>
                               <input type='text' className='form-control' id='name'
-                                  placeholder='Name' ref={name => this.inputName = name}
+                                    placeholder='Name' ref={name => this.inputName = name}
+                                    required
                               />
                           </div>
                           <div className='form-group'>
                               <label htmlFor='lastName'>Last Name</label>
                               <input type='text' className='form-control' id='lastName'
-                                  placeholder='Last Name' ref={lastName => this.inputLastName = lastName}
+                                    placeholder='Last Name' ref={lastName => this.inputLastName = lastName}
+                                    required
                               />
                           </div>
                           <div className='form-group'>
                               <label htmlFor='exampleInputEmail1'>Email</label>
                               <input type='email' className='form-control' id='email'
-                                  placeholder='Email' ref={email => this.inputEmail = email}
+                                    placeholder='Email' ref={email => this.inputEmail = email}
+                                    required
                               />
                           </div>
                           <div className='form-group'>
                               <label htmlFor='password'>Password</label>
                               <input type='password' className='form-control' id='password'
-                                  placeholder='Password' ref={password => this.inputPassword = password}
+                                    placeholder='Password' ref={password => this.inputPassword = password}
+                                    required
                               />
-                          </div>
-                          <button type='submit' className='btn btn-primary'>Send</button>
+                            </div>
+                            <Button onClick={this.account} type='submit' className='btn-custom'>Enviar</Button>
                       </form>
                     </div>
-                    <div className="col-sm-8">
-                        { errors }
+                    <div className="col-sm-8 account-image">
+                            {errors}
                     </div>
               </div>
           </div>

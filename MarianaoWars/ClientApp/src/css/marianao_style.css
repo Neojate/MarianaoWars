@@ -97,7 +97,6 @@
 
 @keyframes spin{
     0%{
-        background: transparent;
         transform: rotate(720deg);
     }
 }
@@ -203,20 +202,38 @@ html, body, #root {
     width: auto;
 }
 
-.link-message{
+.link-message {
     position: relative;
 }
 
-.link-message span{
+.link-message span {
     position: absolute;
     top: 25%;
     left: 25%;
 }
+
+.box-account {
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+}
+
+.account-form {
+    padding: 30px 15px;
+}
+
+.account-image {
+    padding-right: 0;
+}
+
+    .account-image > img {
+        border-radius: 0px 10px 10px 0px;
+        width: 100%;
+    }
 /*******************/
 /* PANEL BUILDS    */
 /*******************/
 .box {
-    background-color: rgba(255, 255, 255, .40);
+    background-color: rgba(255, 255, 255, .70);
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -418,6 +435,7 @@ nav {
     margin: 10px;
     text-align: center;
     transition: all 0.5s;
+    background-color: rgba(255, 255, 255, .30);
 }
 
 .buildOrders-container {
@@ -433,6 +451,7 @@ nav {
     text-align: center;
     transition: all 0.5s;
     margin-bottom: 20px;
+    
 }
 
     .buildOrders-container:after {
@@ -453,6 +472,8 @@ nav {
         left: -5px;
         right: -5px;
         animation: spin 1.5s linear infinite;
+        background-color: rgba(255, 255, 255, .30);
+        
     }
 
     .buildOrders-container > *{

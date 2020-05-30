@@ -57,10 +57,16 @@ namespace MarianaoWars.Controllers
                 {
                     //appUser.NormalizedUserName = appUser.Email;
                     result = await UserMgr.CreateAsync(appUser, password);
-                    user = await UserMgr.FindByNameAsync(appUser.Email);
+                    
 
-                    //update
-                    user.UserName = json["userName"];
+                if (!result.Succeeded)
+                {
+                    return result;
+                }
+
+                user = await UserMgr.FindByNameAsync(appUser.Email);
+                //update
+                user.UserName = json["userName"];
                     context.UpdateUser(appUser);
                 
                     //emaim, password, mantiente login, bloqueo por x fallos
