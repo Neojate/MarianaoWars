@@ -451,7 +451,7 @@ export class HackPanel extends Component {
                                 <Col xs={6}>
                                     <Label for="fromHack"><b>Desde</b></Label>
                                     <Input type="text" defaultValue={this.state.computerActive.IpDirection} name="from" id="fromHack" readOnly />
-                                    <div class="invalid-feedback-block"><span>bloque de espacio</span></div>
+                                    <div className="invalid-feedback-block"><span>bloque de espacio</span></div>
                                 </Col>
                                 <Col xs={6}>
                                     <Label for="exampleSelect"><b>Hasta</b></Label>
@@ -503,7 +503,7 @@ export class HackPanel extends Component {
 
                     <Col xs={12} className="text-center">
                         {this.state.ipIsValid ?
-                            <Button type='submit' className='btn-custom btn-custom-large'>Enviar</Button>
+                            <Button type='submit' onClick={this.hackOrder} className='btn-custom btn-custom-large'>Enviar</Button>
                             : <Button type='submit' className='btn-custom btn-custom-large' disabled>Enviar</Button>
                         }
 

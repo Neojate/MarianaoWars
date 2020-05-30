@@ -33,8 +33,80 @@
     }
 }
 
+@keyframes boxIn-left{
+    0% {
+        position: absolute;
+        width: 95%;
+        left: 75vw;
+        opacity: 0;
+    }
+
+    100% {
+        position: absolute;
+        width: 95%;
+        left: 1vw;
+        opacity: 1;
+    }
+}
+@keyframes boxOut-left {
+    0% {
+        position: absolute;
+        width: 95%;
+        right: 0vw;
+        opacity: 1;
+    }
+
+    100% {
+        position: absolute;
+        width: 95%;
+        right: 75vw;
+        opacity: 0;
+    }
+}
+@keyframes boxIn-right {
+    0% {
+        position: absolute;
+        width: 95%;
+        right: 75vw;
+        opacity: 0;
+    }
+
+    100% {
+        position: absolute;
+        width: 95%;
+        right: 0vw;
+        opacity: 1;
+    }
+}
+
+@keyframes boxOut-right {
+    0% {
+        position: absolute;
+        width: 95%;
+        left: 0vw;
+        opacity: 1;
+    }
+
+    100% {
+        position: absolute;
+        width: 95%;
+        left: 75vw;
+        opacity: 0;
+    }
+}
+
+@keyframes spin{
+    0%{
+        background: transparent;
+        transform: rotate(720deg);
+    }
+}
+
+
+
 html, body, #root {
     height: 100%;
+    overflow: hidden;
 }
 
 #root {
@@ -123,6 +195,26 @@ html, body, #root {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 15px;
 }
+
+    .box.box-in-left {
+        animation: boxIn-left;
+        animation-duration: 1000ms;
+    }
+    .box.box-out-left {
+        animation: boxOut-left;
+        animation-duration: 1000ms;
+        animation-fill-mode: forwards;
+    }
+    .box.box-in-right {
+        animation: boxIn-right;
+        animation-duration: 1000ms;
+    }
+
+    .box.box-out-right {
+        animation: boxOut-right;
+        animation-duration: 1000ms;
+        animation-fill-mode: forwards;
+    }
 
     .box .box-title {
         margin: -16px -16px 0.5rem -17px;
@@ -292,7 +384,7 @@ nav {
         max-height: 100%;
     }
 
-.buildOrders-container, .computers-container {
+.computers-container, .hacks-container {
     border: 1px solid #b3b7bc;
     border-radius: 10px;
     padding: 10px;
@@ -300,6 +392,61 @@ nav {
     text-align: center;
     transition: all 0.5s;
 }
+
+.buildOrders-container {
+    position: relative;
+    /*
+    border: 1px solid #b3b7bc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    */
+    width: 80%;
+    margin: 10px;
+    text-align: center;
+    transition: all 0.5s;
+    margin-bottom: 20px;
+}
+
+    .buildOrders-container:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    .buildOrders-container:before {
+        content: '';
+        border-width: 1px;
+        border-style: solid;
+        border-color: #404040 #ccc #ccc;
+        border-radius: 100%;
+        position: absolute;
+        top: -5px;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;
+        animation: spin 1.5s linear infinite;
+    }
+
+    .buildOrders-container > *{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .spinner {
+        width: 90%;
+        height: 160px;
+        border-radius: 50%;
+        border: 5px solid black;
+        background: transparent;
+        border-top-color: #efef;
+        border-bottom-color: #efef;
+        border-left-color: black;
+        animation: spin 1.5s linear infinite;
+        position: relative;
+    }
 
 .animation-fadein_0 {
     animation-name: fadeIn;
@@ -418,3 +565,4 @@ nav {
         font-size: 14px;
     }
 }
+

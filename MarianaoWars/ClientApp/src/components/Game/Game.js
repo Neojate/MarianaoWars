@@ -6,7 +6,6 @@ import { SystemsType, ScriptTypes, ScriptNames } from '../services/SystemConstan
 import { stringUtils } from '../services/Utils';
 import '../../css/marianao_style.css';
 
-
 export class Game extends Component {
 
     constructor(props) {
@@ -209,14 +208,14 @@ export class Game extends Component {
                 {this.state.hackOrders.map((hackOrder, index) => {
 
                     let time = this.timeLeft(hackOrder.EndTime);
-                    let position = (this.state.computerActive.Id === hackOrder.From) ? 'Enviando' : 'Recibiendo';
+                    let position = (this.state.computerActive.Id === hackOrder.From) ? 'Ejecutando' : 'Recibiendo';
 
                     //Si recibo el escript no se muestra el viaje de vuelta || o recibo un script espia
                     if ( (position === 'Recibiendo' && time === 'Finalizado') || (position === 'Recibiendo' && hackOrder.Type === ScriptTypes.SPY) ) {
                         return '';
                     }
                     //por el contrario, muestro el tiempo de vuelta
-                    else if (position === 'Enviando' && time === 'Finalizado') {
+                    else if (position === 'Ejecutando' && time === 'Finalizado') {
                         position = 'Retornando';
                         time = this.timeLeft(hackOrder.ReturnTime);
                     }
@@ -224,13 +223,12 @@ export class Game extends Component {
                     let name = ScriptNames[hackOrder.Type];
 
                     return (
-                        <div key={index} className={`buildOrders-container animation-fadein_${this.state.buildOrders.length + index}`}>
+                        <div key={index} className={`hacks-container animation-fadein_${this.state.buildOrders.length + index}`}>
                             <Row>
                                 <Col xs={12}>
-                                    <p>{position}</p>
-                                    <p>{name}</p>
-                                    <p>Tiempo restante</p>
-                                    <p className={"m-0"}>{time}</p>
+                                    <h5>{position}</h5>
+                                    <h5>{name}</h5>
+                                    <p><b>{time}</b></p>
                                 </Col>
                             </Row>
                         </div>
@@ -245,6 +243,7 @@ export class Game extends Component {
 
     builds() {
 
+        
         return (
             <>
                 {this.state.buildOrders.map((build, index) => {
@@ -264,16 +263,22 @@ export class Game extends Component {
                     //console.log("system", this.state.systems);
                     let name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
+                    /**
+                    <p>Actulaización de {name}</p>
+                    <p>Tiempo restante</p>
+                    <p className={"m-0"}>{time}</p>
+                    */
+
+
                     return (
-                        <div key={index} className={`buildOrders-container animation-fadein_${index}`}>
+                        <div key={index} className={`buildOrders-container build-spinner animation-fadein_${index}`}>
                             <Row>
-                                <Col xs={12}>
-                                    <p>Actulaización de {name}</p>
-                                    <p>Tiempo restante</p>
-                                    <p className={"m-0"}>{time}</p>
+                                <Col xs={12} className="d-flex flex-column justify-content-center">
+                                    <h5>Actualizando {name}</h5>
+                                    <p className={"m-0"}><b>{time}</b></p>
                                 </Col>
-                            </Row>
-                        </div>
+                                </Row>
+                            </div>
                     );
                 })
                 }

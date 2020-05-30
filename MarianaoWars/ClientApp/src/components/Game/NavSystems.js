@@ -19,7 +19,9 @@ export class NavSystems extends Component {
             instituteId: this.props.instituteId,
             systemActive: -1,
             systems: this.props.system,
+            buildId: 0,
         };
+        this.sleep = this.sleep.bind(this);
     }
 
     componentDidMount() { }
@@ -53,7 +55,6 @@ export class NavSystems extends Component {
                 //$('.sub-nav').show(500);
                 $('.sub-nav').addClass('show');
             }
-
         }
     }
 
@@ -74,7 +75,38 @@ export class NavSystems extends Component {
 
     }
 
-    sleep(ms) {
+    async boxChange(buildId) {
+
+        console.log("build", buildId);
+        console.log("thisbuild", this.state.buildId);
+
+        if (buildId == this.state.buildId) {
+            return;
+        }
+        else if (this.state.buildId < buildId) {
+            if ($('.box').hasClass("box-in-right")) {
+                $('.box').removeClass("box-in-right");
+            }
+            $('.box').addClass('box-out-left');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            $('.box').removeClass('box-out-left');
+            $('.box').addClass('box-in-left');
+
+        }
+        else {
+            if ($('.box').hasClass("box-in-left")) {
+                $('.box').removeClass("box-in-left");
+            }
+            $('.box').addClass('box-out-right');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            $('.box').removeClass('box-out-right');
+            $('.box').addClass('box-in-right');
+        }
+        
+        this.setState({ buildId: buildId });
+    }
+
+    sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
@@ -83,7 +115,7 @@ export class NavSystems extends Component {
             <Col xs={6} className="navsystem sub-nav d-flex justify-content-between align-items-center flex-wrap">
                 {this.state.systems[this.state.systemActive].map((system, index) => {
                     return (
-                        <Link key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
+                        <Link onClick={this.boxChange.bind(this, system.buildId)} key={index} to={{ pathname: `/game/${this.state.instituteId}/system`, state: { system: system, typeSystem: this.state.systemActive } }}>
                             <System key={index} buildId={system.buildId} />
                         </Link>
                     );
