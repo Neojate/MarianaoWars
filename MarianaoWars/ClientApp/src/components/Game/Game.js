@@ -25,7 +25,7 @@ export class Game extends Component {
         this.state = {
             userId: this.props.userId,
             instituteId: this.props.instituteId,
-            systems: this.props.systems,
+            systems: [],
             institute: this.props.institute,
             computers: [],
             computerActive: this.props.computerActive,
@@ -116,13 +116,13 @@ export class Game extends Component {
         return (
             <>
                 {this.state.computers.map((computer, index) => {
-
                     return (
                         <div key={index} onClick={() => this.computerActive(index)} className={`computers-container animation-fadein_${index} ${computer.Id === this.state.computerActive.Id ? 'desk' : ''}`}>
                             <Row>
                                 <Col xs={12}>
-                                    <div className={computer.IsDesk === 1 ? "principal-pc" : "portatil-pc"}></div>
-                                    <p className={"text-center"}>Ip {computer.IpDirection} </p>
+                                    <p className="computer-name"><b>{computer.Name}</b></p>
+                                    <div className={computer.IsDesk  ? "principal-pc" : "portatil-pc"}></div>
+                                    <p className={"text-center"}><b>Ip {computer.IpDirection} </b></p>
                                 </Col>
                             </Row>
                         </div>
@@ -189,6 +189,9 @@ export class Game extends Component {
 
     builds() {
 
+        if (this.state.systems.length === 0) {
+            return;
+        }
         
         return (
             <>
@@ -205,8 +208,6 @@ export class Game extends Component {
 
                     //segundo valor marca la posición en el array del tipo de systems
                     let indiceBuildId = buildId.substring(1, 2);
-                    console.log("buildId", indiceBuildId);
-                    console.log("system", this.state.systems);
                     let name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
                     /**

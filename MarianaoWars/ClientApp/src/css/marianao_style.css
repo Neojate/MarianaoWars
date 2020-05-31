@@ -129,6 +129,28 @@ html, body, #root {
     cursor: pointer;
 }
 
+.pointer-scale {
+    transition: all cubic-bezier(0.22, 0.61, 0.36, 1) 200ms;
+}
+
+    .pointer-round {
+        transition: all cubic-bezier(0.22, 0.61, 0.36, 1) 300ms;
+    }
+
+.pointer-scale:hover {
+    transform: scale(1.25, 1.25);
+    transition: all cubic-bezier(0.22, 0.61, 0.36, 1) 200ms;
+}
+.pointer-scale:hover span {
+    transform: scale(1.25, 1.25);
+    transition: all cubic-bezier(0.22, 0.61, 0.36, 1) 200ms;
+}
+
+.pointer-round:hover {
+    transform: rotate(360deg) scale(1.5, 1.5);
+    transition: all cubic-bezier(0.22, 0.61, 0.36, 1) 300ms;
+}
+
 .themed-container {
     /*
     background-image: url("https://fondosmil.com/fondo/9728.jpg");
@@ -181,11 +203,9 @@ html, body, #root {
 
 .background {
     height: 100%;
-    /*background-image: url("../images/background.jpg");*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    /*background-image: url("../images/background.jpg");*/
 }
 
 .card {
@@ -377,11 +397,14 @@ nav {
     left: 25%;
     bottom: 0px;
     height: 80px;
-    background-color: rgba(181, 181, 181, 0.15);
+    background-color: rgba(255, 255, 255, .50);
     border: 1px solid #ddd;
     border-radius: 10px 10px 0px 0px;
     box-shadow: 0px -3px 3px #888;
 }
+
+
+
 
 .sub-nav {
     opacity: 0;
@@ -409,18 +432,19 @@ nav {
 
 
     .sub-nav a {
-        height: 60px;
-        width: 60px;
+        height: 70px;
+        width: 80px;
         margin: auto;
         text-align: center;
         background-color: white;
     }
 
 .system {
-    height: 60px;
-    width: 60px;
+    height: 70px;
+    width: 80px;
     text-align: center;
     background-color: white;
+    border-radius: 10px;
 }
 
     .system img {
@@ -435,7 +459,7 @@ nav {
     margin: 10px;
     text-align: center;
     transition: all 0.5s;
-    background-color: rgba(255, 255, 255, .30);
+    background-color: rgba(255, 255, 255, .50);
 }
 
 .buildOrders-container {
@@ -472,7 +496,7 @@ nav {
         left: -5px;
         right: -5px;
         animation: spin 1.5s linear infinite;
-        background-color: rgba(255, 255, 255, .30);
+        background-color: rgba(255, 255, 255, .50);
         
     }
 
@@ -517,17 +541,23 @@ nav {
     animation-duration: 1800ms;
 }
 
+.computers-container .computer-name {
+    width: 100%;
+    max-height: 48px;
+    overflow: hidden;
+    margin: 0;
+}
 
-    .computers-container.desk {
-        border: 2px solid #d7d7d7;
-    }
+.computers-container.desk {
+    border: 2px solid #555;
+}
 
-    .computers-container:hover {
-        cursor: pointer;
-        -webkit-box-shadow: 0 4px 6px 5px #777;
-        -moz-box-shadow: 0 4px 6px 5px #777;
-        box-shadow: 0 4px 6px 5px #777;
-    }
+.computers-container:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0 4px 6px 5px #777;
+    -moz-box-shadow: 0 4px 6px 5px #777;
+    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+}
 
     .principal-pc {
         background-image: url("../images/pc_principal.svg");

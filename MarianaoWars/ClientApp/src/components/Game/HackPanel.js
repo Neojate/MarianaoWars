@@ -78,7 +78,7 @@ export class HackPanel extends Component {
             }
         }
 
-        if ("value" in this.inputTo && this.state.instituteId !== prevState.instituteId) {
+        if (this.inputTo !== undefined && "value" in this.inputTo && this.state.instituteId !== prevState.instituteId) {
             this.timeToIp();
         }
         
@@ -436,6 +436,12 @@ export class HackPanel extends Component {
         return (
             <Form onSubmit={this.hackOrder} ref='hackForm'>
                 <div className="box box-hacks">
+                    <h3 className="box-title">
+                        <img alt="img" src={require(`../../images/mac_red.png`)} />
+                        <img alt="img" src={require(`../../images/mac_green.png`)} />
+                        <img alt="img" src={require(`../../images/mac_yellow.png`)} />
+                        <span>Hack Orders</span>
+                    </h3>
                     <Row className="box-scripts">
                         <Col className="box-attack" xs={12}>
                             <Row>

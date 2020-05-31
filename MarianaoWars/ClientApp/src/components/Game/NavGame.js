@@ -193,18 +193,18 @@ export class NavGame extends Component {
                
 
                 <Col className="text-center" xs="4">
-                        <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/explorer.png')} /></Link>
-                        <Link className="link-message" to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
-                            <img alt="mail" className="img-fluid" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} />
+                        <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid pointer-scale" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/explorer.png')} /></Link>
+                        <Link className="link-message pointer-scale" to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
+                            <img alt="mail" className="img-fluid pointer-scale" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} />
                             {this.state.messagesNotRead.length !== 0 ? <span className="badge badge-pill badge-danger">{this.state.messagesNotRead.length}</span> : ''}
                         </Link>
                 </Col>
 
                     <Col xs="4" className="d-flex justify-content-between">
-                        <p className="pointer" onClick={() => this.toogleOpen(computer.Id, computer.Name)} >{computer.Name}</p>
+                        <p className="pointer pointer-scale" onClick={() => this.toogleOpen(computer.Id, computer.Name)} >{computer.Name}</p>
                         <p>{computer.IpDirection}</p>
                         <p onClick={this.props.back}>{computer.MemmoryUsed + '/' + computer.Memmory}</p>
-                        <img className="pointer" onClick={this.props.back} alt="cambiar fondo" src={require(`../../images/settings.svg`)}></img>
+                        <img className="pointer pointer-scale pointer-round" onClick={this.props.back} alt="cambiar fondo" src={require(`../../images/settings.svg`)}></img>
                 </Col>
 
                 </Row>
