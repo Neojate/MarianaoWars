@@ -35,33 +35,8 @@ export class Game extends Component {
             backgroundActive: 0
         };
         this.changeBack = this.changeBack.bind(this);
-
     }
 
-
-
-
-
-    
-    componentDidMount() {
-        //this.userComputers();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        /*
-        if (this.state.computerActive !== nextProps.computerActive) {
-            this.setState({
-                computerActive: nextProps.computerActive
-            })
-        }
-        if (this.state.computers !== nextProps.computers) {
-            this.setState({
-                computers: nextProps.computers
-            })
-        }
-        */
-        
-    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -101,7 +76,7 @@ export class Game extends Component {
             })
         }
 
-    }   
+    }
 
     computerActive(pos) {
         this.props.changeComputerActive(pos);
@@ -118,7 +93,7 @@ export class Game extends Component {
                             <Row>
                                 <Col xs={12}>
                                     <p className="computer-name"><b>{computer.Name}</b></p>
-                                    <div className={computer.IsDesk  ? "principal-pc" : "portatil-pc"}></div>
+                                    <div className={computer.IsDesk ? "principal-pc" : "portatil-pc"}></div>
                                     <p className={"text-center"}><b>Ip {computer.IpDirection} </b></p>
                                 </Col>
                             </Row>
@@ -154,7 +129,7 @@ export class Game extends Component {
                     let position = (this.state.computerActive.Id === hackOrder.From) ? 'Ejecutando' : 'Recibiendo';
 
                     //Si recibo el escript no se muestra el viaje de vuelta || o recibo un script espia
-                    if ( (position === 'Recibiendo' && time === 'Finalizado') || (position === 'Recibiendo' && hackOrder.Type === ScriptTypes.SPY) ) {
+                    if ((position === 'Recibiendo' && time === 'Finalizado') || (position === 'Recibiendo' && hackOrder.Type === ScriptTypes.SPY)) {
                         return '';
                     }
                     //por el contrario, muestro el tiempo de vuelta
@@ -189,7 +164,7 @@ export class Game extends Component {
         if (this.state.systems.length === 0) {
             return;
         }
-        
+
         return (
             <>
                 {this.state.buildOrders.map((build, index) => {
@@ -207,13 +182,6 @@ export class Game extends Component {
                     let indiceBuildId = buildId.substring(1, 2);
                     let name = this.state.systems[indiceBuild][indiceBuildId - 1].name;
 
-                    /**
-                    <p>Actulaización de {name}</p>
-                    <p>Tiempo restante</p>
-                    <p className={"m-0"}>{time}</p>
-                    */
-
-
                     return (
                         <div key={index} className={`buildOrders-container build-spinner animation-fadein_${index}`}>
                             <Row>
@@ -221,8 +189,8 @@ export class Game extends Component {
                                     <h5>Actualizando {name}</h5>
                                     <p className={"m-0"}><b>{time}</b></p>
                                 </Col>
-                                </Row>
-                            </div>
+                            </Row>
+                        </div>
                     );
                 })
                 }

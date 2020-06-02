@@ -22,15 +22,15 @@ export class MessagePanel extends Component {
                 <h2>{this.state.message.title}</h2>
                 <div className="row">
                     <div className="col-6">
-                        <span>Emisor: { this.state.message.sendFrom }</span>
+                        <span>Emisor: {this.state.message.sendFrom}</span>
                     </div>
                     <div className="col-6 text-right">
-                        <span>Fecha: { this.state.message.date }</span>
+                        <span>Fecha: {this.state.message.date}</span>
                     </div>
                 </div>
                 <hr />
                 <div className="message">
-                    { this.state.message.body }
+                    {this.state.message.body}
                 </div>
             </div>
         );

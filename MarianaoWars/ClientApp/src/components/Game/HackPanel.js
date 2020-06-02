@@ -81,7 +81,7 @@ export class HackPanel extends Component {
         if (this.inputTo !== undefined && "value" in this.inputTo && this.state.instituteId !== prevState.instituteId) {
             this.timeToIp();
         }
-        
+
 
     }
 
@@ -136,9 +136,9 @@ export class HackPanel extends Component {
             <FormGroup id={`${name}`} check>
                 <Label check>
                     {this.state.type === type ?
-                        <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} defaultChecked /> 
-                    : <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} /> 
-                        }
+                        <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} defaultChecked />
+                        : <Input type="radio" name="actions" onClick={this.handleActionChange.bind(this, type)} />
+                    }
                     {name}
                 </Label>
                 {' '}<img onClick={this.toogle.bind(this, name)} src={require(`../../images/info.svg`)} alt="info" />
@@ -156,7 +156,7 @@ export class HackPanel extends Component {
         let disabled = (this.state.type === ScriptTypes.COLONIZADOR || this.state.type === ScriptTypes.TRANSPORT) ? false : true;
         let max = parseInt(this.state.computerActive.Resource[resource]);
         let input = <Input type="number" defaultValue={0} min={0} max={max} name={name} id={name} onChange={this.handleResourcesChange.bind(this, name, resource)} innerRef={value => this.inputName = value} />;
-        
+
 
         if (disabled) {
             input = <Input type="number" defaultValue={0} name={name} id={name} innerRef={value => this.inputName = value} readOnly />;

@@ -113,7 +113,7 @@ export class SystemPanel extends Component {
         }
 
     }
-    
+
     neededToUpdate() {
 
         let canBeUpdate = true;
@@ -138,11 +138,11 @@ export class SystemPanel extends Component {
                 else {
                     requeriments[need] = this.state.System[need].split(",")[version];
                 }
-                
+
 
                 //comparamos la cantidad que tenemos con la necesidad del recurso
                 let recurso = need.split("need")[1];
-                
+
                 if (need !== "needBuild" && requeriments[need] > this.state.computerActive.Resource[recurso]) {
                     canBeUpdate = false;
                 }
@@ -153,7 +153,7 @@ export class SystemPanel extends Component {
             }
         }
 
-        if (this.buildIsUpdating(BuildTypes[this.state.typeSystem])){
+        if (this.buildIsUpdating(BuildTypes[this.state.typeSystem])) {
             canBeUpdate = false;
         }
 
@@ -165,7 +165,7 @@ export class SystemPanel extends Component {
         else {
             time = (this.state.System.time.split(",")[version] * 60 * 1000) / this.state.institute.RateTime;
         }
-        
+
         return {
             'needs': requeriments,
             'canBeUpdate': canBeUpdate,
@@ -186,7 +186,7 @@ export class SystemPanel extends Component {
             update = this.state.System.action1.split(",")[version];
         }
 
-        
+
         return (
             <>
                 <h5 className="b-button">Mejora:</h5>
@@ -207,7 +207,7 @@ export class SystemPanel extends Component {
             'Capacidad de Transporte': this.state.System.carry
         }
 
-        return(
+        return (
             <>
                 <h5 className="b-button">Estadisticas:</h5>
                 <div>
@@ -266,7 +266,7 @@ export class SystemPanel extends Component {
                         {(this.state.typeSystem === SystemsType.SCRIPT) ?
                             <p className="panel-level">Cantidad: {this.systemLevel()}</p>
                             : <p className="panel-level">{`Nivel ${this.systemLevel()} de ${this.state.System.lastVersion}`}</p>}
-                    </div>                    
+                    </div>
                     <p>{this.state.System.description}</p>
                 </div>
                 <hr className="mt-1 mb-1" />
@@ -283,7 +283,7 @@ export class SystemPanel extends Component {
                         <Col xs={{ size: 6, offset: 1 }}>
                             {(this.state.typeSystem === SystemsType.SCRIPT) ? this.systemStadistics() : this.systemUps()}
                         </Col>
-                    </Row>    
+                    </Row>
                 </div>
                 <div className="text-center">
                     {updateButton}
@@ -294,7 +294,7 @@ export class SystemPanel extends Component {
 
     createOrderBuild() {
         fetch(`game/createbuildorder?instituteId=${this.state.instituteId}&computerId=${this.state.computerActive.Id}&buildId=${this.state.System.buildId}`)
-            .then((response) => {});
+            .then((response) => { });
     }
 
 }

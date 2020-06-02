@@ -56,7 +56,7 @@ export class Messages extends Component {
             this.drawMessagesTable(this.state.data);
         return (
             <div>
-                { content }
+                {content}
             </div>
         );
     }
@@ -110,7 +110,7 @@ export class Messages extends Component {
     }
 
     async sourceData(dir) {
-        
+
         let index = this.state.pageIndex + dir;
         if ((index - 1) * 10 > this.state.data.length) {
             index = this.state.pageIndex;

@@ -2,9 +2,7 @@
 import { Resource } from './Resource';
 import { Row, Col, Container, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Label, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { BuildIdName, SystemsType } from '../services/SystemConstants'
-
-import { Mailclose } from '../../images/icon/mailclose.png';
+import { BuildIdName, SystemsType } from '../services/SystemConstants';
 
 
 export class NavGame extends Component {
@@ -31,7 +29,7 @@ export class NavGame extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        
+
         if (this.state.systems !== nextProps.systems) {
             this.setState({
                 systems: nextProps.systems
@@ -42,7 +40,7 @@ export class NavGame extends Component {
                 computers: nextProps.computer
             })
         }
-        
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -74,7 +72,7 @@ export class NavGame extends Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() { }
 
     async changeComputerName(event) {
 
@@ -161,7 +159,7 @@ export class NavGame extends Component {
                             increment = increment / 2;
                         }
 
-                        
+
                         var color = this.colorProgress(quantity, capacity);
 
                         if (systemResource.buildId === 4 && quantity < 0) {
@@ -190,22 +188,22 @@ export class NavGame extends Component {
                         />
                     })}
 
-               
 
-                <Col className="text-center" xs="4">
+
+                    <Col className="text-center" xs="4">
                         <Link to={{ pathname: `/game/${this.props.instituteId}` }}><img alt="computers" className="img-fluid pointer-scale" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/explorer.png')} /></Link>
                         <Link className="link-message pointer-scale" to={{ pathname: `/game/${this.props.instituteId}/messages` }}>
                             <img alt="mail" className="img-fluid pointer-scale" style={{ maxWidth: 'autor', maxHeight: '50px' }} src={require('../../images/icon/mailclose.png')} />
                             {this.state.messagesNotRead.length !== 0 ? <span className="badge badge-pill badge-danger">{this.state.messagesNotRead.length}</span> : ''}
                         </Link>
-                </Col>
+                    </Col>
 
                     <Col xs="4" className="d-flex justify-content-between">
                         <p className="pointer pointer-scale" onClick={() => this.toogleOpen(computer.Id, computer.Name)} >{computer.Name}</p>
                         <p>{computer.IpDirection}</p>
                         <p onClick={this.props.back}>{computer.MemmoryUsed + '/' + computer.Memmory}</p>
                         <img className="pointer pointer-scale pointer-round" onClick={this.props.back} alt="cambiar fondo" src={require(`../../images/settings.svg`)}></img>
-                </Col>
+                    </Col>
 
                 </Row>
                 <Modal isOpen={this.state.modal} toggle={this.toogle} className="">
@@ -231,7 +229,7 @@ export class NavGame extends Component {
     render() {
 
         let contents = this.renderResources(this.state.systems, this.props.computer);
-        
+
         return (
             <div>
                 {contents}

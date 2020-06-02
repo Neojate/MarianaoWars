@@ -15,7 +15,7 @@ export class Network extends Component {
             loading: true,
             instituteId: props.match.params.instituteId
         };
-        
+
         this.moveBroadcast = this.moveBroadcast.bind(this);
 
     }
@@ -39,11 +39,7 @@ export class Network extends Component {
         if (this.state.broadcast !== prevState.broadcast) {
             this.sourceData(this.state.broadcast);
         }
-        
-    }
 
-    componentDidMount() {
-        //this.sourceData(this.state.broadcast);
     }
 
     render() {
@@ -71,14 +67,14 @@ export class Network extends Component {
                         <Row>
                             <Col xs={12} className="d-flex justify-content-between">
                                 <Button className="btn btn-custom" onClick={() => this.moveBroadcast(false)}>Anterior</Button>
-                                <Button className="btn btn-custom" onClick={() => this.moveBroadcast(true)}>Siguiente</Button>    
+                                <Button className="btn btn-custom" onClick={() => this.moveBroadcast(true)}>Siguiente</Button>
                             </Col>
                         </Row>
-                        
+
                     </div>
                 </div>
-            
-                </>
+
+            </>
         );
     }
 
@@ -88,7 +84,7 @@ export class Network extends Component {
         let response = await result.text();
 
         let condition = (this.state.type === ScriptTypes.ATTACK || this.state.type === ScriptTypes.SPY || this.state.type === ScriptTypes.TRANSPORT) && String(true).toLowerCase() === response.toLowerCase();
-        
+
         if (condition) {
             return true;
         }
@@ -99,7 +95,7 @@ export class Network extends Component {
 
     actions(ip, validIp) {
 
-        
+
         return (
 
             <Row>
@@ -107,23 +103,23 @@ export class Network extends Component {
                     (<>
                         <Col xs={3}>
                             <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.ATTACK, ip: ip } }} >
-                                <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/rocket.svg')} alt={"Hack"} />
+                                <img src={require('../../images/rocket.svg')} alt={"Hack"} />
                             </Link>
                         </Col>
                         <Col xs={3}>
                             <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.SPY, ip: ip } }}>
-                                <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/bug.svg')} alt={"Debug"} />
+                                <img src={require('../../images/bug.svg')} alt={"Debug"} />
                             </Link>
                         </Col>
                         <Col xs={3}>
                             <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.TRANSPORT, ip: ip } }}>
-                                <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/dependent.svg')} alt={"Transport"} />
+                                <img src={require('../../images/dependent.svg')} alt={"Transport"} />
                             </Link>
                         </Col>
                     </>)
                     : (<Col xs={3}>
                         <Link to={{ pathname: `/game/${this.state.instituteId}/hackorder`, state: { type: ScriptTypes.COLONIZADOR, ip: ip } }}>
-                            <img /*style={{ maxWidth: '16px' }}*/ src={require('../../images/desktop-download.svg')} alt={"Persistence"} />
+                            <img src={require('../../images/desktop-download.svg')} alt={"Persistence"} />
                         </Link>
                     </Col>)
                 }
@@ -145,13 +141,13 @@ export class Network extends Component {
                     computerName = computer.Name;
                     validIp = true;
                 }
-                    
+
             }
 
             items.push(
                 <tr key={i}>
-                    <td>{ ip }</td>
-                    <td>{ computerName }</td>
+                    <td>{ip}</td>
+                    <td>{computerName}</td>
                     <td></td>
                     <td>
                         {this.actions(ip, validIp)}
@@ -171,7 +167,7 @@ export class Network extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    { items }
+                    {items}
                 </tbody>
             </table>
         );
@@ -194,7 +190,7 @@ export class Network extends Component {
         let broadcast = parseInt(this.state.broadcast) + value;
 
         if (broadcast < 0) {
-            broadcast =  49;
+            broadcast = 49;
         }
         else if (broadcast > 49) {
             broadcast = 0;
