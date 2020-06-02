@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route } from "react-router-dom";
-import { Game } from '../components/game/Game';
-import { Network } from '../components/game/Network';
-import { SystemPanel } from '../components/game/SystemPanel';
-import { Messages } from '../components/game/Messages';
-import { MessagePanel } from '../components/game/MessagePanel';
-import { HackPanel } from '../components/game/HackPanel';
+import { Game } from '../components/Game/Game';
+import { Network } from '../components/Game/Network';
+import { SystemPanel } from '../components/Game/SystemPanel';
+import { Messages } from '../components/Game/Messages';
+import { MessagePanel } from '../components/Game/MessagePanel';
+import { HackPanel } from '../components/Game/HackPanel';
 import authService from '../components/api-authorization/AuthorizeService';
 import systemServices from '../components/services/SytemServices';
 import * as signalR from '@aspnet/signalr';
