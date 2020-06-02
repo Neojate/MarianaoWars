@@ -16,10 +16,7 @@ export class Game extends Component {
             require(`../../images/backgrounds/back2.jpg`),
             require(`../../images/backgrounds/win10_2.jpeg`),
             require(`../../images/backgrounds/winxp.jpg`),
-            require(`../../images/backgrounds/nic.jpg`),
-            require(`../../images/backgrounds/marianao_1.jpg`),
-            require(`../../images/backgrounds/marianao_2.jpg`),
-            require(`../../images/backgrounds/marianao_3.jpg`),
+            require(`../../images/backgrounds/nic.jpg`)
         ]
 
         this.state = {
@@ -237,7 +234,7 @@ export class Game extends Component {
 
     changeBack() {
         let back = this.state.backgroundActive;
-        back = (back < 7) ? back + 1 : 0;
+        back = (back < 4) ? back + 1 : 0;
 
         this.setState({ backgroundActive: back });
     }
