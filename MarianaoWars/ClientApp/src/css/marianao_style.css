@@ -224,6 +224,7 @@ html, body, #root {
 
 .link-message {
     position: relative;
+    margin-left: 40px;
 }
 
 .link-message span {
